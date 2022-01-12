@@ -2,7 +2,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://hinoki-su-github-io.vercel.app/static/Hinoki_logo.png" width="120" alt="Hinoki Logo" /></a>
 </p>
 <h1 align="center">
- Hinoki's Blog CMS
+ Hinoki's Blog Management Platform
 </h1>
 
 # Description
@@ -20,7 +20,7 @@ $ pnpm install
 - run admin
 
 ```bash
-$ pnpm run dev:admin
+$ pnpm run dev
 ```
 
 ## License

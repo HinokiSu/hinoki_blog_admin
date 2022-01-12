@@ -1,0 +1,6 @@
+version: 2.1
+jobs:
+  build:
+    steps:
+      - run: echo "A first hello"
+      - run: npm -v

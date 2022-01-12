@@ -12,6 +12,9 @@ jobs:
           keys: 
             - dependencies_circle_node
       - run:
+          name: Install Pnpm
+          command: sudo curl -f https://get.pnpm.io/v6.16.js | sudo node - add --global pnpm
+      - run:
           name: Install
           command: pnpm install
       - save_cache:
@@ -21,3 +24,9 @@ jobs:
       - run:
           name: Build
           command: pnpm run build
+      - run:
+          name: AuthSet
+          command: chmod +x scripts/deploy.sh
+      - run:
+          name: Deploy
+          command: ./scripts/deploy.sh

@@ -1,0 +1,43 @@
+/* global css */
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  -ms-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+}
+
+body {
+  /* 将溢出内容区的元素，剪裁掉， 以此来隐藏水平滚动条 */
+  overflow-x: hidden;
+}
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+a,
+a:visited,
+a:active,
+a:hover,
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+/* 
+#app {
+  width: 100%;
+  height: 100vh;
+} */

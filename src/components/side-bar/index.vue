@@ -1,16 +1,16 @@
 <template>
   <div class="hinoki-blog sidebar">
-    <div class="features" v-for="item in 4" :key="item">
+    <div class="features">
       <div class="feature">
         <router-link :to="{name: 'article'}">
           <p>Article</p>
         </router-link>
       </div>
-      <router-link :to="{name: 'user'}">
         <div class="feature">
+      <router-link :to="{name: 'user'}">
           <p>User</p>
-        </div>
       </router-link>
+        </div>
       <div class="feature">
         <p>Category</p>
       </div>

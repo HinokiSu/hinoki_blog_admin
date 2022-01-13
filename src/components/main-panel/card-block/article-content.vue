@@ -1,27 +1,27 @@
 <template>
   <div class="article-content">
     <div class="title">
-      <h3>How to use Nest?</h3>
+      <h3>{{ article?.title }}</h3>
     </div>
-    <div class="info">
-      <div class="author">
-        <p>Author: Hinoki</p>
-      </div>
-      <div class="release_time">
-        <p>Reltime: 2022/1/8 21:46</p>
-      </div>
+
+    <div class="description">
+      <p>{{ article?.description }}</p>
     </div>
-    <div class="desc">
-      <p>Before using Nest, you need skill of typescript,... ...</p>
+    <div class="release-time">
+      <p>{{ article?.createdAt }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { IArticle } from '@admin/interfaces/IArticle'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name:'ArticleContentTest',
+  name: 'ArticleContentTest',
+  props: {
+    article: Object as PropType<IArticle>,
+  },
   setup() {
     return {}
   },
@@ -33,8 +33,8 @@ export default defineComponent({
   display: grid;
   grid-template-areas:
     'title'
-    'info'
-    'desc';
+    'desc'
+    'time';
   row-gap: 10px;
   .title {
     grid-area: title;
@@ -42,23 +42,16 @@ export default defineComponent({
     border-bottom: 2px solid var(--accents-2);
   }
 
-  .info {
-    grid-area: info;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--accents-2);
-
-    .author {
-      font-size: 16px;
-    }
-    .release_time {
-      font-size: 14px;
-    }
+  .description {
+    grid-area: desc;
+    font-size: 22px;
+    font-weight: 500;
   }
 
-  .desc {
-    grid-area: desc;
+  .release-time {
+    border-top: 2px solid var(--accents-2);
+    grid-area: time;
+    font-size: 14px;
   }
 }
 </style>

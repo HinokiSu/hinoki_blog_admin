@@ -3,7 +3,6 @@
     <div class="wrapper">
       <div class="content">
         <slot></slot>
-        <article-content></article-content>
       </div>
       <div class="collapse-features">
         <div class="feature">
@@ -24,11 +23,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import articleContent from './article-content.vue'
 
 export default defineComponent({
-  name:'CardBlock',
-  components: { articleContent },
+  name: 'CardBlock',
   props: {
     disable: Boolean,
     // Whole width

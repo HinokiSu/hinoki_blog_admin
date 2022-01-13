@@ -53,4 +53,15 @@ export default defineConfig({
       },
     },
   },
+  // config proxy
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        // /api/todo -> http://localhost:4000/todo
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

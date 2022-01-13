@@ -38,4 +38,3 @@ workflows:
             branches:
               only: 
                 - main
-                - cur

@@ -1,6 +1,6 @@
 export interface IArticle {
-  _id?: string,
-  title?: string,
+  _id?: string
+  title?: string
   description?: string
   markdown?: string
   html?: string
@@ -10,4 +10,10 @@ export interface IArticle {
 
 export interface IArticles {
   articles: IArticle[]
+}
+
+
+
+export type IHttpArticle = {
+  article: IArticle
 }

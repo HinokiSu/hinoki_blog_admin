@@ -1,6 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { ArticleRoutes } from './articleRoute'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('@admin/layouts/home-layout.vue'),
@@ -14,11 +15,8 @@ const routes = [
         path: 'manage',
         component: () => import('@admin/layouts/content-layout.vue'),
         children: [
-          {
-            path: 'article',
-            name: 'article',
-            component: () => import('@admin/views/article/index.vue'),
-          },
+          // 文章管理-路由
+          ...ArticleRoutes,
           {
             path: 'user',
             name: 'user',

@@ -1,11 +1,11 @@
 <template>
   <div class="hinoki-blog card_feature">
     <div class="search">
-      <fe-input placeholder="请输入..." :value="searchValue" clearable />
-      <fe-button load-type="wave" size="large" ghost @click="emitSearchClick">Search</fe-button>
+      <fe-input size="small" placeholder="请输入..." clearable v-model="searchValue" />
+      <fe-button auto size="large" @click="emitSearchClick">Search</fe-button>
     </div>
     <div class="adjunction">
-      <fe-button wd="40px" type="success" auto size="large" @click="emitAddjunction"> Adjunction </fe-button>
+      <fe-button type="success" auto size="large" @click="emitAddjunction">Add</fe-button>
     </div>
   </div>
 </template>
@@ -15,21 +15,18 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'CardFeature',
-  props: {
-    searchValue: {
-      type: String,
-      default: '',
-    },
-  },
-  emits: ['update:searchValue', 'searchClick', 'addjuctionClick'],
+  emits: ['searchClick', 'addjuctionClick'],
   setup(props, { emit }) {
+    const searchValue = ref('')
     const emitSearchClick = () => {
-      emit('searchClick', props.searchValue)
+      emit('searchClick', searchValue.value)
     }
     const emitAddjunction = () => {
       emit('addjuctionClick')
     }
+
     return {
+      searchValue,
       emitSearchClick,
       emitAddjunction,
     }
@@ -40,18 +37,27 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.card_feature {
-    display: flex;
-    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 20px;
 
-    margin-top: 20px;
-
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
     .search {
+      display: flex;
+      align-items: center;
       button {
-        min-width: 40px;
-        
         margin-left: 20px;
         font-size: 26px;
         font-weight: 500;
+      }
+    }
+
+    .adjunction {
+      justify-self: right;
+      margin-right: 20px;
+      button {
+        font-size: 26px;
       }
     }
   }

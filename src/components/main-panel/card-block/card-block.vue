@@ -5,14 +5,19 @@
         <slot></slot>
       </div>
       <div class="collapse-features">
+        <!-- TODO: 1.跳转到:id 的文章, 可以修改/预览，保存 -->
         <div class="feature">
-          <p>See</p>
+          <router-link :to="seeToLink">
+            <p>See</p>
+          </router-link>
         </div>
 
+        <!-- TODO: 2.弹出对话框，修改标题、摘要... 设置是否可见， -->
         <div class="feature">
           <p>Mod</p>
         </div>
 
+        <!-- TODO: 3.删除文章，会弹出提示框 -->
         <div class="feature">
           <p>Del</p>
         </div>
@@ -38,6 +43,8 @@ export default defineComponent({
       type: String,
       default: 'auto',
     },
+    seeToLink: Object,
+
   },
   setup(props) {
     return {

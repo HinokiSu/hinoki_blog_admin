@@ -4,7 +4,6 @@
       <div class="bread_wrapper">
         <card-breadnav :breadNavList="navListProp"></card-breadnav>
       </div>
-      <card-feature></card-feature>
       <router-view></router-view>
     </fe-card>
   </main>
@@ -13,12 +12,12 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import CardBlock from '@admin/components/main-panel/card-block/card-block.vue'
-import CardFeature from '@admin/components/main-panel/card-main/card-feature.vue'
 import CardBreadnav from '@admin/components/main-panel/card-main/card-breadnav.vue'
 import { IBreadNav } from '@admin/interfaces'
 
 export default defineComponent({
   name: 'ContentLayout',
+  components: { CardBlock, CardBreadnav },
   setup() {
     const navList = <IBreadNav[]>[
       {
@@ -40,7 +39,6 @@ export default defineComponent({
       navListProp,
     }
   },
-  components: { CardBlock, CardFeature, CardBreadnav },
 })
 </script>
 

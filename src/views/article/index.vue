@@ -1,15 +1,14 @@
 <template>
   <div class="hinoki-blog article_continer">
     <div class="article-feature">
-      <card-feature @searchClick="searcHandler"></card-feature>
+      <card-feature @search-click="searcHandler" @addjuction-click="addjuction"></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
         <card-block
           :seeToLink="{
-            name: 'article-preview',
+            name: 'update-article',
             params: {
-              title: `${article.title}`,
               id: article._id,
             },
           }"
@@ -27,13 +26,14 @@ import cardBlock from '@admin/components/main-panel/card-block/card-block.vue'
 import { useArticleStore } from '@admin/stores/articleStore'
 import ArticleContent from '@admin/components/main-panel/card-block/article-content.vue'
 import CardFeature from '@admin/components/main-panel/card-main/card-feature.vue'
-
+import { useRoute } from 'vue-router'
+import router from '@admin/routes'
 export default defineComponent({
-  name: 'Article',
+  name: 'Articles',
   components: { cardBlock, ArticleContent, CardFeature },
   setup() {
     const ArticleStore = useArticleStore()
-
+    const route = useRoute()
     onMounted(() => {
       ArticleStore.getArticleList()
     })
@@ -42,9 +42,16 @@ export default defineComponent({
       console.log(val)
     }
 
+    const addjuction = () => {
+      router.push({
+        name: 'create-article'
+      })
+    }
+
     return {
       articleList: computed(() => ArticleStore.articleList),
       searcHandler,
+      addjuction
     }
   },
 })
@@ -55,9 +62,6 @@ export default defineComponent({
   &.article_continer {
     .article-feature {
       margin-left: 20px;
-    }
-
-    .block-group {
     }
   }
 }

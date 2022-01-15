@@ -2,12 +2,12 @@
   <div class="hinoki-blog sidebar">
     <div class="features">
       <div class="feature">
-        <router-link :to="{name: 'article'}">
+        <router-link :to="{name: 'articles'}">
           <p>Article</p>
         </router-link>
       </div>
         <div class="feature">
-      <router-link :to="{name: 'user'}">
+      <router-link :to="{name: 'users'}">
           <p>User</p>
       </router-link>
         </div>

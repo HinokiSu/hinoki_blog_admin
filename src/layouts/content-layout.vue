@@ -2,6 +2,7 @@
   <main class="hinoki-blog main_content">
     <fe-card shadow>
       <div class="bread_wrapper">
+        <!-- TODO: Dynamically update breadNavList data -->
         <card-breadnav :breadNavList="navListProp"></card-breadnav>
       </div>
       <router-view></router-view>

@@ -5,18 +5,17 @@ import { computed } from 'vue'
 
 interface IState {
   articleList: IArticle[]
-  article: IArticle
+  articleData: IArticle
 }
 
 export const useArticleStore = defineStore('artilce', {
   state: (): IState => ({
     articleList: [],
-    article: {},
+    articleData: {},
   }),
 
   getters: {
     articleCount: (state) => state.articleList.length,
-    getArticle: (state) => computed(() => state.article),
   },
 
   actions: {
@@ -33,14 +32,12 @@ export const useArticleStore = defineStore('artilce', {
     },
 
     async getArticleById(articleId: string) {
-      console.log(articleId)
       try {
         const result = <IHttpArticle>await httpGet({
           url: `/article/${articleId}`,
         })
-        this.article = result.article
+        this.articleData = result.article
       } catch (error) {
-        console.log('error: ', error)
         throw error
       }
     },

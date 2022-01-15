@@ -3,14 +3,19 @@ import { RouteRecordRaw } from 'vue-router'
 export const ArticleRoutes: RouteRecordRaw[] = [
   {
     // 显示所有
-    path: 'article',
-    name: 'article',
+    path: 'articles',
+    name: 'articles',
     component: () => import('@admin/views/article/index.vue'),
   },
+
   {
-    // 预览指定文章
-    name: 'article-preview',
-    path: '/article/preview/:title',
-    component: () => import('@admin/layouts/pre-article-layout.vue'),
+    path: '/article/create',
+    name: 'create-article',
+    component: () => import('@admin/views/article/article-form.vue'),
+  },
+  {
+    path: '/article/update/:id',
+    name: 'update-article',
+    component: () => import('@admin/views/article/article-form.vue'),
   },
 ]

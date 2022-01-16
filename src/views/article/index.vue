@@ -1,18 +1,11 @@
 <template>
   <div class="hinoki-blog article_continer">
     <div class="article-feature">
-      <card-feature @search-click="searcHandler" @addjuction-click="addjuction"></card-feature>
+      <card-feature @search-click="searcHandler" @addjuction-click="addjuctionHandler"></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
-        <card-block
-          :seeToLink="{
-            name: 'update-article',
-            params: {
-              id: article._id,
-            },
-          }"
-        >
+        <card-block :id="article._id" :to-link-name="'update-article'">
           <article-content :article="article"></article-content>
         </card-block>
       </fe-grid>
@@ -26,14 +19,12 @@ import cardBlock from '@admin/components/main-panel/card-block/card-block.vue'
 import { useArticleStore } from '@admin/stores/articleStore'
 import ArticleContent from '@admin/components/main-panel/card-block/article-content.vue'
 import CardFeature from '@admin/components/main-panel/card-main/card-feature.vue'
-import { useRoute } from 'vue-router'
 import router from '@admin/routes'
 export default defineComponent({
   name: 'Articles',
   components: { cardBlock, ArticleContent, CardFeature },
   setup() {
     const ArticleStore = useArticleStore()
-    const route = useRoute()
     onMounted(() => {
       ArticleStore.getArticleList()
     })
@@ -42,16 +33,16 @@ export default defineComponent({
       console.log(val)
     }
 
-    const addjuction = () => {
+    const addjuctionHandler = () => {
       router.push({
-        name: 'create-article'
+        name: 'create-article',
       })
     }
 
     return {
       articleList: computed(() => ArticleStore.articleList),
       searcHandler,
-      addjuction
+      addjuctionHandler,
     }
   },
 })

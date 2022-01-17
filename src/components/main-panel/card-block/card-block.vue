@@ -127,12 +127,25 @@ export default defineComponent({
           duration: '1500',
         }),
 
-      confirmEdit: () =>
-      // TODO: submit edited data
-        proxy.$toast['success']({
-          text: 'Edited successfully!',
-          duration: '1500',
-        }),
+      confirmEdit: async () => {
+        // TODO: submit edited data
+        await articleStore.updateArticle(articleId.value)
+
+        if (articleStore.fettle) {
+          articleStore.fettle = false
+          // reacquire
+          articleStore.getArticleList()
+          proxy.$toast['success']({
+            text: 'Edit successfully!',
+            duration: '1500',
+          })
+        } else {
+          proxy.$toast['error']({
+            text: 'Edit failed !',
+            duration: '2000',
+          })
+        }
+      },
     }
 
     // Delete Modal
@@ -142,12 +155,25 @@ export default defineComponent({
           text: 'Delete cancelled',
           duration: '1500',
         }),
-      confirmDelete: () =>
-        // submit data which will deleted 
-        proxy.$toast['success']({
-          text: 'Delete successfully!',
-          duration: '1500',
-        }),
+
+      confirmDelete: async () => {
+        await articleStore.deleteArticle(articleId.value)
+
+        if (articleStore.fettle) {
+          articleStore.fettle = false
+          // reacquire
+          articleStore.getArticleList()
+          proxy.$toast['success']({
+            text: 'Delete successfully!',
+            duration: '1500',
+          })
+        } else {
+          proxy.$toast['error']({
+            text: 'Delete failed !',
+            duration: '2000',
+          })
+        }
+      },
     }
 
     const recycleStore = () => {

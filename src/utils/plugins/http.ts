@@ -17,18 +17,14 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // 请求参数接口
 interface IHttpParams {
   url: string
-  params?: object
   data?: object
 }
 
 // Get request
-export const httpGet = ({ url, params, data }: IHttpParams) =>
+export const httpGet = ({ url }: IHttpParams) =>
   new Promise((resolve, reject) => {
     axios
-      .get(url, {
-        params,
-        data,
-      })
+      .get(url, {})
       .then((res) => {
         resolve(res.data)
       })
@@ -38,14 +34,10 @@ export const httpGet = ({ url, params, data }: IHttpParams) =>
   })
 
 // Post request
-export const httpPost = ({ url, params, data }: IHttpParams) =>
+export const httpPost = ({ url, data }: IHttpParams) =>
   new Promise((resolve, reject) => {
-    axios({
-      url,
-      method: 'post',
-      data,
-      params,
-    })
+    axios
+      .post(url, data)
       .then((res) => {
         resolve(res.data)
       })
@@ -55,12 +47,10 @@ export const httpPost = ({ url, params, data }: IHttpParams) =>
   })
 
 // Delete request
-export const httpDelete = ({ url, params }: IHttpParams) =>
+export const httpDelete = ({ url }: IHttpParams) =>
   new Promise((resolve, reject) => {
-    axios({
-      url,
-      params,
-    })
+    axios
+      .delete(url)
       .then((res) => {
         resolve(res)
       })
@@ -70,13 +60,10 @@ export const httpDelete = ({ url, params }: IHttpParams) =>
   })
 
 // Put request
-export const httpPut = ({ url, params, data }: IHttpParams) =>
+export const httpPut = ({ url, data }: IHttpParams) =>
   new Promise((resolve, reject) => {
-    axios({
-      url,
-      params,
-      data,
-    })
+    axios
+      .put(url, data)
       .then((res) => {
         resolve(res)
       })

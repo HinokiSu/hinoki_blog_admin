@@ -1,16 +1,16 @@
 <template>
-  <div class="hinoki-blog sidebar">
+  <div class="hinoki-blog side-bar">
     <div class="features">
       <div class="feature">
-        <router-link :to="{name: 'articles'}">
+        <router-link :to="{ name: 'articles' }">
           <p>Article</p>
         </router-link>
       </div>
-        <div class="feature">
-      <router-link :to="{name: 'users'}">
+      <div class="feature">
+        <router-link :to="{ name: 'users' }">
           <p>User</p>
-      </router-link>
-        </div>
+        </router-link>
+      </div>
       <div class="feature">
         <p>Category</p>
       </div>
@@ -34,7 +34,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  &.sidebar {
+  &.side-bar {
     position: fixed;
     flex-shrink: 0;
 
@@ -43,13 +43,23 @@ export default defineComponent({
     overflow: auto;
     top: 120px;
     bottom: 0;
-
+    box-shadow: 0 0 30px var(--accents-2);
     // hidden srrollbar
     &::-webkit-scrollbar {
       width: 0;
     }
 
-    box-shadow: 0 0 30px var(--accents-2);
+    @media only screen and (max-width: 650px) {
+      & {
+        top: 0;
+        left: 0;
+        width: 30vw;
+        height: 100%;
+        z-index: 300;
+        position: static;
+        box-shadow: unset;
+      }
+    }
 
     .features {
       display: grid;

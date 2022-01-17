@@ -57,6 +57,11 @@ export default defineComponent({
       padding-bottom: 20px;
       border-bottom: 1px solid var(--accents-2);
     }
+
+    @media only screen and( max-width: 650px) {
+      padding-left: 0px;
+      padding-bottom: 0px;
+    }
   }
 }
 </style>

@@ -2,10 +2,10 @@
   <div class="hinoki-blog card_feature">
     <div class="search">
       <fe-input size="small" placeholder="请输入..." clearable v-model="searchValue" />
-      <fe-button auto size="large" @click="emitSearchClick">Search</fe-button>
+      <fe-button class="search-btn" size="large" auto @click="emitSearchClick">Search</fe-button>
     </div>
     <div class="adjunction">
-      <fe-button type="success" auto size="large" @click="emitAddjunction">Add</fe-button>
+      <fe-button class="add-btn" type="success" auto size="large" @click="emitAddjunction">Add</fe-button>
     </div>
   </div>
 </template>
@@ -41,12 +41,13 @@ export default defineComponent({
     padding-bottom: 20px;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr auto;
     align-items: center;
+    column-gap: 10px;
     .search {
       display: flex;
       align-items: center;
-      button {
+      .search-btn {
         margin-left: 20px;
         font-size: 26px;
         font-weight: 500;
@@ -55,8 +56,9 @@ export default defineComponent({
 
     .adjunction {
       justify-self: right;
-      margin-right: 20px;
-      button {
+      margin-right: 10px;
+
+      .add-btn {
         font-size: 26px;
       }
     }

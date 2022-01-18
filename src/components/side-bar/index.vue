@@ -7,12 +7,9 @@
         </router-link>
       </div>
       <div class="feature">
-        <router-link :to="{ name: 'users' }">
-          <p>User</p>
+        <router-link :to="{ name: 'categories' }">
+          <p>Category</p>
         </router-link>
-      </div>
-      <div class="feature">
-        <p>Category</p>
       </div>
       <div class="feature">
         <p>Photo</p>

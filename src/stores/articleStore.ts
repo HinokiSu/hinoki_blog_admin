@@ -1,4 +1,5 @@
 import { IArticle, IArticles, IHttpArticle } from '@admin/interfaces/IArticle'
+import { dateFormat } from '@admin/utils/format'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/plugins'
 import { defineStore } from 'pinia'
 
@@ -25,7 +26,7 @@ export const useArticleStore = defineStore('artilce', {
     // TODO: determine whether request is success according to response status
     async getArticleList() {
       try {
-        const result = <IArticles>await httpGet({ url: '/article/' })
+        const result = <IArticles>await httpGet({ url: '/article/all' })
 
         this.articleList = result.articles
       } catch (error) {
@@ -54,18 +55,23 @@ export const useArticleStore = defineStore('artilce', {
         })
         this.fettle = true
       } catch (error) {
+        this.fettle = false
         throw error
       }
     },
 
     async updateArticle(articleId: string) {
       try {
+        const updatedArticle = { ...this.articleData }
+        updatedArticle.updatedAt = dateFormat(new Date(), 'YYYY-MM-DD hh:mm:ss')
         const result = <IHttpArticle>await httpPut({
           url: `/article/${articleId}`,
-          data: this.articleData,
+          data: updatedArticle,
         })
+        console.log('res:', result)
         this.fettle = true
       } catch (error) {
+        this.fettle = false
         throw error
       }
     },
@@ -77,6 +83,7 @@ export const useArticleStore = defineStore('artilce', {
         })
         this.fettle = true
       } catch (error) {
+        this.fettle = false
         throw error
       }
     },

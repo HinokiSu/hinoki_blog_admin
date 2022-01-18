@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@fect-ui/vue': ^1.1.1
+  '@fect-ui/vue-icons': ^2.0.0
   '@types/node': ^17.0.2
   '@typescript-eslint/eslint-plugin': ^5.8.0
   '@typescript-eslint/parser': ^5.8.0
@@ -13,6 +14,7 @@ specifiers:
   eslint-plugin-vue: ^8.2.0
   husky: ^7.0.4
   less: ^4.1.2
+  moment: ^2.29.1
   pinia: ^2.0.9
   postcss: ^8.4.5
   postcss-pxtorem: ^6.0.0
@@ -26,9 +28,11 @@ specifiers:
 
 dependencies:
   '@fect-ui/vue': registry.npmmirror.com/@fect-ui/vue/1.1.1_vue@3.2.26
+  '@fect-ui/vue-icons': registry.npmmirror.com/@fect-ui/vue-icons/2.0.0_vue@3.2.26
   autoprefixer: registry.npmmirror.com/autoprefixer/10.4.2_postcss@8.4.5
   axios: registry.npmmirror.com/axios/0.24.0
   browserslist: registry.npmmirror.com/browserslist/4.19.1
+  moment: registry.npmmirror.com/moment/2.29.1
   pinia: registry.npmmirror.com/pinia/2.0.9_typescript@4.5.4+vue@3.2.26
   postcss: registry.npmmirror.com/postcss/8.4.5
   postcss-pxtorem: registry.npmmirror.com/postcss-pxtorem/6.0.0_postcss@8.4.5
@@ -1279,6 +1283,17 @@ packages:
       vue: registry.npmmirror.com/vue/3.2.26
     dev: false
 
+  registry.npmmirror.com/@fect-ui/vue-icons/2.0.0_vue@3.2.26:
+    resolution: {integrity: sha512-/ZhSicpoZIk/Ib9nZ3iTCUd8sR0JgAKB2PIZQexcwBko7XMxNOfpAbm1SPoZOB8WicaNyAr80sInzJb7+C8QYg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue-icons/download/@fect-ui/vue-icons-2.0.0.tgz}
+    id: registry.npmmirror.com/@fect-ui/vue-icons/2.0.0
+    name: '@fect-ui/vue-icons'
+    version: 2.0.0
+    peerDependencies:
+      vue: ^3.0.11
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.2.26
+    dev: false
+
   registry.npmmirror.com/@fect-ui/vue/1.1.1_vue@3.2.26:
     resolution: {integrity: sha512-zZWykUalMTgQLPn4YsMu5Y3n6qkvyVqnIuq+uRxU2ny10pWYi8sEfPHHPoFaIzIa/ZvMkDX7kMEQSTF2w47c4w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue/download/@fect-ui/vue-1.1.1.tgz}
     id: registry.npmmirror.com/@fect-ui/vue/1.1.1
@@ -2470,6 +2485,12 @@ packages:
     dependencies:
       brace-expansion: registry.nlark.com/brace-expansion/1.1.11
     dev: true
+
+  registry.npmmirror.com/moment/2.29.1:
+    resolution: {integrity: sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/moment/download/moment-2.29.1.tgz}
+    name: moment
+    version: 2.29.1
+    dev: false
 
   registry.npmmirror.com/ms/2.1.2:
     resolution: {integrity: sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ms/download/ms-2.1.2.tgz?cache=0&sync_timestamp=1632788163669&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fms%2Fdownload%2Fms-2.1.2.tgz}

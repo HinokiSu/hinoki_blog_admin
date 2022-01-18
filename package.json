@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@fect-ui/vue": "^1.1.1",
+    "@fect-ui/vue-icons": "^2.0.0",
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",
     "browserslist": "^4.19.1",
+    "moment": "^2.29.1",
     "pinia": "^2.0.9",
     "postcss": "^8.4.5",
     "postcss-pxtorem": "^6.0.0",
@@ -34,5 +37,4 @@
     "vite-plugin-compression": "^0.3.6",
     "vue-tsc": "^0.29.8"
   }
-  
 }

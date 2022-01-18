@@ -14,7 +14,7 @@
         <side-bar></side-bar>
       </fe-drawer>
 
-      <!-- 内容区域 -->
+      <!-- content area -->
       <router-view />
     </div>
   </div>

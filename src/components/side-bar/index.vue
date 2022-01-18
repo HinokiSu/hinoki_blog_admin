@@ -1,18 +1,18 @@
 <template>
   <div class="hinoki-blog side-bar">
     <div class="features">
+      <router-link :to="{ name: 'articles' }">
+        <div class="feature">
+          <p><FileText class="f-icon filetext-icon" />Article</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'categories' }">
+        <div class="feature">
+          <p><Hash class="f-icon hash-icon" />Category</p>
+        </div>
+      </router-link>
       <div class="feature">
-        <router-link :to="{ name: 'articles' }">
-          <p>Article</p>
-        </router-link>
-      </div>
-      <div class="feature">
-        <router-link :to="{ name: 'categories' }">
-          <p>Category</p>
-        </router-link>
-      </div>
-      <div class="feature">
-        <p>Photo</p>
+        <p><Image class="f-icon image-icon" />Photo</p>
       </div>
     </div>
   </div>
@@ -20,9 +20,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Hash, FileText, Image } from '@fect-ui/vue-icons'
 
 export default defineComponent({
   name: 'SideBar',
+  components: {
+    Hash,
+    FileText,
+    Image,
+  },
   setup() {
     return {}
   },
@@ -41,6 +47,8 @@ export default defineComponent({
     top: 120px;
     bottom: 0;
     box-shadow: 0 0 30px var(--accents-2);
+    border-radius: 40px;
+
     // hidden srrollbar
     &::-webkit-scrollbar {
       width: 0;
@@ -59,28 +67,52 @@ export default defineComponent({
     }
 
     .features {
+      padding-top: 64px;
       display: grid;
+      row-gap: 48px;
       justify-items: center;
       align-items: center;
 
-      .feature {
-        padding: 10px;
-        margin: 20px 0;
-        width: 80%;
-        text-align: center;
+      & a {
+        width: 100%;
+      }
 
-        border: 2px solid white;
+      .feature {
+        text-align: center;
         cursor: pointer;
-        transition: border 0.2s ease 0s, color 0.2s ease 0s;
-        border-radius: 10px;
+        transition: all 0.4s ease 0s;
+        border-radius: 24px;
+        color: var(--accents-5);
+        padding: 30px 20px;
+        width: 100%;
 
         &:hover {
-          border-color: var(--accents-3);
+          // TODO: 选中后 切换到这个 tab
+          background-color: var(--accents-2);
+          color: var(--primary-foreground);
         }
 
         p {
           font-size: 30px;
           font-weight: 500;
+        }
+
+        .f-icon {
+          vertical-align: sub;
+
+          &.filetext-icon {
+            width: 34px;
+            margin-right: 6px;
+          }
+
+          &.hash-icon {
+            width: 30px;
+            margin-right: 2px;
+          }
+          &.image-icon {
+            width: 36px;
+            margin-right: 4px;
+          }
         }
       }
     }

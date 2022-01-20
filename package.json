@@ -15,7 +15,7 @@
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",
     "browserslist": "^4.19.1",
-    "moment": "^2.29.1",
+    "dayjs": "^1.10.7",
     "pinia": "^2.0.9",
     "postcss": "^8.4.5",
     "postcss-pxtorem": "^6.0.0",

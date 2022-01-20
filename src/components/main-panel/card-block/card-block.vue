@@ -50,21 +50,21 @@
         <!-- TODO: Pack textarea, the current value isn't  out of sync -->
         <textarea class="textarea-desc" v-model="modalValue.description"></textarea>
       </div>
-      <!-- TODO: is visible -->
+      <div class="categories">
+        <h2>Category</h2>
+        <!-- TODO: Pack textarea, the current value isn't  out of sync -->
+        <fe-tag class="cate-tag" :text="cate.name" v-for="cate in modalValue.classification" :key="cate._id"></fe-tag>
+      </div>
       <div class="visible-option">
         <h2>Is visible ?</h2>
         <div class="radio-group">
-          <fe-radioGroup size="small" use-row v-model="isVisible">
-            <fe-radio value="0">可见</fe-radio>
-            <fe-radio value="1">不可见</fe-radio>
-          </fe-radioGroup>
+          <fe-switch size="large" v-model="modalValue.isVisible" checked-value="1" inactive-value="0" />
         </div>
       </div>
     </div>
   </fe-modal>
 
   <!-- delete modal -->
-
   <fe-modal
     title="Delete"
     v-model:visible="deleteShow"
@@ -74,7 +74,7 @@
     @confirm="deleteModalHandler.confirmDelete"
   >
     <p>
-      是否确认要删除&nbsp;:&nbsp<fe-code>{{ modalValue.title }} </fe-code>
+      是否确认要删除&nbsp;&nbsp;<fe-code>{{ modalValue.title }} </fe-code>
     </p>
   </fe-modal>
 </template>
@@ -114,10 +114,8 @@ export default defineComponent({
     const editHandler = () => (editShow.value = !editShow.value)
     const deleteHandler = () => {
       deleteShow.value = !deleteShow.value
-      console.log('re', articleId.value)
     }
     // TODO: this value should put in articleSchema
-    const isVisible = ref<string>('0')
 
     // Edit MOdal
     const editModalHandler = {
@@ -197,13 +195,13 @@ export default defineComponent({
         articleStore.getArticleById(articleId.value)
       }
     })
+
     return {
       style: computed(() => ({
         width: `${props.wd}`,
         height: `${props.hg}`,
       })),
       modalValue,
-      isVisible,
       editHandler,
       deleteHandler,
       editShow,
@@ -310,10 +308,14 @@ export default defineComponent({
       height: 100px;
 
       resize: none;
+    }
+  }
 
-      /*  &::-webkit-scrollbar {
-        width: 0px;
-      } */
+  .categories {
+    .cate-tag {
+      width: 36px;
+      text-align: center;
+      margin: 0 10px;
     }
   }
 

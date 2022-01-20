@@ -1,5 +1,5 @@
 import { IArticle, IArticles, IHttpArticle } from '@admin/interfaces/IArticle'
-import { dateFormat } from '@admin/utils/format'
+import { nowDateFormat } from '@admin/utils/format'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/plugins'
 import { defineStore } from 'pinia'
 
@@ -40,7 +40,7 @@ export const useArticleStore = defineStore('artilce', {
         const result = <IHttpArticle>await httpGet({
           url: `/article/${articleId}`,
         })
-        this.articleData = result.article
+        this.articleData = result.article[0]
       } catch (error) {
         throw error
       }
@@ -63,12 +63,11 @@ export const useArticleStore = defineStore('artilce', {
     async updateArticle(articleId: string) {
       try {
         const updatedArticle = { ...this.articleData }
-        updatedArticle.updatedAt = dateFormat(new Date(), 'YYYY-MM-DD hh:mm:ss')
+        updatedArticle.updatedAt = nowDateFormat('YYYY-MM-DD hh:mm:ss')
         const result = <IHttpArticle>await httpPut({
           url: `/article/${articleId}`,
           data: updatedArticle,
         })
-        console.log('res:', result)
         this.fettle = true
       } catch (error) {
         this.fettle = false

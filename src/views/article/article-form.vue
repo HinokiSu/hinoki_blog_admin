@@ -1,6 +1,6 @@
 <template>
   <div class="hinoki-blog preview-container">
-    <fe-form :model="formValue" :rules="rules" ref="formRef" show-message>
+    <fe-form class="form-container" :model="formValue" :rules="rules" ref="formRef" show-message>
       <fe-form-item prop="title">
         <div class="title">
           <h1>Title</h1>
@@ -11,6 +11,14 @@
         <div class="description">
           <h1>Description</h1>
           <textarea class="desc-textarea" v-model="formValue.description"></textarea>
+        </div>
+      </fe-form-item>
+      <fe-form-item prop="categories">
+        <div class="categories">
+          <h1>Categories</h1>
+          <!-- TODO: Wrapping tag, achieve features of delete and add tag  -->
+
+          <fe-tag class="cate-tag" :text="cate.name" v-for="cate in formValue.classification" :key="cate._id"></fe-tag>
         </div>
       </fe-form-item>
       <!-- TODO: .md -> pre -> html -->
@@ -68,7 +76,7 @@ export default defineComponent({
         await articleStore.getArticleById(id)
       }
 
-      watchEffect( async () => {
+      watchEffect(async () => {
         await fetchData(articleId as string)
       })
 
@@ -89,13 +97,12 @@ export default defineComponent({
         }
       }
     } else {
-      sumbitHandler = async() => {
+      sumbitHandler = async () => {
         // articleStore -> createArticle
         await articleStore.createArticle()
 
         if (articleStore.fettle) {
           articleStore.fettle = false
-          // TODO: after submit successfully, giving some tips
           router.push({
             name: 'articles',
           })
@@ -139,36 +146,47 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  &.preview-container {
-    display: grid;
-    grid-template-rows: auto 2fr auto auto;
+  & .preview-container {
     padding-left: 20px;
 
     :nth-child(n) h1 {
       padding: 16px 0;
     }
 
-    .title {
-      .title-input {
-        width: 100%;
+    .form-container {
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+
+      .title {
+        .title-input {
+          width: 100%;
+        }
       }
-    }
-
-    .description {
-      .desc-textarea {
-        width: 100%;
-        height: 48px;
-        font-size: 26px;
+      .description {
+        .desc-textarea {
+          width: 100%;
+          height: 48px;
+          font-size: 26px;
+        }
       }
-    }
 
-    .features {
-      padding-top: 20px;
+      .categories {
+        padding-top: 10px;
+        .cate-tag {
+          text-align: center;
+          width: 48px;
+          margin: 0 10px;
+        }
+      }
 
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      column-gap: 20px;
+      .features {
+        padding-top: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        column-gap: 20px;
+      }
     }
   }
 }

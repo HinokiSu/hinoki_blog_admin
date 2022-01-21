@@ -10,7 +10,7 @@
       <fe-form-item prop="description">
         <div class="description">
           <h1>Description</h1>
-          <textarea class="desc-textarea" v-model="formValue.description"></textarea>
+          <hino-textarea v-model="formValue.description" wd="100%" unscale unscroll></hino-textarea>
         </div>
       </fe-form-item>
       <fe-form-item prop="categories">
@@ -25,13 +25,13 @@
       <fe-form-item>
         <div class="markdown-html">
           <h1>MarkDown</h1>
-          <textarea v-model="formValue.markdown"></textarea>
+          <hino-textarea v-model="formValue.markdown" wd="100%" unscale unscroll></hino-textarea>
         </div>
       </fe-form-item>
       <fe-form-item>
         <div class="markdown-html">
           <h1>Html</h1>
-          <textarea v-model="formValue.html"></textarea>
+          <hino-textarea v-model="formValue.html" wd="100%" unscale unscroll></hino-textarea>
         </div>
       </fe-form-item>
 
@@ -56,8 +56,12 @@ import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
 import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
+import HinoTextarea from '@admin/components/text-area/index.vue'
 export default defineComponent({
   name: 'ArticleForm',
+  components: {
+    HinoTextarea,
+  },
   setup() {
     const formRef = ref(null)
 

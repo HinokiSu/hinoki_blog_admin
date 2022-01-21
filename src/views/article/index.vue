@@ -1,11 +1,11 @@
 <template>
-  <div class="hinoki-blog article_continer">
+  <div class="hinoki-blog article-continer">
     <div class="article-feature">
       <card-feature @search-click="searcHandler" @addjuction-click="addjuctionHandler"></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
-        <card-block :id="article._id" :to-link-name="'update-article'">
+        <card-block :id="article._id" to-link-name="update-article">
           <article-content :article="article"></article-content>
         </card-block>
       </fe-grid>
@@ -50,7 +50,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  &.article_continer {
+  &.article-continer {
     .article-feature {
       margin-left: 20px;
     }

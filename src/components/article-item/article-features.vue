@@ -1,5 +1,5 @@
 <template>
-  <div class="hinoki-card card-block" :style="style">
+  <div class="hinoki-card card-block" :style="styles">
     <div class="wrapper">
       <div class="content">
         <slot></slot>
@@ -19,26 +19,24 @@
           </router-link>
         </div>
 
-        <!-- TODO: 2.弹出对话框，修改标题、摘要... 设置是否可见， -->
-        <div class="feature" @click="editHandler">
+        <div class="feature" @click="handleClick.edit">
           <p>Mod</p>
         </div>
 
-        <div class="feature" @click="deleteHandler">
-          <!-- TODO: 3.删除文章，会弹出提示框 -->
+        <div class="feature" @click="handleClick.delete">
           <p>Del</p>
         </div>
       </div>
     </div>
   </div>
-  <!-- mod modal -->
+  <!-- Edit Modal -->
   <fe-modal
     title="Edit"
-    v-model:visible="editShow"
+    v-model:visible="handleShow.editModal"
     cancel="取消"
     done="提交"
-    @cancel="editModalHandler.cancelEdit"
-    @confirm="editModalHandler.confirmEdit"
+    @cancel="handleCancelEventModal"
+    @confirm="confirmModalHandler.editModal"
   >
     <div class="modal-container">
       <div class="title">
@@ -47,12 +45,10 @@
       </div>
       <div class="desc">
         <h2>Description</h2>
-        <!-- TODO: Pack textarea, the current value isn't  out of sync -->
-        <textarea class="textarea-desc" v-model="modalValue.description"></textarea>
+        <hino-areatext v-model="modalValue.description" wd="100%" unscale unscroll></hino-areatext>
       </div>
       <div class="categories">
         <h2>Category</h2>
-        <!-- TODO: Pack textarea, the current value isn't  out of sync -->
         <fe-tag class="cate-tag" :text="cate.name" v-for="cate in modalValue.classification" :key="cate._id"></fe-tag>
       </div>
       <div class="visible-option">
@@ -64,14 +60,14 @@
     </div>
   </fe-modal>
 
-  <!-- delete modal -->
+  <!-- Delete Modal -->
   <fe-modal
     title="Delete"
-    v-model:visible="deleteShow"
+    v-model:visible="handleShow.deleteModal"
     cancel="取消"
     done="删除"
-    @cancel="deleteModalHandler.cancelDelete"
-    @confirm="deleteModalHandler.confirmDelete"
+    @cancel="handleCancelEventModal"
+    @confirm="confirmModalHandler.deleteModal"
   >
     <p>
       是否确认要删除&nbsp;&nbsp;<fe-code>{{ modalValue.title }} </fe-code>
@@ -81,18 +77,16 @@
 
 <script lang="ts">
 import { useArticleStore } from '@admin/stores/articleStore'
-import { computed, defineComponent, getCurrentInstance, ref, watchEffect } from 'vue'
-
+import { computed, defineComponent, getCurrentInstance, reactive, ref, watchEffect } from 'vue'
+import HinoAreatext from '@admin/components/text-area/index.vue'
 export default defineComponent({
   name: 'CardBlock',
   props: {
     disable: Boolean,
-    // Whole width
     wd: {
       type: String,
       default: '240px',
     },
-    // Whole height
     hg: {
       type: String,
       default: 'auto',
@@ -103,30 +97,30 @@ export default defineComponent({
     },
     toLinkName: String,
   },
+  components: { HinoAreatext },
   setup(props) {
-    const editShow = ref<boolean>(false)
-    const deleteShow = ref<boolean>(false)
+    const handleShow = reactive({
+      editModal: false,
+      deleteModal: false,
+    })
+    const text = ref<string>('')
+
     const articleStore = useArticleStore()
     const articleId = computed<string>(() => props.id)
     // ts-error: 类型“ComponentInternalInstance | null”上不存在属性“proxy”。
     const { proxy } = getCurrentInstance() as any
 
-    const editHandler = () => (editShow.value = !editShow.value)
-    const deleteHandler = () => {
-      deleteShow.value = !deleteShow.value
+    const handleClick = {
+      edit: () => {
+        handleShow.editModal = !handleShow.editModal
+      },
+      delete: () => {
+        handleShow.deleteModal = !handleShow.deleteModal
+      },
     }
-    // TODO: this value should put in articleSchema
 
-    // Edit MOdal
-    const editModalHandler = {
-      cancelEdit: () =>
-        proxy.$toast['warning']({
-          text: 'Edit cancelled',
-          duration: '1500',
-        }),
-
-      confirmEdit: async () => {
-        // TODO: submit edited data
+    const confirmModalHandler = {
+      editModal: async () => {
         await articleStore.updateArticle(articleId.value)
 
         if (articleStore.fettle) {
@@ -144,19 +138,9 @@ export default defineComponent({
           })
         }
       },
-    }
 
-    // Delete Modal
-    const deleteModalHandler = {
-      cancelDelete: () =>
-        proxy.$toast['warning']({
-          text: 'Delete cancelled',
-          duration: '1500',
-        }),
-
-      confirmDelete: async () => {
+      deleteModal: async () => {
         await articleStore.deleteArticle(articleId.value)
-
         if (articleStore.fettle) {
           articleStore.fettle = false
           // reacquire
@@ -174,6 +158,16 @@ export default defineComponent({
       },
     }
 
+    watchEffect(() => {
+      text.value = handleShow.editModal ? 'Edit' : 'Delete'
+    })
+
+    const handleCancelEventModal = () =>
+      proxy.$toast['warning']({
+        text: `${text.value} cancelled`,
+        duration: '1500',
+      })
+
     const recycleStore = () => {
       // recycle
       articleStore.articleData = {}
@@ -183,31 +177,31 @@ export default defineComponent({
 
     watchEffect(() => {
       // edit modal
-      if (!editShow.value) {
+      if (!handleShow.editModal) {
         recycleStore()
       } else {
         articleStore.getArticleById(articleId.value)
       }
       // delete modal
-      if (!deleteShow.value) {
+      if (!handleShow.deleteModal) {
         recycleStore()
       } else {
         articleStore.getArticleById(articleId.value)
       }
     })
 
+    const styles = computed(() => ({
+      width: `${props.wd}`,
+      height: `${props.hg}`,
+    }))
+
     return {
-      style: computed(() => ({
-        width: `${props.wd}`,
-        height: `${props.hg}`,
-      })),
+      styles,
+      handleClick,
       modalValue,
-      editHandler,
-      deleteHandler,
-      editShow,
-      deleteShow,
-      editModalHandler,
-      deleteModalHandler,
+      handleShow,
+      handleCancelEventModal,
+      confirmModalHandler,
     }
   },
 })

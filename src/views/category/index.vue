@@ -1,24 +1,43 @@
 <template>
-  <div>
-    <fe-card>
-      <h1>Category</h1>
-    </fe-card>
+  <div class="hinoki-blog category-container">
+    <fe-collapseGroup accordion>
+      <fe-grid-group direction="row" class="block-group" justify="flex-start" :gap="3">
+        <fe-grid class="cate-main" v-for="category in categoryList" :key="category._id">
+          <category-item  :category="category"> </category-item>
+        </fe-grid>
+      </fe-grid-group>
+    </fe-collapseGroup>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { ICategory } from '@admin/interfaces/ICategory'
+import { useCategoryStore } from '@admin/stores/categoryStore'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import CategoryItem from '@admin/components/category-item/index.vue'
 export default defineComponent({
   name: 'Category',
-  setup () {
-    
+  components: { CategoryItem },
+  setup() {
+    const CategoryStore = useCategoryStore()
 
-    return {}
-  }
+    onMounted(() => {
+      CategoryStore.getCategoryList()
+    })
+
+    const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
+
+    return {
+      categoryList,
+    }
+  },
 })
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+.hinoki-blog {
+  .category-container {
+    padding-bottom: 100px;
+  }
+}
 </style>

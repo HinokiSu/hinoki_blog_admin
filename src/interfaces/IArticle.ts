@@ -2,7 +2,7 @@ export interface IArticle {
   _id?: string
   title?: string
   description?: string
-  classification?: Array<IArticleCategory>
+  classification?: IArticleCategory[]
   markdown?: string
   html?: string
   isVisible?: string
@@ -15,8 +15,8 @@ export interface IArticles {
 }
 
 export interface IArticleCategory {
-  _id: String
-  name: String
+  _id?: string
+  name?: string
 }
 
 export type IHttpArticle = {

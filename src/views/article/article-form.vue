@@ -13,12 +13,20 @@
           <hino-textarea v-model="formValue.description" wd="100%" unscale unscroll></hino-textarea>
         </div>
       </fe-form-item>
-      <fe-form-item prop="categories">
+      <fe-form-item prop="classification">
         <div class="categories">
           <h1>Categories</h1>
           <!-- TODO: Wrapping tag, achieve features of delete and add tag  -->
 
-          <fe-tag class="cate-tag" :text="cate.name" v-for="cate in formValue.classification" :key="cate._id"></fe-tag>
+          <fe-select
+            placeholder="选择类别"
+            v-model="formValue.classification"
+            multiple
+            style="width: 220px"
+            @change="selectChangeHandler"
+          >
+            <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
+          </fe-select>
         </div>
       </fe-form-item>
       <!-- TODO: .md -> pre -> html -->
@@ -51,12 +59,13 @@
 </template>
 
 <script lang="ts">
-import { IArticle } from '@admin/interfaces'
+import { IArticle, IArticleCategory } from '@admin/interfaces'
 import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
-import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, ref, watchEffect } from 'vue'
+import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import HinoTextarea from '@admin/components/text-area/index.vue'
+import { useCategoryStore } from '@admin/stores/categoryStore'
 export default defineComponent({
   name: 'ArticleForm',
   components: {
@@ -70,6 +79,8 @@ export default defineComponent({
     const { proxy } = getCurrentInstance() as any
     const articleId = <string | undefined>route.params?.id
     const formValue = computed<IArticle>(() => articleStore.articleData)
+
+    const CategoryStore = useCategoryStore()
 
     let sumbitHandler
 
@@ -132,17 +143,29 @@ export default defineComponent({
 
     const cancelHandler = () => {}
 
+    onMounted(async () => {
+      await CategoryStore.getCategoryList()
+    })
+
     // recycle
     onBeforeUnmount(() => {
       articleStore.articleData = {}
     })
 
+    const selectChangeHandler = (e: Event) => {
+      console.log('1')
+    }
+
+    const categoryList = computed<IArticleCategory[]>(() => CategoryStore.categoryList)
+
     return {
       formValue,
+      categoryList,
       rules,
       sumbitHandler,
       cancelHandler,
       formRef,
+      selectChangeHandler,
     }
   },
 })

@@ -20,7 +20,7 @@ export const useCategoryStore = defineStore('category', {
   actions: {
     async createCategory() {
       try {
-        const result = <ICategories>await httpPost({ url: '/category/new' })
+        const result = <ICategories>await httpPost({ url: '/admin/category/new' })
         this.fettle = true
       } catch (error) {
         this.fettle = false
@@ -31,7 +31,7 @@ export const useCategoryStore = defineStore('category', {
 
     async getCategoryList() {
       try {
-        const result = <ICategories>await httpGet({ url: '/category/all' })
+        const result = <ICategories>await httpGet({ url: '/admin/category/all' })
         this.categoryList = result.categories
         this.fettle = true
       } catch (error) {
@@ -44,7 +44,7 @@ export const useCategoryStore = defineStore('category', {
     // TODO: Need fix
     async getCategoryById(id: string) {
       try {
-        const result = <ICategory>await httpGet({ url: `/category/${id}` })
+        const result = <ICategory>await httpGet({ url: `/admin/category/${id}` })
         this.categoryData = result
         this.fettle = true
       } catch (error) {
@@ -56,7 +56,7 @@ export const useCategoryStore = defineStore('category', {
 
     async updateCategory(id: string) {
       try {
-        const result = <ICategories>await httpPut({ url: `/category/${id}` })
+        const result = <ICategories>await httpPut({ url: `/admin/category/${id}` })
         // this.categoryData = result.category
         this.fettle = true
       } catch (error) {
@@ -68,7 +68,7 @@ export const useCategoryStore = defineStore('category', {
 
     async deleteCategory(id: string) {
       try {
-        const result = <ICategories>await httpDelete({ url: `/category/${id}` })
+        const result = <ICategories>await httpDelete({ url: `/admin/category/${id}` })
         this.fettle = true
       } catch (error) {
         this.fettle = false

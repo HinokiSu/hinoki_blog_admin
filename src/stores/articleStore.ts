@@ -12,7 +12,9 @@ interface IState {
 export const useArticleStore = defineStore('artilce', {
   state: (): IState => ({
     articleList: [],
-    articleData: {},
+    articleData: {
+      classification: [],
+    },
     // whether request is success
     fettle: false,
   }),
@@ -26,7 +28,7 @@ export const useArticleStore = defineStore('artilce', {
     // TODO: determine whether request is success according to response status
     async getArticleList() {
       try {
-        const result = <IArticles>await httpGet({ url: '/article/all' })
+        const result = <IArticles>await httpGet({ url: '/admin/article/all' })
 
         this.articleList = result.articles
       } catch (error) {
@@ -38,7 +40,7 @@ export const useArticleStore = defineStore('artilce', {
     async getArticleById(articleId: string) {
       try {
         const result = <IHttpArticle>await httpGet({
-          url: `/article/${articleId}`,
+          url: `/admin/article/${articleId}`,
         })
         this.articleData = result.article[0]
       } catch (error) {
@@ -50,7 +52,7 @@ export const useArticleStore = defineStore('artilce', {
       try {
         console.log('this', this.articleData)
         const result = await httpPost({
-          url: '/article/new',
+          url: '/admin/article/new',
           data: this.articleData,
         })
         this.fettle = true
@@ -65,7 +67,7 @@ export const useArticleStore = defineStore('artilce', {
         const updatedArticle = { ...this.articleData }
         updatedArticle.updatedAt = nowDateFormat('YYYY-MM-DD hh:mm:ss')
         const result = <IHttpArticle>await httpPut({
-          url: `/article/${articleId}`,
+          url: `/admin/article/${articleId}`,
           data: updatedArticle,
         })
         this.fettle = true
@@ -78,7 +80,7 @@ export const useArticleStore = defineStore('artilce', {
     async deleteArticle(articleId: string) {
       try {
         const result = <IHttpArticle>await httpDelete({
-          url: `/article/${articleId}`,
+          url: `/admin/article/${articleId}`,
         })
         this.fettle = true
       } catch (error) {

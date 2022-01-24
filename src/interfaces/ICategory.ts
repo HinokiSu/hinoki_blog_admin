@@ -6,6 +6,5 @@ export interface ICategory {
 }
 
 export interface ICategories {
-  category: { _id?: string | undefined; name?: string | undefined; createdAt?: string | undefined; updatedAt?: string | undefined; };
   categories: ICategory[]
 }

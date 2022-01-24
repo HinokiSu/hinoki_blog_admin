@@ -2,6 +2,7 @@ import { IArticle, IArticles, IHttpArticle } from '@admin/interfaces/IArticle'
 import { nowDateFormat } from '@admin/utils/format'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/plugins'
 import { defineStore } from 'pinia'
+import { computed } from 'vue'
 
 interface IState {
   articleList: IArticle[]
@@ -12,16 +13,14 @@ interface IState {
 export const useArticleStore = defineStore('artilce', {
   state: (): IState => ({
     articleList: [],
-    articleData: {
-      classification: [],
-    },
+    articleData: {},
     // whether request is success
     fettle: false,
   }),
 
   getters: {
     articleCount: (state) => state.articleList.length,
-  },
+    },
 
   actions: {
     // get all article

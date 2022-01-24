@@ -13,18 +13,12 @@
           <hino-textarea v-model="formValue.description" wd="100%" unscale unscroll></hino-textarea>
         </div>
       </fe-form-item>
-      <fe-form-item prop="classification">
+      <fe-form-item>
         <div class="categories">
           <h1>Categories</h1>
           <!-- TODO: Wrapping tag, achieve features of delete and add tag  -->
 
-          <fe-select
-            placeholder="选择类别"
-            v-model="formValue.classification"
-            multiple
-            style="width: 220px"
-            @change="selectChangeHandler"
-          >
+          <fe-select placeholder="选择类别" v-model="multiSelectVals" multiple style="width: 220px">
             <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
           </fe-select>
         </div>
@@ -59,13 +53,24 @@
 </template>
 
 <script lang="ts">
-import { IArticle, IArticleCategory } from '@admin/interfaces'
+import { IArticle } from '@admin/interfaces'
 import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
-import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  isRef,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+  watchEffect,
+} from 'vue'
 import { useRoute } from 'vue-router'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import { useCategoryStore } from '@admin/stores/categoryStore'
+import { ICategory } from '@admin/interfaces/ICategory'
 export default defineComponent({
   name: 'ArticleForm',
   components: {
@@ -78,7 +83,9 @@ export default defineComponent({
     const route = useRoute()
     const { proxy } = getCurrentInstance() as any
     const articleId = <string | undefined>route.params?.id
-    const formValue = computed<IArticle>(() => articleStore.articleData)
+    const formValue = ref<IArticle>({})
+
+    const multiSelectVals = ref<string[]>([])
 
     const CategoryStore = useCategoryStore()
 
@@ -90,13 +97,21 @@ export default defineComponent({
         // get data -> filling articleData of articleStore
         await articleStore.getArticleById(id)
       }
+      const getExistCategories = () =>
+        formValue.value.classification?.forEach((item) => {
+          console.log(item)
+          multiSelectVals.value.push(item)
+        })
 
       watchEffect(async () => {
         await fetchData(articleId as string)
+        formValue.value = articleStore.articleData
+        getExistCategories()
       })
 
       sumbitHandler = async () => {
         // articleStore -> updateArticle
+        formValue.value.classification = multiSelectVals.value
         await articleStore.updateArticle(articleId)
         console.log(articleStore.fettle)
         if (articleStore.fettle) {
@@ -152,11 +167,7 @@ export default defineComponent({
       articleStore.articleData = {}
     })
 
-    const selectChangeHandler = (e: Event) => {
-      console.log('1')
-    }
-
-    const categoryList = computed<IArticleCategory[]>(() => CategoryStore.categoryList)
+    const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
 
     return {
       formValue,
@@ -165,7 +176,7 @@ export default defineComponent({
       sumbitHandler,
       cancelHandler,
       formRef,
-      selectChangeHandler,
+      multiSelectVals,
     }
   },
 })

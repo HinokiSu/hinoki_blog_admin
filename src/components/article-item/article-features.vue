@@ -49,7 +49,9 @@
       </div>
       <div class="categories">
         <h2>Category</h2>
-        <fe-tag class="cate-tag" :text="cate.name" v-for="cate in modalValue.classification" :key="cate._id"></fe-tag>
+        <fe-select class="multi-select-main" placeholder="选择类别" v-model="multiSelectVals" multiple>
+          <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
+        </fe-select>
       </div>
       <div class="visible-option">
         <h2>Is visible ?</h2>
@@ -76,11 +78,13 @@
 </template>
 
 <script lang="ts">
-import { useArticleStore } from '@admin/stores/articleStore'
-import { computed, defineComponent, getCurrentInstance, reactive, ref, watchEffect } from 'vue'
+import { computed, defineComponent, getCurrentInstance, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import HinoAreatext from '@admin/components/text-area/index.vue'
+import { useCategoryStore } from '@admin/stores/categoryStore'
+import { ICategory } from '@admin/interfaces/ICategory'
+import { useArticleStore } from '@admin/stores/articleStore'
 export default defineComponent({
-  name: 'CardBlock',
+  name: 'ArticleFeatures',
   props: {
     disable: Boolean,
     wd: {
@@ -104,11 +108,19 @@ export default defineComponent({
       deleteModal: false,
     })
     const text = ref<string>('')
+    const multiSelectVals = ref<string[]>([])
+    const modalValue = computed(() => ArticleStore.articleData)
+    const ArticleStore = useArticleStore()
+    const CategoryStore = useCategoryStore()
 
-    const articleStore = useArticleStore()
     const articleId = computed<string>(() => props.id)
     // ts-error: 类型“ComponentInternalInstance | null”上不存在属性“proxy”。
     const { proxy } = getCurrentInstance() as any
+
+    const recycleStore = () => {
+      ArticleStore.articleData = {}
+      multiSelectVals.value.length = 0
+    }
 
     const handleClick = {
       edit: () => {
@@ -121,16 +133,25 @@ export default defineComponent({
 
     const confirmModalHandler = {
       editModal: async () => {
-        await articleStore.updateArticle(articleId.value)
+        await ArticleStore.updateArticle(articleId.value)
 
-        if (articleStore.fettle) {
-          articleStore.fettle = false
+        if (ArticleStore.fettle) {
+          modalValue.value.classification = multiSelectVals.value
+          ArticleStore.fettle = false
           // reacquire
-          articleStore.getArticleList()
-          proxy.$toast['success']({
-            text: 'Edit successfully!',
-            duration: '1500',
-          })
+          await ArticleStore.updateArticle(articleId.value)
+          if (ArticleStore.fettle) {
+            ArticleStore.fettle = false
+            proxy.$toast['success']({
+              text: 'Edit successfully!',
+              duration: '1500',
+            })
+          } else {
+            proxy.$toast['error']({
+              text: 'Update failed!',
+              duration: '2000',
+            })
+          }
         } else {
           proxy.$toast['error']({
             text: 'Edit failed !',
@@ -140,11 +161,11 @@ export default defineComponent({
       },
 
       deleteModal: async () => {
-        await articleStore.deleteArticle(articleId.value)
-        if (articleStore.fettle) {
-          articleStore.fettle = false
+        await ArticleStore.deleteArticle(articleId.value)
+        if (ArticleStore.fettle) {
+          ArticleStore.fettle = false
           // reacquire
-          articleStore.getArticleList()
+          ArticleStore.getArticleList()
           proxy.$toast['success']({
             text: 'Delete successfully!',
             duration: '1500',
@@ -158,37 +179,33 @@ export default defineComponent({
       },
     }
 
-    watchEffect(() => {
+    const getExistCategories = () =>
+      modalValue.value.classification?.forEach((item) => {
+        multiSelectVals.value.push(item)
+      })
+
+    watchEffect(async () => {
       text.value = handleShow.editModal ? 'Edit' : 'Delete'
+
+      if (!handleShow.editModal && !handleShow.deleteModal) {
+        recycleStore()
+      } else {
+        await ArticleStore.getArticleById(articleId.value)
+        getExistCategories()
+      }
     })
+
+    onMounted(async () => {
+      await CategoryStore.getCategoryList()
+    })
+
+    const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
 
     const handleCancelEventModal = () =>
       proxy.$toast['warning']({
         text: `${text.value} cancelled`,
         duration: '1500',
       })
-
-    const recycleStore = () => {
-      // recycle
-      articleStore.articleData = {}
-    }
-
-    const modalValue = computed(() => articleStore.articleData)
-
-    watchEffect(() => {
-      // edit modal
-      if (!handleShow.editModal) {
-        recycleStore()
-      } else {
-        articleStore.getArticleById(articleId.value)
-      }
-      // delete modal
-      if (!handleShow.deleteModal) {
-        recycleStore()
-      } else {
-        articleStore.getArticleById(articleId.value)
-      }
-    })
 
     const styles = computed(() => ({
       width: `${props.wd}`,
@@ -202,6 +219,8 @@ export default defineComponent({
       handleShow,
       handleCancelEventModal,
       confirmModalHandler,
+      multiSelectVals,
+      categoryList,
     }
   },
 })
@@ -305,12 +324,8 @@ export default defineComponent({
     }
   }
 
-  .categories {
-    .cate-tag {
-      width: 36px;
-      text-align: center;
-      margin: 0 10px;
-    }
+  &.fect-select__dropdown {
+    z-index: 999;
   }
 
   .visible-option {

@@ -10,7 +10,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@fect-ui/vue": "^1.1.1",
+    "@fect-ui/vue": "^1.2.2",
     "@fect-ui/vue-icons": "^2.0.0",
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",

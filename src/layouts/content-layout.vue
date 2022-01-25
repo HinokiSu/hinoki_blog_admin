@@ -2,8 +2,7 @@
   <main class="hinoki-blog main_content">
     <fe-card shadow>
       <div class="bread_wrapper">
-        <!-- TODO: Dynamically update breadNavList data -->
-        <card-breadnav :breadNavList="navListProp"></card-breadnav>
+        <card-breadnav :breadNavList="curNavList"></card-breadnav>
       </div>
       <router-view></router-view>
     </fe-card>
@@ -11,32 +10,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 import CardBreadnav from '@admin/components/card-main/card-breadnav.vue'
 import { IBreadNav } from '@admin/interfaces'
+import router from '@admin/routes'
 
 export default defineComponent({
   name: 'ContentLayout',
   components: { CardBreadnav },
   setup() {
-    const navList = <IBreadNav[]>[
+    const curNavList = ref<IBreadNav[]>([
       {
         name: 'Home',
-        toPath: '/article',
+        toPath: '/',
       },
-      {
-        name: 'Article',
-        toPath: '/article',
-      },
-      {
-        name: 'List',
-        toPath: '/article',
-      },
-    ]
+    ])
 
-    const navListProp = ref(navList)
+    const curRouteList = ref<string[]>([])
+    watchEffect(() => {
+      const curRoutePath = router.currentRoute.value.fullPath
+      curRouteList.value = curRoutePath.slice(1).split('/', 2)
+
+      if (curRouteList.value[0] === 'manage') {
+        curNavList.value.length = 1
+        if (curRouteList.value[1] === 'articles' || curRouteList.value[1] === 'article') {
+          curNavList.value.push({
+            name: 'Articles',
+            toPath: curRoutePath,
+          })
+        } else if (curRouteList.value[1] === 'categories') {
+          curNavList.value.push({
+            name: 'Categories',
+            toPath: curRoutePath,
+          })
+        }
+      }
+
+      if (curRouteList.value[0] === 'article') {
+        curNavList.value.length = 2
+        curNavList.value.push({
+          name: curRouteList.value[1],
+          toPath: curRoutePath,
+        })
+      }
+    })
+
     return {
-      navListProp,
+      curNavList,
     }
   },
 })

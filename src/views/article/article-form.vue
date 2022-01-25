@@ -60,10 +60,8 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
-  isRef,
   onBeforeUnmount,
   onMounted,
-  reactive,
   ref,
   watchEffect,
 } from 'vue'
@@ -83,7 +81,7 @@ export default defineComponent({
     const route = useRoute()
     const { proxy } = getCurrentInstance() as any
     const articleId = <string | undefined>route.params?.id
-    const formValue = ref<IArticle>({})
+    const formValue = computed(() => articleStore.articleData)
 
     const multiSelectVals = ref<string[]>([])
 
@@ -105,7 +103,7 @@ export default defineComponent({
 
       watchEffect(async () => {
         await fetchData(articleId as string)
-        formValue.value = articleStore.articleData
+       
         getExistCategories()
       })
 

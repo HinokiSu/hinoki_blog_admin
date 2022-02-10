@@ -1,42 +1,26 @@
 <template>
-  <div class="hinoki-blog preview-container">
+  <div class="hinoki-blog article-form">
     <fe-form class="form-container" :model="formValue" :rules="rules" ref="formRef" show-message>
       <fe-form-item prop="title">
-        <div class="title">
-          <h1>Title</h1>
-          <fe-input size="small" class="title-input" v-model="formValue.title" />
-        </div>
+        <h1>Title</h1>
+        <fe-input size="small" class="title-input" v-model="formValue.title" />
       </fe-form-item>
       <fe-form-item prop="description">
-        <div class="description">
-          <h1>Description</h1>
-          <hino-textarea v-model="formValue.description" wd="100%" unscale unscroll></hino-textarea>
-        </div>
+        <h1>Description</h1>
+        <hino-textarea class="desc-textarea" v-model="formValue.description" unscale unscroll></hino-textarea>
       </fe-form-item>
       <fe-form-item>
+        <h1>Categories</h1>
         <div class="categories">
-          <h1>Categories</h1>
-          <!-- TODO: Wrapping tag, achieve features of delete and add tag  -->
-
           <fe-select placeholder="选择类别" v-model="multiSelectVals" multiple style="width: 220px">
             <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
           </fe-select>
         </div>
       </fe-form-item>
-      <!-- TODO: .md -> pre -> html -->
       <fe-form-item>
-        <div class="markdown-html">
-          <h1>MarkDown</h1>
-          <hino-textarea v-model="formValue.markdown" wd="100%" unscale unscroll></hino-textarea>
-        </div>
+        <h1>Content</h1>
+        <hino-markdown-preview></hino-markdown-preview>
       </fe-form-item>
-      <fe-form-item>
-        <div class="markdown-html">
-          <h1>Html</h1>
-          <hino-textarea v-model="formValue.html" wd="100%" unscale unscroll></hino-textarea>
-        </div>
-      </fe-form-item>
-
       <fe-form-item>
         <div class="features">
           <div class="update">
@@ -53,93 +37,44 @@
 </template>
 
 <script lang="ts">
-import { IArticle } from '@admin/interfaces'
+import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
 import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
-import {
-  computed,
-  defineComponent,
-  getCurrentInstance,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watchEffect,
-} from 'vue'
-import { useRoute } from 'vue-router'
-import HinoTextarea from '@admin/components/text-area/index.vue'
 import { useCategoryStore } from '@admin/stores/categoryStore'
 import { ICategory } from '@admin/interfaces/ICategory'
+import HinoTextarea from '@admin/components/text-area/index.vue'
+import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
 export default defineComponent({
   name: 'ArticleForm',
   components: {
     HinoTextarea,
+    HinoMarkdownPreview,
   },
   setup() {
     const formRef = ref(null)
 
-    const articleStore = useArticleStore()
-    const route = useRoute()
+    const ArticleStore = useArticleStore()
     const { proxy } = getCurrentInstance() as any
-    const articleId = <string | undefined>route.params?.id
-    const formValue = computed(() => articleStore.articleData)
+    const formValue = computed(() => ArticleStore.articleData)
 
     const multiSelectVals = ref<string[]>([])
 
     const CategoryStore = useCategoryStore()
 
-    let sumbitHandler
+    const sumbitHandler = async () => {
+      // ArticleStore -> createArticle
+      await ArticleStore.createArticle()
 
-    if (articleId) {
-      // /article/update/:id
-      const fetchData = async (id: string) => {
-        // get data -> filling articleData of articleStore
-        await articleStore.getArticleById(id)
-      }
-      const getExistCategories = () =>
-        formValue.value.classification?.forEach((item) => {
-          console.log(item)
-          multiSelectVals.value.push(item)
+      if (ArticleStore.fettle) {
+        ArticleStore.fettle = false
+        router.push({
+          name: 'articles',
         })
-
-      watchEffect(async () => {
-        await fetchData(articleId as string)
-       
-        getExistCategories()
-      })
-
-      sumbitHandler = async () => {
-        // articleStore -> updateArticle
-        formValue.value.classification = multiSelectVals.value
-        await articleStore.updateArticle(articleId)
-        console.log(articleStore.fettle)
-        if (articleStore.fettle) {
-          articleStore.fettle = false
-          router.push({
-            name: 'articles',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Update failed!',
-            duration: '2000',
-          })
-        }
-      }
-    } else {
-      sumbitHandler = async () => {
-        // articleStore -> createArticle
-        await articleStore.createArticle()
-
-        if (articleStore.fettle) {
-          articleStore.fettle = false
-          router.push({
-            name: 'articles',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Create failed!',
-            duration: '2000',
-          })
-        }
+      } else {
+        proxy.$toast['error']({
+          text: 'Create failed!',
+          duration: '2000',
+        })
       }
     }
 
@@ -154,7 +89,13 @@ export default defineComponent({
       ],
     }
 
-    const cancelHandler = () => {}
+    const cancelHandler = () => {
+      ArticleStore.fettle = false
+      ArticleStore.recycleArticleData()
+      router.push({
+        name: 'articles',
+      })
+    }
 
     onMounted(async () => {
       await CategoryStore.getCategoryList()
@@ -162,7 +103,7 @@ export default defineComponent({
 
     // recycle
     onBeforeUnmount(() => {
-      articleStore.articleData = {}
+      ArticleStore.recycleArticleData()
     })
 
     const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
@@ -182,7 +123,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  & .preview-container {
+  & .article-form {
     padding-left: 20px;
 
     :nth-child(n) h1 {
@@ -190,20 +131,16 @@ export default defineComponent({
     }
 
     .form-container {
-      display: grid;
-      grid-template-rows: repeat(6, 1fr);
+      display: flex;
+      flex-direction: column;
 
-      .title {
-        .title-input {
-          width: 100%;
-        }
+      .title-input {
+        width: 100%;
       }
-      .description {
-        .desc-textarea {
-          width: 100%;
-          height: 48px;
-          font-size: 26px;
-        }
+
+      .desc-textarea {
+        width: 100%;
+        height: 64px;
       }
 
       .categories {

@@ -20,7 +20,7 @@ export const useArticleStore = defineStore('artilce', {
 
   getters: {
     articleCount: (state) => state.articleList.length,
-    },
+  },
 
   actions: {
     // get all article
@@ -86,6 +86,10 @@ export const useArticleStore = defineStore('artilce', {
         this.fettle = false
         throw error
       }
+    },
+    // 回收数据
+    recycleArticleData() {
+      this.articleData = {}
     },
   },
 })

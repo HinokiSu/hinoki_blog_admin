@@ -3,7 +3,6 @@
     <textarea
       class="text-area-main"
       :class="classes"
-      :style="styles"
       ref="textareaRef"
       :value="modelValue"
       :placeholder="placeholder"
@@ -32,14 +31,6 @@ export default defineComponent({
     },
     unscroll: {
       type: Boolean,
-    },
-    wd: {
-      type: String,
-      default: '40%',
-    },
-    hg: {
-      type: String,
-      default: '50px',
     },
   },
   emits: ['update:modelValue', 'focus', 'blur'],
@@ -72,15 +63,10 @@ export default defineComponent({
       hover: hoverRef.value,
     }))
 
-    const styles = computed(() => ({
-      width: props.wd,
-      height: props.hg,
-    }))
     const textareaHandler = (e: Event) => updateValue((e.target as HTMLTextAreaElement).value)
     return {
       textareaRef,
       classes,
-      styles,
       updateValue,
       textareaHandler,
       focusHandler,
@@ -93,20 +79,21 @@ export default defineComponent({
 <style lang="less" scoped>
 .hino-text-area {
   .text-area-main {
-    display: inline-flex;
+    display: inline-block;
     vertical-align: middle;
-    align-items: center;
-    height: 100%;
-    flex: 1;
+    width: inherit;
+    height: inherit;
     user-select: none;
     border: 1px solid var(--accents-2);
     border-radius: 5px;
     transition: border 0.2s ease 0s, color 0.2s ease 0s;
     padding: 2px 10px;
-    margin: 6px 4px;
+    box-sizing: border-box;
+    margin: 0;
 
     font-size: 24px;
-    font-weight: 500;
+    font-weight: 400;
+    background: inherit;
 
     &::placeholder {
       color: var(--accents-3);

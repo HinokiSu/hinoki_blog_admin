@@ -29,29 +29,34 @@ export default defineComponent({
     const curRouteList = ref<string[]>([])
     watchEffect(() => {
       const curRoutePath = router.currentRoute.value.fullPath
-      curRouteList.value = curRoutePath.slice(1).split('/', 2)
+      curRouteList.value = curRoutePath.slice(1).split('/', 3)
 
       if (curRouteList.value[0] === 'manage') {
         curNavList.value.length = 1
         if (curRouteList.value[1] === 'articles' || curRouteList.value[1] === 'article') {
           curNavList.value.push({
             name: 'Articles',
-            toPath: curRoutePath,
+            toPath: '/manage/articles',
           })
+          if (curRouteList.value[2]) {
+            if (curRouteList.value[2] === 'create') {
+              curNavList.value.push({
+                name: 'Create',
+                toPath: curRoutePath,
+              })
+            } else if (curRouteList.value[2] === 'update') {
+              curNavList.value.push({
+                name: 'Update',
+                toPath: curRoutePath,
+              })
+            }
+          }
         } else if (curRouteList.value[1] === 'categories') {
           curNavList.value.push({
             name: 'Categories',
-            toPath: curRoutePath,
+            toPath: '/manage/categories',
           })
         }
-      }
-
-      if (curRouteList.value[0] === 'article') {
-        curNavList.value.length = 2
-        curNavList.value.push({
-          name: curRouteList.value[1],
-          toPath: curRoutePath,
-        })
       }
     })
 

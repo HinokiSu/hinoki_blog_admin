@@ -15,4 +15,5 @@ export default defineComponent({
 
 <style lang="less">
 @import url('@admin/assets/css/global.css');
+@import url('@admin/assets/css/markdown-global.css');
 </style>

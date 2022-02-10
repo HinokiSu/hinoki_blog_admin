@@ -314,20 +314,6 @@ export default defineComponent({
     }
   }
 
-  .desc {
-    .textarea-desc {
-      font-size: 26px;
-      width: 100%;
-      height: 100px;
-
-      resize: none;
-    }
-  }
-
-  &.fect-select__dropdown {
-    z-index: 999;
-  }
-
   .visible-option {
     .radio-group {
       margin-left: 20px;

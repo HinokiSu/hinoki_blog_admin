@@ -7,15 +7,14 @@ export const ArticleRoutes: RouteRecordRaw[] = [
     name: 'articles',
     component: () => import('@admin/views/article/index.vue'),
   },
-
   {
-    path: '/article/create',
+    path: 'article/create',
     name: 'create-article',
-    component: () => import('@admin/views/article/article-form.vue'),
+    component: () => import('@admin/views/article/create-article.vue'),
   },
   {
-    path: '/article/update/:id',
+    path: 'article/update/:id',
     name: 'update-article',
-    component: () => import('@admin/views/article/article-form.vue'),
+    component: () => import('@admin/views/article/update-article.vue'),
   },
 ]

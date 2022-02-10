@@ -12,10 +12,12 @@
   "dependencies": {
     "@fect-ui/vue": "^1.2.2",
     "@fect-ui/vue-icons": "^2.0.0",
+    "@types/markdown-it": "^12.2.3",
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",
     "browserslist": "^4.19.1",
     "dayjs": "^1.10.7",
+    "markdown-it": "^12.3.2",
     "pinia": "^2.0.9",
     "postcss": "^8.4.5",
     "postcss-pxtorem": "^6.0.0",

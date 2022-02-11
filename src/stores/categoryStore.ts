@@ -15,7 +15,9 @@ export const useCategoryStore = defineStore('category', {
     fettle: false,
   }),
 
-  getters: {},
+  getters: {
+    categoryCount: (state) => state.categoryList.length,
+  },
 
   actions: {
     async createCategory() {
@@ -75,6 +77,10 @@ export const useCategoryStore = defineStore('category', {
         console.log(`err: ${error}`)
         return error
       }
+    },
+    // recycle data
+    recycleCategoryData() {
+      this.categoryData = {}
     },
   },
 })

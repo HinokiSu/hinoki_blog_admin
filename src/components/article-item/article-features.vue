@@ -5,7 +5,6 @@
         <slot></slot>
       </div>
       <div class="collapse-features">
-        <!-- TODO: 1.跳转到:id 的文章, 可以修改/预览，保存 -->
         <div class="feature">
           <router-link
             :to="{

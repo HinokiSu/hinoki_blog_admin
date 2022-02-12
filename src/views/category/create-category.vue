@@ -1,0 +1,122 @@
+<template>
+  <div class="hinoki-blog create-category">
+    <div class="create-form">
+      <div class="title">
+        <p>创建类别</p>
+      </div>
+      <fe-form :model="formValue" :rules="rules" ref="formRef">
+        <fe-form-item prop="name">
+          <div class="category-name">
+            <fe-input placeholder="请输入类别名称" size="large" v-model="formValue.name">
+              <fe-dot type="success">
+                <p class="caption-dot">类别名称</p>
+              </fe-dot>
+            </fe-input>
+          </div>
+        </fe-form-item>
+        <fe-form-item>
+          <div class="features">
+            <fe-button type="success" auto size="large" ghost @click="clickHandler.create">Create</fe-button>
+            <fe-button type="warning" auto size="large" ghost @click="clickHandler.cancle">Cancel</fe-button>
+          </div>
+        </fe-form-item>
+      </fe-form>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import router from '@admin/routes'
+import { useCategoryStore } from '@admin/stores/categoryStore'
+import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, ref } from 'vue'
+
+export default defineComponent({
+  name: 'CreateCategory',
+  setup() {
+    const { proxy } = getCurrentInstance() as any
+    const CategoryStore = useCategoryStore()
+    const formRef = ref(null)
+    const formValue = computed(() => CategoryStore.categoryData)
+    const rules = {
+      input: [
+        {
+          required: true,
+          message: 'Please input category name',
+          trigger: 'blur',
+        },
+      ],
+    }
+
+    const clickHandler = {
+      create: async () => {
+        await CategoryStore.createCategory()
+        if (CategoryStore.fettle) {
+          CategoryStore.fettle = false
+          CategoryStore.recycleCategoryData()
+          router.push({
+            name: 'categories',
+          })
+        } else {
+          proxy.$toast['error']({
+            text: 'Create failed!',
+            duration: '2000',
+          })
+        }
+      },
+      cancle: () => {
+        CategoryStore.recycleCategoryData()
+        router.push({
+          name: 'categories',
+        })
+      },
+    }
+
+    onBeforeUnmount(() => {
+      CategoryStore.recycleCategoryData()
+    })
+
+    return {
+      formRef,
+      rules,
+      formValue,
+      clickHandler,
+    }
+  },
+})
+</script>
+
+<style lang="less" scoped>
+.hinoki-blog {
+  &.create-category {
+    margin: 48px;
+    .create-form {
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        align-self: center;
+        font-size: 42px;
+        padding: 16px 0;
+      }
+
+      .category-name {
+        margin-left: 32px;
+        .caption-dot {
+          font-size: 24px;
+        }
+      }
+
+      .features {
+        display: flex;
+
+        justify-content: flex-end;
+        margin: 16px 0;
+        padding-top: 20px;
+        :nth-child(1) {
+          margin: 0 24px;
+        }
+      }
+    }
+  }
+}
+</style>

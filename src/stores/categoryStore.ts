@@ -22,7 +22,7 @@ export const useCategoryStore = defineStore('category', {
   actions: {
     async createCategory() {
       try {
-        const result = <ICategories>await httpPost({ url: '/admin/category/new' })
+        const result = <ICategories>await httpPost({ url: '/admin/category/new', data: this.categoryData })
         this.fettle = true
       } catch (error) {
         this.fettle = false

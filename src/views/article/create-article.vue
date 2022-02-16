@@ -61,6 +61,13 @@ export default defineComponent({
 
     const CategoryStore = useCategoryStore()
 
+    watch(
+      () => multiSelectVals.value,
+      () => {
+        formValue.value.classification = multiSelectVals.value
+      }
+    )
+
     const sumbitHandler = async () => {
       // ArticleStore -> createArticle
       await ArticleStore.createArticle()

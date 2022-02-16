@@ -1,7 +1,7 @@
 <template>
   <div class="hinoki-blog article-continer">
     <div class="article-feature">
-      <card-feature @search-click="searcHandler" @addjuction-click="addjuctionHandler"></card-feature>
+      <card-feature @search-click="searchHandler" @addjuction-click="addjuctionHandler"></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
@@ -35,7 +35,7 @@ export default defineComponent({
       ArticleStore.getArticleList()
     })
 
-    const searcHandler = (val: string) => {
+    const searchHandler = (val: string) => {
       console.log(val)
     }
 
@@ -57,7 +57,7 @@ export default defineComponent({
 
     return {
       articleList,
-      searcHandler,
+      searchHandler,
       addjuctionHandler,
       isNullArticleList,
     }

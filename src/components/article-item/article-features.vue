@@ -130,12 +130,18 @@ export default defineComponent({
       },
     }
 
+    watch(
+      () => multiSelectVals.value,
+      () => {
+        modalValue.value.classification = multiSelectVals.value
+      }
+    )
+
     const confirmModalHandler = {
       editModal: async () => {
         await ArticleStore.updateArticle(articleId.value)
 
         if (ArticleStore.fettle) {
-          modalValue.value.classification = multiSelectVals.value
           ArticleStore.fettle = false
           // reacquire
           await ArticleStore.updateArticle(articleId.value)
@@ -178,6 +184,7 @@ export default defineComponent({
       },
     }
 
+    // article have exist category tags
     const getExistCategories = () =>
       modalValue.value.classification?.forEach((item) => {
         multiSelectVals.value.push(item)
@@ -186,9 +193,11 @@ export default defineComponent({
     watchEffect(async () => {
       text.value = handleShow.editModal ? 'Edit' : 'Delete'
 
+      // edit & delete modal all close
       if (!handleShow.editModal && !handleShow.deleteModal) {
         recycleStore()
       } else {
+        // when open edit or delete modal, get data and add exist category tags
         await ArticleStore.getArticleById(articleId.value)
         getExistCategories()
       }

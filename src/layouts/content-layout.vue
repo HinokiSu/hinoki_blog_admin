@@ -13,12 +13,12 @@
 import { defineComponent, ref, watchEffect } from 'vue'
 import CardBreadnav from '@admin/components/card-main/card-breadnav.vue'
 import { IBreadNav } from '@admin/interfaces'
-import router from '@admin/routes'
-
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'ContentLayout',
   components: { CardBreadnav },
   setup() {
+    const router = useRouter()
     const curNavList = ref<IBreadNav[]>([
       {
         name: 'Home',

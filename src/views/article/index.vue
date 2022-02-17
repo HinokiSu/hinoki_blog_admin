@@ -18,16 +18,17 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
-import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
 import ArticleContent from '@admin/components/article-item/article-content.vue'
 import CardFeature from '@admin/components/card-main/card-feature.vue'
 import ArticleFeatures from '@admin/components/article-item/article-features.vue'
 import EmptyWrap from '@admin/components/empty-wrap/index.vue'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Articles',
   components: { ArticleContent, CardFeature, ArticleFeatures, EmptyWrap },
   setup() {
+    const router = useRouter()
     const ArticleStore = useArticleStore()
     const isNullArticleList = ref(false)
 

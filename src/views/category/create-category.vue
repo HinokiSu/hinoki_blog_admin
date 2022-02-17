@@ -26,13 +26,14 @@
 </template>
 
 <script lang="ts">
-import router from '@admin/routes'
 import { useCategoryStore } from '@admin/stores/categoryStore'
 import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'CreateCategory',
   setup() {
+    const router = useRouter()
     const { proxy } = getCurrentInstance() as any
     const CategoryStore = useCategoryStore()
     const formRef = ref(null)

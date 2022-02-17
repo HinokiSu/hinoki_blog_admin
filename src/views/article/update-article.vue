@@ -14,9 +14,8 @@
 
 <script lang="ts">
 import { defineComponent, getCurrentInstance, onBeforeUnmount, onUnmounted, watchEffect } from 'vue'
-import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
 export default defineComponent({
@@ -24,6 +23,7 @@ export default defineComponent({
   setup() {
     const ArticleStore = useArticleStore()
     const route = useRoute()
+    const router = useRouter()
     const { proxy } = getCurrentInstance() as any
 
     const articleId = <string | undefined>route.params?.id

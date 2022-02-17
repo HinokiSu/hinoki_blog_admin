@@ -61,11 +61,12 @@ import { computed, defineComponent, getCurrentInstance, onMounted, reactive, ref
 import CategoryItem from '@admin/components/category-item/index.vue'
 import EmptyWrap from '@admin/components/empty-wrap/index.vue'
 import CardFeature from '@admin/components/card-main/card-feature.vue'
-import router from '@admin/routes'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Category',
   components: { CategoryItem, EmptyWrap, CardFeature },
   setup() {
+    const router = useRouter()
     const CategoryStore = useCategoryStore()
     const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
     const { proxy } = getCurrentInstance() as any

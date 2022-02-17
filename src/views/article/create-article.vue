@@ -38,12 +38,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, getCurrentInstance, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
-import router from '@admin/routes'
 import { useArticleStore } from '@admin/stores/articleStore'
 import { useCategoryStore } from '@admin/stores/categoryStore'
 import { ICategory } from '@admin/interfaces/ICategory'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
+import { useRouter } from 'node_modules/vue-router/dist/vue-router'
 export default defineComponent({
   name: 'ArticleForm',
   components: {
@@ -52,6 +52,7 @@ export default defineComponent({
   },
   setup() {
     const formRef = ref(null)
+    const router = useRouter()
 
     const ArticleStore = useArticleStore()
     const { proxy } = getCurrentInstance() as any

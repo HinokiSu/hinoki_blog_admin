@@ -1,8 +1,7 @@
 import { IArticle, IArticles, IHttpArticle } from '@admin/interfaces/IArticle'
 import { nowDateFormat } from '@admin/utils/format'
-import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/plugins'
+import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
 import { defineStore } from 'pinia'
-import { computed } from 'vue'
 
 interface IState {
   articleList: IArticle[]

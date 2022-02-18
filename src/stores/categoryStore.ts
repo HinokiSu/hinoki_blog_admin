@@ -1,5 +1,5 @@
 import { ICategories, ICategory } from '@admin/interfaces/ICategory'
-import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils'
+import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
 import { defineStore } from 'pinia'
 
 interface IState {

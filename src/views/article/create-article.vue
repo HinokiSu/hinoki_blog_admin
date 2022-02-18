@@ -43,7 +43,7 @@ import { useCategoryStore } from '@admin/stores/categoryStore'
 import { ICategory } from '@admin/interfaces/ICategory'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
-import { useRouter } from 'node_modules/vue-router/dist/vue-router'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'ArticleForm',
   components: {

@@ -6,6 +6,7 @@ import router from '@admin/routes'
 import { createPinia } from 'pinia'
 // fect-ui
 import { UIRegister } from './plugins/ui'
+import 'highlight.js/styles/github.css';
 
 const app = createApp(App)
 app.use(router)

@@ -24,12 +24,28 @@ import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'
 import { useArticleStore } from '@admin/stores/articleStore'
 import MarkdownIt from 'markdown-it'
 import HinoTextarea from '@admin/components/text-area/index.vue'
+import hljs from 'highlight.js'
 export default defineComponent({
   name: 'HinoMarkdownPreview',
   components: { HinoTextarea },
   setup() {
-    const markdownParser = new MarkdownIt({
+    const markdownParser: any = new MarkdownIt({
       html: true,
+      linkify: true,
+      typographer: true,
+      langPrefix:   'language-',
+      highlight: (str, lang) => {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return (
+              '<pre class="hljs"><code>' +
+              hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+              '</code></pre>'
+            )
+          } catch (__) {}
+        }
+        return '<pre class="hljs"><code>' + markdownParser.utils.escapeHtml(str) + '</code></pre>'
+      },
     })
     const ArticleStore = useArticleStore()
     const article = computed(() => ArticleStore.articleData)
@@ -37,7 +53,7 @@ export default defineComponent({
     watch(
       () => article.value.markdown,
       () => {
-        article.value.html = markdownParser.render(article.value.markdown as string)
+        article.value.html = markdownParser.render(article.value.markdown ? article.value.markdown : '')
       }
     )
     return {

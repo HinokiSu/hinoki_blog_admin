@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@fect-ui/vue': ^1.2.2
+  '@fect-ui/vue': 1.2.4
   '@fect-ui/vue-icons': ^2.0.0
   '@types/markdown-it': ^12.2.3
   '@types/node': ^17.0.2
@@ -29,7 +29,7 @@ specifiers:
   vue-tsc: ^0.29.8
 
 dependencies:
-  '@fect-ui/vue': registry.npmmirror.com/@fect-ui/vue/1.2.2_vue@3.2.26
+  '@fect-ui/vue': registry.npmmirror.com/@fect-ui/vue/1.2.4_vue@3.2.26
   '@fect-ui/vue-icons': registry.npmmirror.com/@fect-ui/vue-icons/2.0.0_vue@3.2.26
   '@types/markdown-it': registry.npmmirror.com/@types/markdown-it/12.2.3
   autoprefixer: registry.npmmirror.com/autoprefixer/10.4.2_postcss@8.4.5
@@ -1214,17 +1214,17 @@ packages:
       - supports-color
     dev: true
 
-  registry.npmmirror.com/@fect-ui/themes/2.0.0:
-    resolution: {integrity: sha512-xXysjVDxmClN0AAZWO6ejE7bKfPBDjuw+Ze4V0e1HKGJztuYrxhvnS0SQPcB2rLrJiH9iKFhWAjqOjr//RtMBg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/themes/download/@fect-ui/themes-2.0.0.tgz}
+  registry.npmmirror.com/@fect-ui/themes/2.2.0:
+    resolution: {integrity: sha512-1CIJonLeCkYqAomA+T5QqngplP7pCsf/ISDOMZSEQ4v0rvQWTxHWrMQyremiGGbDy3z5HsqrhmSPiBPvyEzrMA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/themes/-/themes-2.2.0.tgz}
     name: '@fect-ui/themes'
-    version: 2.0.0
+    version: 2.2.0
     dev: false
 
-  registry.npmmirror.com/@fect-ui/vue-hooks/1.0.0_vue@3.2.26:
-    resolution: {integrity: sha512-iLw8GVBJNcg4i2ugS64Fjc2zojVOV5UIWV5KIq6iotBHHjrdDbR9M64lNiCFL+8fiWsYFl/MxW5JGVPtmejk6A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue-hooks/download/@fect-ui/vue-hooks-1.0.0.tgz}
-    id: registry.npmmirror.com/@fect-ui/vue-hooks/1.0.0
+  registry.npmmirror.com/@fect-ui/vue-hooks/1.1.0_vue@3.2.26:
+    resolution: {integrity: sha512-7pr9ksrS17348/S6K8jrp6NkhGyHBjA/Su9CxDf5YcEcP3OcjtrfUbB0Xo6+pf02IZ+aZvVdctrlSJsP7gX39w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue-hooks/-/vue-hooks-1.1.0.tgz}
+    id: registry.npmmirror.com/@fect-ui/vue-hooks/1.1.0
     name: '@fect-ui/vue-hooks'
-    version: 1.0.0
+    version: 1.1.0
     peerDependencies:
       vue: ^3.0.11
     dependencies:
@@ -1242,16 +1242,16 @@ packages:
       vue: registry.npmmirror.com/vue/3.2.26
     dev: false
 
-  registry.npmmirror.com/@fect-ui/vue/1.2.2_vue@3.2.26:
-    resolution: {integrity: sha512-frooOi4JVFng2BPW50BFshmANiHQV8MdwAybyTK3+o7gWmNWdGQqmOLDE0va37nGrnRcIiqjE8n7SzwdnFNKSw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue/download/@fect-ui/vue-1.2.2.tgz}
-    id: registry.npmmirror.com/@fect-ui/vue/1.2.2
+  registry.npmmirror.com/@fect-ui/vue/1.2.4_vue@3.2.26:
+    resolution: {integrity: sha512-udzaJAnCl/JzXsS65LdVzYthR9Z9uV19s2eum4LCJykQAqKUWti8jOxS+4NQiZb5p/cYxqYUrQCJscBcQfhZHQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@fect-ui/vue/-/vue-1.2.4.tgz}
+    id: registry.npmmirror.com/@fect-ui/vue/1.2.4
     name: '@fect-ui/vue'
-    version: 1.2.2
+    version: 1.2.4
     peerDependencies:
       vue: ^3.0.11
     dependencies:
-      '@fect-ui/themes': registry.npmmirror.com/@fect-ui/themes/2.0.0
-      '@fect-ui/vue-hooks': registry.npmmirror.com/@fect-ui/vue-hooks/1.0.0_vue@3.2.26
+      '@fect-ui/themes': registry.npmmirror.com/@fect-ui/themes/2.2.0
+      '@fect-ui/vue-hooks': registry.npmmirror.com/@fect-ui/vue-hooks/1.1.0_vue@3.2.26
       proy: registry.npmmirror.com/proy/0.0.3
       vue: registry.npmmirror.com/vue/3.2.26
     dev: false
@@ -2658,7 +2658,7 @@ packages:
     dev: true
 
   registry.npmmirror.com/proy/0.0.3:
-    resolution: {integrity: sha512-T1RE9NuaGXX54LGpt9PjxtXGio/N681v15ONwTfVkHlmt7TcNomJvV10UhNJ6PlniOygqH3cNmzVBpdvm+BZqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/proy/download/proy-0.0.3.tgz}
+    resolution: {integrity: sha512-T1RE9NuaGXX54LGpt9PjxtXGio/N681v15ONwTfVkHlmt7TcNomJvV10UhNJ6PlniOygqH3cNmzVBpdvm+BZqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/proy/-/proy-0.0.3.tgz}
     name: proy
     version: 0.0.3
     dev: false

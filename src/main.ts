@@ -5,11 +5,10 @@ import router from '@admin/routes'
 // pinia
 import { createPinia } from 'pinia'
 // fect-ui
-import FectUI from '@fect-ui/vue'
-import '@fect-ui/vue/lib/main.css'
+import { UIRegister } from './plugins/ui'
 
 const app = createApp(App)
 app.use(router)
 app.use(createPinia())
-app.use(FectUI)
+UIRegister(app)
 app.mount('#app')

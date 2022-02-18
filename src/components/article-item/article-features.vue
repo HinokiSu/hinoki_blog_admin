@@ -70,9 +70,9 @@
     @cancel="handleCancelEventModal"
     @confirm="confirmModalHandler.deleteModal"
   >
-    <p>
-      是否确认要删除&nbsp;&nbsp;<fe-code>{{ modalValue.title }} </fe-code>
-    </p>
+    <span>
+      是否确认要删除&nbsp;&nbsp;<p>{{ modalValue.title }} </p>
+    </span>
   </fe-modal>
 </template>
 

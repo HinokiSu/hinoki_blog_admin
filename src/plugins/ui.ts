@@ -11,12 +11,12 @@ import {
   Input,
   Button,
   Dot,
-  Code,
   Drawer,
   Switch,
   CollapseGroup,
   Form,
   FormItem,
+  Toast,
 } from '@fect-ui/vue'
 // fe-image need rename,because naming collision
 // Image.name = 'feImg'
@@ -36,13 +36,12 @@ const UI = [
   Input,
   Button,
   Dot,
-  Code,
   Drawer,
   Switch,
   CollapseGroup,
   Form,
   FormItem,
+  Toast
 ]
 
 export const UIRegister = (instance: any) => UI.map((_) => instance.use(_))
-

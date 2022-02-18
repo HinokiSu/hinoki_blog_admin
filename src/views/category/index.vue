@@ -29,14 +29,16 @@
     >
       <fe-input v-model="modalValue.name">
         <fe-dot type="success">
-          <fe-code style="font-size: 12px">类别名称</fe-code>
+          <span style="color: var(--highlight-pink); font-size: 14px; font-weight: 500" class="input-caption"
+            >类别名称</span
+          >
         </fe-dot>
       </fe-input>
     </fe-modal>
   </div>
 
   <!-- Delete Modal -->
-  <div class="delte-modal">
+  <div class="delete-modal">
     <fe-modal
       title="Delete"
       v-model:visible="handleShow.deleteModal"
@@ -47,8 +49,7 @@
     >
       <p>
         确定要删除:
-        <fe-code>{{ modalValue.name }}</fe-code>
-        !
+        <span style="color: var(--highlight-pink); font-size: 14px; font-weight: 500">`{{ modalValue.name }}`</span>
       </p>
     </fe-modal>
   </div>

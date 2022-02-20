@@ -8,7 +8,6 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.8.0
   '@typescript-eslint/parser': ^5.8.0
   '@vitejs/plugin-vue': ^2.0.0
-  autoprefixer: ^10.4.0
   axios: ^0.24.0
   browserslist: ^4.19.1
   dayjs: ^1.10.7
@@ -19,8 +18,6 @@ specifiers:
   less: ^4.1.2
   markdown-it: ^12.3.2
   pinia: ^2.0.9
-  postcss: ^8.4.5
-  postcss-pxtorem: ^6.0.0
   typescript: ^4.4.4
   vite: ^2.7.2
   vite-plugin-compression: ^0.3.6
@@ -33,15 +30,12 @@ dependencies:
   '@fect-ui/vue': registry.npmmirror.com/@fect-ui/vue/1.2.4_vue@3.2.26
   '@fect-ui/vue-icons': registry.npmmirror.com/@fect-ui/vue-icons/2.0.0_vue@3.2.26
   '@types/markdown-it': registry.npmmirror.com/@types/markdown-it/12.2.3
-  autoprefixer: registry.npmmirror.com/autoprefixer/10.4.2_postcss@8.4.5
   axios: registry.npmmirror.com/axios/0.24.0
   browserslist: registry.npmmirror.com/browserslist/4.19.1
   dayjs: registry.npmmirror.com/dayjs/1.10.7
   highlight.js: registry.npmmirror.com/highlight.js/11.4.0
   markdown-it: registry.npmmirror.com/markdown-it/12.3.2
   pinia: registry.npmmirror.com/pinia/2.0.9_typescript@4.5.4+vue@3.2.26
-  postcss: registry.npmmirror.com/postcss/8.4.5
-  postcss-pxtorem: registry.npmmirror.com/postcss-pxtorem/6.0.0_postcss@8.4.5
   vite-plugin-style-import: registry.npmmirror.com/vite-plugin-style-import/1.4.1_vite@2.7.10
   vue: registry.npmmirror.com/vue/3.2.26
   vue-router: registry.npmmirror.com/vue-router/4.0.12_vue@3.2.26
@@ -699,13 +693,6 @@ packages:
     dependencies:
       lower-case: registry.nlark.com/lower-case/2.0.2
       tslib: registry.npmmirror.com/tslib/2.3.1
-    dev: false
-
-  registry.nlark.com/normalize-range/0.1.2:
-    resolution: {integrity: sha1-LRDAa9/TEuqXd2laTShDlFa3WUI=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/normalize-range/download/normalize-range-0.1.2.tgz}
-    name: normalize-range
-    version: 0.1.2
-    engines: {node: '>=0.10.0'}
     dev: false
 
   registry.nlark.com/object-assign/4.1.1:
@@ -1716,25 +1703,6 @@ packages:
     name: argparse
     version: 2.0.1
 
-  registry.npmmirror.com/autoprefixer/10.4.2_postcss@8.4.5:
-    resolution: {integrity: sha512-9fOPpHKuDW1w/0EKfRmVnxTDt8166MAnLI3mgZ1JCnhNtYWxcJ6Ud5CO/AVOZi/AvFa8DY9RTy3h3+tFBlrrdQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/autoprefixer/download/autoprefixer-10.4.2.tgz}
-    id: registry.npmmirror.com/autoprefixer/10.4.2
-    name: autoprefixer
-    version: 10.4.2
-    engines: {node: ^10 || ^12 || >=14}
-    hasBin: true
-    peerDependencies:
-      postcss: ^8.1.0
-    dependencies:
-      browserslist: registry.npmmirror.com/browserslist/4.19.1
-      caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001298
-      fraction.js: registry.npmmirror.com/fraction.js/4.1.2
-      normalize-range: registry.nlark.com/normalize-range/0.1.2
-      picocolors: registry.npmmirror.com/picocolors/1.0.0
-      postcss: registry.npmmirror.com/postcss/8.4.5
-      postcss-value-parser: registry.npmmirror.com/postcss-value-parser/4.2.0
-    dev: false
-
   registry.npmmirror.com/axios/0.24.0:
     resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/axios/download/axios-0.24.0.tgz}
     name: axios
@@ -2276,12 +2244,6 @@ packages:
         optional: true
     dev: false
 
-  registry.npmmirror.com/fraction.js/4.1.2:
-    resolution: {integrity: sha512-o2RiJQ6DZaR/5+Si0qJUIy637QMRudSi9kU/FFzx9EZazrIdnBgpU+3sEWCxAVhH2RtxW2Oz+T4p2o8uOPVcgA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fraction.js/download/fraction.js-4.1.2.tgz}
-    name: fraction.js
-    version: 4.1.2
-    dev: false
-
   registry.npmmirror.com/fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fsevents/-/fsevents-2.3.2.tgz}
     name: fsevents
@@ -2630,23 +2592,6 @@ packages:
       typescript: registry.npmmirror.com/typescript/4.5.4
       vue: registry.npmmirror.com/vue/3.2.26
       vue-demi: registry.npmmirror.com/vue-demi/0.12.1_vue@3.2.26
-    dev: false
-
-  registry.npmmirror.com/postcss-pxtorem/6.0.0_postcss@8.4.5:
-    resolution: {integrity: sha512-ZRXrD7MLLjLk2RNGV6UA4f5Y7gy+a/j1EqjAfp9NdcNYVjUMvg5HTYduTjSkKBkRkfqbg/iKrjMO70V4g1LZeg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/postcss-pxtorem/download/postcss-pxtorem-6.0.0.tgz}
-    id: registry.npmmirror.com/postcss-pxtorem/6.0.0
-    name: postcss-pxtorem
-    version: 6.0.0
-    peerDependencies:
-      postcss: ^8.0.0
-    dependencies:
-      postcss: registry.npmmirror.com/postcss/8.4.5
-    dev: false
-
-  registry.npmmirror.com/postcss-value-parser/4.2.0:
-    resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/postcss-value-parser/download/postcss-value-parser-4.2.0.tgz}
-    name: postcss-value-parser
-    version: 4.2.0
     dev: false
 
   registry.npmmirror.com/postcss/8.4.5:

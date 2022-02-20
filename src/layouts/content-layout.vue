@@ -51,11 +51,19 @@ export default defineComponent({
               })
             }
           }
-        } else if (curRouteList.value[1] === 'categories') {
+        } else if (curRouteList.value[1] === 'categories' || curRouteList.value[1] === 'category') {
           curNavList.value.push({
             name: 'Categories',
             toPath: '/manage/categories',
           })
+          if (curRouteList.value[2]) {
+            if (curRouteList.value[2] === 'create') {
+              curNavList.value.push({
+                name: 'Create',
+                toPath: curRoutePath,
+              })
+            }
+          }
         }
       }
     })
@@ -72,8 +80,6 @@ export default defineComponent({
   &.main_content {
     display: flex;
     width: 100%;
-    padding-top: 30px;
-    padding-left: 50px;
     padding-bottom: 40px;
 
     .bread_wrapper {

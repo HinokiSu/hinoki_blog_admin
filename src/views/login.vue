@@ -1,11 +1,11 @@
 <template>
   <div class="hinoki-blog login">
-    <div class="container">
+    <div class="login-page__container">
       <div class="left-area">
-        <img src="" alt="" />
+        <img class="decorative-img" src="../assets/img/login-page__purple_sky.jpg" alt="" />
       </div>
-      <div class="login-in-wrapper">
-        <div class="login-in-container">
+      <div class="right--login__wrapper">
+        <div class="right--login__container">
           <div class="caption">
             <p>Login In</p>
           </div>
@@ -21,13 +21,19 @@
                 ></fe-input>
               </fe-form-item>
               <fe-form-item label="Password" prop="password">
-                <fe-input class=""  size="large" type="password" v-model="loginForm.password" placeholder="input your password"></fe-input>
+                <fe-input
+                  class=""
+                  size="large"
+                  type="password"
+                  v-model="loginForm.password"
+                  placeholder="input your password"
+                ></fe-input>
               </fe-form-item>
             </fe-form>
           </div>
-          <div class="form-btn">
-            <fe-button size="large" auto @click="formBtnHandler.login">Sumbit</fe-button>
-            <fe-button size="large" auto @click="formBtnHandler.reset">Rest</fe-button>
+          <div class="form-btns">
+            <fe-button size="medium" type="success" auto @click="formBtnHandler.login">Sumbit</fe-button>
+            <fe-button size="medium" auto @click="formBtnHandler.reset">Rest</fe-button>
           </div>
         </div>
       </div>
@@ -77,66 +83,88 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.login {
-    width: 100vw;
-    height: 100vh;
-
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(
+      to right bottom,
+      rgba(112, 132, 219, 0.521),
+      rgba(147, 80, 185, 0.425),
+      rgba(182, 19, 60, 0.233)
+    );
 
-    .container {
-      width: 65%;
-      height: 80%;
-
+    .login-page__container {
+      max-width: 700px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-
       background-color: var(--accents-2);
 
-      box-shadow: 0 0 20px var(--accents-3);
+      // box-shadow: 0 0 36px var(--accents-2);
       border-radius: 30px;
 
-      .left-area {
+      @media screen and(max-width: 900px ) {
+        display: flex;
+        grid: unset;
+      }
+
+      & .left-area {
         border-radius: 30px 0 0 30px;
         background-color: rgb(79, 74, 90);
         z-index: 16;
+        overflow: hidden;
+
+        @media screen and (max-width: 900px) {
+          display: none;
+        }
+
+        .decorative-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
-      .login-in-wrapper {
+      & .right--login__wrapper {
         border-radius: 0 30px 30px 0;
         background-color: var(--accents-1);
         margin-left: -40px;
         z-index: 15;
-      }
 
-      .login-in-container {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        padding-left: 40px;
-        padding-bottom: 40px;
-        padding-top: 64px;
-        grid-template-rows: 1fr 4fr 2fr;
-        align-items: center;
-        justify-items: center;
+        @media screen and (max-width: 900px) {
+          & {
+            margin-left: 0;
+            width: 100%;
+            border-radius: 30px;
 
-        .caption {
-          font-size: 48px;
-          font-weight: 500;
+            .right--login__container {
+              padding-right: 40px;
+            }
+          }
         }
 
-        .login-form {
-        }
+        .right--login__container {
+          width: 100%;
+          height: 100%;
+          display: grid;
+          padding-left: 40px;
+          padding-bottom: 40px;
+          padding-top: 64px;
+          grid-template-rows: 1fr 4fr 2fr;
+          align-items: center;
+          justify-items: center;
 
-        .form-btn {
-          width: 50%;
-          display: flex;
-          flex-direction: column;
-          row-gap: 20px;
+          .caption {
+            font-size: 3rem;
+            font-weight: 500;
+            background: radial-gradient();
+          }
 
-          button {
-            font-size: 24px;
-            height: 56px;
+          .form-btns {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
           }
         }
       }

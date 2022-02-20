@@ -6,10 +6,9 @@
     <div class="layout--left-side">
       <side-bar></side-bar>
       <!-- fold side bar -->
-      <!--  <fold-side-bar @click="visible = true"></fold-side-bar>
-      <fe-drawer placement="left" v-model="visible">
-        <side-bar></side-bar>
-      </fe-drawer> -->
+    </div>
+    <div class="layout--left-side__fold">
+      <fold-side-bar></fold-side-bar>
     </div>
     <div class="layout--main">
       <router-view />
@@ -30,10 +29,7 @@ export default defineComponent({
     FoldSideBar,
   },
   setup() {
-    const visible = ref<boolean>(false)
-    return {
-      visible,
-    }
+    return {}
   },
 })
 </script>
@@ -44,7 +40,12 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     width: 100vw;
-    height: 100vh;
+
+    @media only screen and( max-width: 875px) {
+      & {
+        flex-direction: column;
+      }
+    }
 
     & .layout--header {
       position: fixed;
@@ -55,31 +56,43 @@ export default defineComponent({
 
     & .layout--left-side {
       position: fixed;
-      padding: 0 24px;
-      margin-top: 120px;
+      padding-top: 96px;
       width: 120px;
-      height: 80vh;
+      height: 100vh;
+
+      @media only screen and(max-width: 875px) {
+        & {
+          display: none;
+        }
+      }
+    }
+
+    & .layout--left-side__fold {
+      display: none;
+      @media only screen and(max-width: 875px) {
+        & {
+          margin-top: 80px;
+          margin-left: 24px;
+          display: block;
+        }
+      }
     }
 
     & .layout--main {
       width: 100%;
-      margin-left: 196px;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      margin-left: 160px;
       margin-right: 24px;
-      margin-top: 120px;
+      margin-top: 100px;
+
+      @media only screen and (max-width: 875px) {
+        margin: unset;
+        padding: 12px;
+      }
     }
-
-    /* @media only screen and( max-width: 650px) {
-        & {
-          flex-direction: column;
-        }
-        .side-bar-main {
-          display: none;
-        }
-
-        .side-bar--shadow {
-          display: none;
-        }
-      } */
   }
 }
 </style>

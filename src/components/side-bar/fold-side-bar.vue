@@ -5,19 +5,29 @@
       <div class="burger-line-2"></div>
       <div class="burger-line-3"></div>
     </div>
+    <fe-drawer placement="left" v-model="visible">
+      <side-bar style="box-shadow: unset"></side-bar>
+    </fe-drawer>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import SideBar from '@admin/components/side-bar/index.vue'
 
 export default defineComponent({
   name: 'FoldSideBar',
-  emits: ['click'],
+  components: {
+    SideBar,
+  },
   setup(props, { emit }) {
-    const clickHandler = () => emit('click')
+    const visible = ref<boolean>(false)
+    const clickHandler = () => {
+      visible.value = !visible.value
+    }
     return {
       clickHandler,
+      visible,
     }
   },
 })
@@ -26,69 +36,58 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   & .fold-side-bar {
-    display: none;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    background: var(--primary-background);
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--fay-border);
+    & .burger {
+      width: 45px;
+      height: 19px;
 
-    .burger {
-      display: none;
-    }
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      justify-items: center;
+      align-items: center;
 
-    @media only screen and( max-width: 650px) {
-      & {
-        display: block;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        left: 0;
-        z-index: 30;
-        background: var(--primary-background);
-        padding-left: 2vw;
-        box-sizing: border-box;
-        border-bottom: 1px solid var(--fay-border);
-      }
-      & .burger {
+      row-gap: 2px;
+      cursor: pointer;
+
+      .burger-line-1,
+      .burger-line-2,
+      .burger-line-3 {
         width: 45px;
-        height: 19px;
+        height: 2px;
+        background-color: var(--accents-7);
+        transition: all 0.5s ease;
+        border-radius: 2px;
+        margin: 2px 0;
+      }
 
-        display: grid;
-        grid-template-rows: repeat(3, 1fr);
-        justify-items: center;
-        align-items: center;
-
-        row-gap: 4px;
-        cursor: pointer;
-
+      /* 折叠按钮的三条线 */
+      &:hover {
         .burger-line-1,
         .burger-line-2,
         .burger-line-3 {
-          width: 45px;
-          height: 3px;
-          background-color: var(--accents-8);
-          transition: 0.5s ease;
-          border-radius: 2px;
+          background-color: #2e2e2e;
+          /* 折叠动画 */
+          transition: 0.4s ease;
         }
-
-        /* 折叠按钮的三条线 */
-        &:hover {
-          .burger-line-1,
-          .burger-line-2,
-          .burger-line-3 {
-            background-color: #2e2e2e;
-            /* 折叠动画 */
-            transition: 0.4s ease;
-          }
-          .burger-line-1 {
-            /* 转动45度，正数是一个从左到右旋转 */
-            transform: translateX(10px);
-          }
-          .burger-line-2 {
-            transform: translateX(15px);
-          }
-          .burger-line-3 {
-            transform: translateX(10px);
-          }
+        .burger-line-1 {
+          /* 转动45度，正数是一个从左到右旋转 */
+          transform: translateX(10px);
+        }
+        .burger-line-2 {
+          transform: translateX(15px);
+        }
+        .burger-line-3 {
+          transform: translateX(10px);
         }
       }
     }

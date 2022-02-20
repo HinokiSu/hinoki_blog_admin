@@ -39,27 +39,15 @@ export default defineComponent({
 .hinoki-blog {
   &.side-bar {
     flex-shrink: 0;
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     overflow: auto;
     box-shadow: 0 0 30px var(--accents-2);
-    border-radius: 24px;
+    border-radius: 0 24px 0 0;
 
     // hidden srrollbar
     &::-webkit-scrollbar {
       width: 0;
-    }
-
-    @media only screen and (max-width: 650px) {
-      & {
-        top: 0;
-        left: 0;
-        width: 30vw;
-        height: 100%;
-        z-index: 300;
-        position: static;
-        box-shadow: unset;
-      }
     }
 
     .features {

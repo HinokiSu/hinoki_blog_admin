@@ -12,10 +12,6 @@
   box-sizing: border-box !important;
 }
 
-body {
-  /* 将溢出内容区的元素，剪裁掉， 以此来隐藏水平滚动条 */
-  overflow-x: hidden;
-}
 body::-webkit-scrollbar {
   width: 0;
 }
@@ -36,7 +32,3 @@ a:link {
   fill: currentColor;
   overflow: hidden;
 }
-
-
-
-

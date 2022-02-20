@@ -16,8 +16,8 @@
         </fe-form-item>
         <fe-form-item>
           <div class="features">
-            <fe-button type="success" auto size="large" ghost @click="clickHandler.create">Create</fe-button>
-            <fe-button type="warning" auto size="large" ghost @click="clickHandler.cancle">Cancel</fe-button>
+            <fe-button type="success" auto size="medium" ghost @click="clickHandler.create">Create</fe-button>
+            <fe-button type="warning" auto size="medium" ghost @click="clickHandler.cancle">Cancel</fe-button>
           </div>
         </fe-form-item>
       </fe-form>
@@ -89,21 +89,21 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.create-category {
-    margin: 48px;
+    margin: 24px;
     .create-form {
       display: flex;
       flex-direction: column;
 
       .title {
         align-self: center;
-        font-size: 42px;
+        font-size: 1.8rem;
         padding: 16px 0;
       }
 
       .category-name {
         margin-left: 32px;
         .caption-dot {
-          font-size: 24px;
+          font-size: 1.2rem;
         }
       }
 

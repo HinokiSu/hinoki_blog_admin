@@ -44,14 +44,14 @@ export default defineComponent({
 
   .description {
     grid-area: desc;
-    font-size: 22px;
+    font-size: 1rem;
     font-weight: 500;
   }
 
   .release-time {
     border-top: 2px solid var(--accents-2);
     grid-area: time;
-    font-size: 14px;
+    font-size: 0.8rem;
   }
 }
 </style>

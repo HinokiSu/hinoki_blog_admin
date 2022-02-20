@@ -39,21 +39,21 @@
   >
     <div class="modal-container">
       <div class="title">
-        <h2>Title</h2>
+        <p>标题</p>
         <fe-input class="input-title" v-model="modalValue.title"></fe-input>
       </div>
       <div class="desc">
-        <h2>Description</h2>
+        <p>摘要</p>
         <hino-areatext v-model="modalValue.description" wd="100%" unscale unscroll></hino-areatext>
       </div>
       <div class="categories">
-        <h2>Category</h2>
+        <p>类别</p>
         <fe-select class="multi-select-main" placeholder="选择类别" v-model="multiSelectVals" multiple>
           <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
         </fe-select>
       </div>
       <div class="visible-option">
-        <h2>Is visible ?</h2>
+        <p>不可见</p>
         <div class="radio-group">
           <fe-switch size="large" v-model="modalValue.isVisible" checked-value="1" inactive-value="0" />
         </div>
@@ -71,7 +71,8 @@
     @confirm="confirmModalHandler.deleteModal"
   >
     <span>
-      是否确认要删除&nbsp;&nbsp;<p>{{ modalValue.title }} </p>
+      是否确认要删除&nbsp;&nbsp;
+      <p>{{ modalValue.title }}</p>
     </span>
   </fe-modal>
 </template>
@@ -258,7 +259,7 @@ export default defineComponent({
         padding-top: 15px;
 
         .feature {
-          font-size: 20px;
+          font-size: 0.8rem;
           font-weight: 500;
           cursor: pointer;
 
@@ -309,10 +310,10 @@ export default defineComponent({
   grid-template-rows: atuo 1fr auto;
   row-gap: 6px;
 
-  & div > h2 {
-    padding-top: 10px;
+  & div > p {
+    padding-top: 8px;
     padding-bottom: 20px;
-    font-size: 28px;
+    font-size: 1.2rem;
     font-weight: 500;
   }
 

@@ -2,32 +2,32 @@
   <div class="hinoki-blog article-form">
     <fe-form class="form-container" :model="formValue" :rules="rules" ref="formRef" show-message>
       <fe-form-item prop="title">
-        <h1>Title</h1>
+        <p class="form-caption">标题</p>
         <fe-input size="small" class="title-input" v-model="formValue.title" />
       </fe-form-item>
       <fe-form-item prop="description">
-        <h1>Description</h1>
+        <p class="form-caption">摘要</p>
         <hino-textarea class="desc-textarea" v-model="formValue.description" unscale unscroll></hino-textarea>
       </fe-form-item>
       <fe-form-item>
-        <h1>Categories</h1>
+        <p class="form-caption">类别</p>
         <div class="categories">
-          <fe-select placeholder="选择类别" v-model="multiSelectVals" multiple style="width: 220px">
+          <fe-select placeholder="选择类别" v-model="multiSelectVals" multiple style="width: 200px">
             <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
           </fe-select>
         </div>
       </fe-form-item>
       <fe-form-item>
-        <h1>Content</h1>
+        <p class="form-caption">内容</p>
         <hino-markdown-preview></hino-markdown-preview>
       </fe-form-item>
       <fe-form-item>
         <div class="features">
           <div class="update">
-            <fe-button auto ghost size="large" type="success" @click="sumbitHandler">Submit</fe-button>
+            <fe-button auto ghost size="medium" type="success" @click="sumbitHandler">Submit</fe-button>
           </div>
           <div class="cancel">
-            <fe-button auto ghost size="large" type="warning" @click="cancelHandler">Cancel</fe-button>
+            <fe-button auto ghost size="medium" type="warning" @click="cancelHandler">Cancel</fe-button>
           </div>
         </div>
       </fe-form-item>
@@ -134,8 +134,10 @@ export default defineComponent({
   & .article-form {
     padding-left: 20px;
 
-    :nth-child(n) h1 {
+    .form-caption {
       padding: 16px 0;
+      font-size: 1.3rem;
+      font-weight: 500;
     }
 
     .form-container {
@@ -162,11 +164,10 @@ export default defineComponent({
 
       .features {
         padding-top: 20px;
-
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        column-gap: 20px;
+        column-gap: 16px;
       }
     }
   }

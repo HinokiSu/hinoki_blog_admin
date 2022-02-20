@@ -91,7 +91,7 @@ export default defineComponent({
     box-sizing: border-box;
     margin: 0;
 
-    font-size: 24px;
+    font-size: 1rem;
     font-weight: 400;
     background: inherit;
 

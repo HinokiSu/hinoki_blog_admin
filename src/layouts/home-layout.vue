@@ -1,20 +1,17 @@
 <template>
-  <div class="hinoki-blog home-layout">
-    <nav-bar></nav-bar>
-
-    <div class="tablecloth-layout">
-      <side-bar class="side-bar-main"></side-bar>
-
-      <div class="side-bar--shadow" />
-
+  <div class="hinoki-blog layout-body">
+    <div class="layout--header">
+      <nav-bar></nav-bar>
+    </div>
+    <div class="layout--left-side">
+      <side-bar></side-bar>
       <!-- fold side bar -->
-      <fold-side-bar @click="visible = true"></fold-side-bar>
-
+      <!--  <fold-side-bar @click="visible = true"></fold-side-bar>
       <fe-drawer placement="left" v-model="visible">
         <side-bar></side-bar>
-      </fe-drawer>
-
-      <!-- content area -->
+      </fe-drawer> -->
+    </div>
+    <div class="layout--main">
       <router-view />
     </div>
   </div>
@@ -43,25 +40,35 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  &.home-layout {
-    .tablecloth-layout {
+  &.layout-body {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+
+    & .layout--header {
+      position: fixed;
+      height: 64px;
       width: 100%;
-      top: 0;
-      right: 0;
-      left: 0;
-      position: relative;
+      z-index: 99;
+    }
 
-      display: flex;
-      padding: 0 50px;
-      padding-top: 100px;
+    & .layout--left-side {
+      position: fixed;
+      padding: 0 24px;
+      margin-top: 120px;
+      width: 120px;
+      height: 80vh;
+    }
 
-      .side-bar--shadow {
-        width: 200px;
-        height: 100%;
-        flex-shrink: 0;
-      }
+    & .layout--main {
+      width: 100%;
+      margin-left: 196px;
+      margin-right: 24px;
+      margin-top: 120px;
+    }
 
-      @media only screen and( max-width: 650px) {
+    /* @media only screen and( max-width: 650px) {
         & {
           flex-direction: column;
         }
@@ -72,8 +79,7 @@ export default defineComponent({
         .side-bar--shadow {
           display: none;
         }
-      }
-    }
+      } */
   }
 }
 </style>

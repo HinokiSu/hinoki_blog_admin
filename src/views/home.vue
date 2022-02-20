@@ -7,7 +7,7 @@
             <img src="@admin/assets/logo.png" />
           </div>
           <div class="caption">
-            <p>Hinoki Blog Management Platform</p>
+            <p>Hinoki's Blog Management Platform</p>
           </div>
           <div class="description">
             <p>This platform is used to manage blog resources, including articles, categories, photos, etc</p>
@@ -35,19 +35,24 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.home {
-    padding-top: 30px;
-    padding-left: 50px;
     width: 100%;
+    height: 80vh;
+    display: flex;
+
     @media only screen and( max-width: 650px) {
       padding-left: 0px;
       padding-bottom: 0px;
     }
 
     .card {
-      height: 100%;
+      display: flex;
     }
 
     .home-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
       .introduction {
         display: grid;
         grid-template-rows: 1fr auto 1fr;
@@ -56,20 +61,20 @@ export default defineComponent({
 
         .logo {
           img {
-            width: 200px;
+            width: 120px;
             object-fit: cover;
           }
         }
 
         .caption {
           padding: 10px;
-          font-size: 36px;
+          font-size: 2rem;
           font-weight: 500;
           text-align: center;
         }
 
         .description {
-          font-size: 24px;
+          font-size: 1.2rem;
           font-weight: 400;
           letter-spacing: 1px;
         }

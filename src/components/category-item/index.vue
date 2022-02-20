@@ -62,12 +62,12 @@ export default defineComponent({
       & > div {
         width: 100%;
         cursor: pointer;
-        font-size: 24px;
+        font-size: 1rem;
         font-weight: 500;
         text-align: center;
         padding: 8px 32px;
 
-        border: 1px solid var(--accents-1);
+        border: 1px solid var(--primary-background);
         border-radius: 8px;
         transition: all 0.4s ease;
 

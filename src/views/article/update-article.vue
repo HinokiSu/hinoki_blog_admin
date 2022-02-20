@@ -3,10 +3,10 @@
     <hino-markdown-preview></hino-markdown-preview>
     <div class="features">
       <div class="update">
-        <fe-button auto ghost size="large" type="success" @click="sumbitHandler">Submit</fe-button>
+        <fe-button auto ghost size="medium" type="success" @click="sumbitHandler">Submit</fe-button>
       </div>
       <div class="cancel">
-        <fe-button auto ghost size="large" type="warning" @click="cancelHandler">Cancel</fe-button>
+        <fe-button auto ghost size="medium" type="warning" @click="cancelHandler">Cancel</fe-button>
       </div>
     </div>
   </div>

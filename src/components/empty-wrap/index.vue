@@ -31,7 +31,7 @@ export default defineComponent({
     justify-content: center;
 
     .tips {
-      font-size: 36px;
+      font-size: 1.8rem;
       font-weight: 500;
     }
   }

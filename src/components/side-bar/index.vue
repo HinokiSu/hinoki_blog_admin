@@ -38,16 +38,12 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.side-bar {
-    position: fixed;
     flex-shrink: 0;
-
-    width: 200px;
-    height: 85%;
+    width: inherit;
+    height: inherit;
     overflow: auto;
-    top: 120px;
-    bottom: 0;
     box-shadow: 0 0 30px var(--accents-2);
-    border-radius: 40px;
+    border-radius: 24px;
 
     // hidden srrollbar
     &::-webkit-scrollbar {
@@ -81,9 +77,9 @@ export default defineComponent({
         text-align: center;
         cursor: pointer;
         transition: all 0.4s ease 0s;
-        border-radius: 24px;
+        border-radius: 16px;
         color: var(--accents-5);
-        padding: 30px 20px;
+        padding: 24px 0;
         width: 100%;
 
         &:hover {
@@ -93,7 +89,7 @@ export default defineComponent({
         }
 
         p {
-          font-size: 30px;
+          font-size: 1.25rem;
           font-weight: 500;
         }
 
@@ -102,16 +98,13 @@ export default defineComponent({
 
           &.filetext-icon {
             width: 34px;
-            margin-right: 6px;
           }
 
           &.hash-icon {
-            width: 30px;
-            margin-right: 2px;
+            width: 24px;
           }
           &.image-icon {
             width: 36px;
-            margin-right: 4px;
           }
         }
       }

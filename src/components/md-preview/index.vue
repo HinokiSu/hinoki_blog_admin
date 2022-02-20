@@ -33,7 +33,7 @@ export default defineComponent({
       html: true,
       linkify: true,
       typographer: true,
-      langPrefix:   'language-',
+      langPrefix: 'language-',
       highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
           try {
@@ -66,7 +66,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   & .markdown-preview {
-    padding: 48px 0;
+    padding: 24px 0;
 
     & .preview-container {
       border: 1px solid var(--accents-2);
@@ -89,7 +89,7 @@ export default defineComponent({
         align-items: center;
 
         .tab {
-          font-size: 32px;
+          font-size: 1.2rem;
           background-color: white;
           padding: 10px 15px;
           border-left: 1px solid var(--accents-2);
@@ -115,7 +115,7 @@ export default defineComponent({
         height: 100%;
         width: 100%;
         padding: 12px;
-        font-size: 24px;
+        font-size: 1rem;
         font-weight: 400;
         overflow: auto;
 

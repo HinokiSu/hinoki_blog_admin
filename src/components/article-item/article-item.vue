@@ -1,14 +1,40 @@
 <template>
-  <div class="article-content">
-    <div class="title">
-      <h3>{{ article?.title }}</h3>
-    </div>
+  <div class="hinoki-blog article-item">
+    <div class="item--wrapper">
+      <div class="item__simple-content">
+        <div class="title">
+          <h3>{{ article?.title }}</h3>
+        </div>
 
-    <div class="description">
-      <p>{{ article?.description }}</p>
-    </div>
-    <div class="release-time">
-      <p>{{ article?.createdAt }}</p>
+        <div class="description">
+          <p>{{ article?.description }}</p>
+        </div>
+        <div class="release-time">
+          <p>{{ article?.createdAt }}</p>
+        </div>
+      </div>
+      <div class="item__collapse">
+        <div class="collapse-btns">
+          <div class="feature-btn">
+            <router-link
+              :to="{
+                name: 'update-article',
+                params: {
+                  id: article?._id,
+                },
+              }"
+            >
+              <p>See</p>
+            </router-link>
+          </div>
+          <div class="feature-btn" @click="clickHandler.edit">
+            <p>Edit</p>
+          </div>
+          <div class="feature-btn" @click="clickHandler.delete">
+            <p>Del</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,40 +44,113 @@ import { IArticle } from '@admin/interfaces/IArticle'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: 'ArticleContentTest',
+  name: 'ArticleItem',
   props: {
     article: Object as PropType<IArticle>,
   },
-  setup() {
-    return {}
+  emits: ['clickEdit', 'clickDelete'],
+  setup(props, { emit }) {
+    const clickHandler = {
+      edit: () => {
+        emit('clickEdit', props.article?._id)
+      },
+      delete: () => {
+        emit('clickDelete', props.article?._id)
+      },
+    }
+    return {
+      clickHandler,
+    }
   },
 })
 </script>
 
 <style lang="less" scoped>
-.article-content {
-  display: grid;
-  grid-template-areas:
-    'title'
-    'desc'
-    'time';
-  row-gap: 10px;
-  .title {
-    grid-area: title;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--accents-2);
-  }
+.hinoki-blog {
+  &.article-item {
+    & .item--wrapper {
+      transition: all 0.4s ease;
+      padding: 20px;
 
-  .description {
-    grid-area: desc;
-    font-size: 1rem;
-    font-weight: 500;
-  }
+      .item__simple-content {
+        box-shadow: 0 0 30px var(--accents-2);
+        padding: 12px;
+        display: grid;
+        grid-template-areas:
+          'title'
+          'desc'
+          'time';
+        row-gap: 10px;
+        .title {
+          grid-area: title;
+          padding-bottom: 5px;
+          border-bottom: 2px solid var(--accents-2);
+          font-size: 0.9rem;
+        }
+        .description {
+          grid-area: desc;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
 
-  .release-time {
-    border-top: 2px solid var(--accents-2);
-    grid-area: time;
-    font-size: 0.8rem;
+        .release-time {
+          border-top: 2px solid var(--accents-2);
+          grid-area: time;
+          font-size: 0.8rem;
+        }
+      }
+
+      & .item__collapse {
+        & .collapse-btns {
+          display: grid;
+          border-top: 1px solid var(--accents-2);
+          grid-template-columns: repeat(3, 1fr);
+          justify-items: center;
+
+          padding-top: 15px;
+          .feature-btn {
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.2s ease;
+            transition-property: transform, opacity;
+            transition-timing-function: cubic-bezier(1, 0, 0.65, 0.75), linear;
+          }
+
+          :nth-child(2) {
+            transition-delay: 0.15s;
+          }
+          :nth-child(3) {
+            transition-delay: 0.1s;
+          }
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 0 30px var(--accents-2);
+        & .item__collapse {
+          & .feature-btn {
+            opacity: 1;
+            transform: translateY(0);
+            opacity: 1;
+            transition-timing-function: cubic-bezier(0.2, 0.15, 0.1, 1), ease;
+          }
+
+          :nth-child(1) {
+            transition-delay: 0.2s;
+          }
+          :nth-child(2) {
+            transition-delay: 0.15s;
+          }
+          :nth-child(3) {
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
 }
 </style>

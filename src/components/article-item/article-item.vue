@@ -3,11 +3,11 @@
     <div class="item--wrapper">
       <div class="item__simple-content">
         <div class="title">
-          <h3>{{ article?.title }}</h3>
+          {{ article?.title }}
         </div>
 
         <div class="description">
-          <p>{{ article?.description }}</p>
+          {{ article?.description }}
         </div>
         <div class="release-time">
           <p>{{ article?.createdAt }}</p>
@@ -73,27 +73,37 @@ export default defineComponent({
       padding: 20px;
 
       .item__simple-content {
-        box-shadow: 0 0 30px var(--accents-2);
-        padding: 12px;
+        max-width: 200px;
+        padding: 16px;
         display: grid;
         grid-template-areas:
           'title'
           'desc'
           'time';
         row-gap: 10px;
+        box-shadow: 0 0 30px var(--accents-2);
+        .title + .description {
+          font-weight: 500;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
         .title {
           grid-area: title;
           padding-bottom: 5px;
-          border-bottom: 2px solid var(--accents-2);
-          font-size: 0.9rem;
+          border-bottom: 2px dashed var(--accents-2);
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--accents-7);
         }
         .description {
           grid-area: desc;
           font-size: 0.8rem;
-          font-weight: 500;
         }
 
         .release-time {
+          padding-top: 4px;
           border-top: 2px solid var(--accents-2);
           grid-area: time;
           font-size: 0.8rem;
@@ -103,7 +113,6 @@ export default defineComponent({
       & .item__collapse {
         & .collapse-btns {
           display: grid;
-          border-top: 1px solid var(--accents-2);
           grid-template-columns: repeat(3, 1fr);
           justify-items: center;
 

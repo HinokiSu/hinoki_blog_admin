@@ -33,7 +33,7 @@
       </div>
       <div class="desc">
         <p>摘要</p>
-        <hino-areatext v-model="modalValue.description" wd="100%" unscale unscroll></hino-areatext>
+        <hino-areatext class="desc-areatext" v-model="modalValue.description" unscale unscroll />
       </div>
       <div class="categories">
         <p>类别</p>
@@ -257,6 +257,10 @@ export default defineComponent({
     .input-title {
       width: 100%;
     }
+  }
+
+  .desc-areatext {
+    width: 100%;
   }
 
   .visible-option {

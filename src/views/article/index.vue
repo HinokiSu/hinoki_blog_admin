@@ -5,11 +5,11 @@
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
-        <article-content
+        <article-item
           :article="article"
           @click-edit="handleClick.edit"
           @click-delete="handleClick.delete"
-        ></article-content>
+        ></article-item>
       </fe-grid>
     </fe-grid-group>
     <empty-wrap :is-empty="isNullArticleList">
@@ -72,14 +72,14 @@ import { useRouter } from 'vue-router'
 import { useArticleStore } from '@admin/stores/articleStore'
 import { ICategory } from '@admin/interfaces/ICategory'
 import { useCategoryStore } from '@admin/stores/categoryStore'
-import ArticleContent from '@admin/components/article-item/article-content.vue'
+import ArticleItem from '@admin/components/article-item/article-item.vue'
 import CardFeature from '@admin/components/card-main/card-feature.vue'
 import EmptyWrap from '@admin/components/empty-wrap/index.vue'
 import HinoAreatext from '@admin/components/text-area/index.vue'
 
 export default defineComponent({
   name: 'Articles',
-  components: { ArticleContent, CardFeature, EmptyWrap, HinoAreatext },
+  components: { ArticleItem, CardFeature, EmptyWrap, HinoAreatext },
   setup() {
     const router = useRouter()
     const ArticleStore = useArticleStore()
@@ -153,20 +153,11 @@ export default defineComponent({
 
         if (ArticleStore.fettle) {
           ArticleStore.fettle = false
-          // reacquire
-          await ArticleStore.updateArticle(articleId.value)
-          if (ArticleStore.fettle) {
-            ArticleStore.fettle = false
-            proxy.$toast['success']({
-              text: 'Edit successfully!',
-              duration: '1500',
-            })
-          } else {
-            proxy.$toast['error']({
-              text: 'Update failed!',
-              duration: '2000',
-            })
-          }
+          ArticleStore.getArticleList()
+          proxy.$toast['success']({
+            text: 'Edit successfully!',
+            duration: '1500',
+          })
         } else {
           proxy.$toast['error']({
             text: 'Edit failed !',

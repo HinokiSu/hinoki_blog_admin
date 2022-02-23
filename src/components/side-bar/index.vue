@@ -3,16 +3,16 @@
     <div class="features">
       <router-link :to="{ name: 'articles' }">
         <div class="feature">
-          <p><FileText class="f-icon filetext-icon" />Article</p>
+          <p><file-text class="f-icon filetext-icon" />Article</p>
         </div>
       </router-link>
       <router-link :to="{ name: 'categories' }">
         <div class="feature">
-          <p><Hash class="f-icon hash-icon" />Category</p>
+          <p><hash class="f-icon hash-icon" />Category</p>
         </div>
       </router-link>
       <div class="feature">
-        <p><Image class="f-icon image-icon" />Photo</p>
+        <p><image-icon class="f-icon image-icon" />Photo</p>
       </div>
     </div>
   </div>
@@ -20,14 +20,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Hash, FileText, Image } from '@fect-ui/vue-icons'
+import { Hash, FileText, Image as ImageIcon } from '@fect-ui/vue-icons'
 
 export default defineComponent({
   name: 'SideBar',
   components: {
     Hash,
     FileText,
-    Image,
+    ImageIcon,
   },
   setup() {
     return {}

@@ -12,6 +12,16 @@
         ></article-item>
       </fe-grid>
     </fe-grid-group>
+    <div class="articles__pagination">
+      <fe-pagination v-model="initialPage" count="10">
+        <template #prev>
+          <arrow-left-circle />
+        </template>
+        <template #next>
+          <arrow-right-circle />
+        </template>
+      </fe-pagination>
+    </div>
     <empty-wrap :is-empty="isNullArticleList">
       <p>没有任何文章 : (</p>
     </empty-wrap>
@@ -76,10 +86,10 @@ import ArticleItem from '@admin/components/article-item/article-item.vue'
 import CardFeature from '@admin/components/card-main/card-feature.vue'
 import EmptyWrap from '@admin/components/empty-wrap/index.vue'
 import HinoAreatext from '@admin/components/text-area/index.vue'
-
+import { ArrowLeftCircle, ArrowRightCircle } from '@fect-ui/vue-icons'
 export default defineComponent({
   name: 'Articles',
-  components: { ArticleItem, CardFeature, EmptyWrap, HinoAreatext },
+  components: { ArticleItem, CardFeature, EmptyWrap, HinoAreatext, ArrowLeftCircle, ArrowRightCircle },
   setup() {
     const router = useRouter()
     const ArticleStore = useArticleStore()
@@ -110,6 +120,9 @@ export default defineComponent({
         }
       }
     )
+
+    // pagination
+    const initialPage = ref(1)
 
     /* Modal */
     const handleShow = reactive({
@@ -217,6 +230,7 @@ export default defineComponent({
       searchHandler,
       addjuctionHandler,
       isNullArticleList,
+      initialPage,
 
       handleClick,
       modalValue,
@@ -233,10 +247,18 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.article-continer {
+    padding-bottom: 48px;
+
     .article-feature {
       margin-left: 20px;
     }
-    padding-bottom: 48px;
+
+    & .articles__pagination {
+      margin-top: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 

@@ -1,26 +1,20 @@
 <template>
   <div class="hinoki-blog markdown-preview">
     <div class="preview-container">
-      <div class="tabnav">
-        <div class="tabs">
-          <div class="tab">
-            <p>Edit Markdown</p>
-          </div>
-          <div class="tab">
-            <p>Preview</p>
-          </div>
-        </div>
-      </div>
-      <div class="editor">
-        <hino-textarea class="markdown-textarea" v-model="article.markdown" unscale></hino-textarea>
-        <div class="preview-html" v-html="article.html"></div>
-      </div>
+      <fe-tabs class="md-preview__tabs" v-model:active="tabActive">
+        <fe-tab title="Edit Markdown">
+          <hino-textarea class="markdown-textarea" v-model="article.markdown" unscale></hino-textarea>
+        </fe-tab>
+        <fe-tab title="Preview">
+          <div class="preview-html" v-html="article.html"></div>
+        </fe-tab>
+      </fe-tabs>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'
+import { computed, defineComponent, reactive, ref, watch, watchEffect } from 'vue'
 import { useArticleStore } from '@admin/stores/articleStore'
 import MarkdownIt from 'markdown-it'
 import HinoTextarea from '@admin/components/text-area/index.vue'
@@ -29,6 +23,11 @@ export default defineComponent({
   name: 'HinoMarkdownPreview',
   components: { HinoTextarea },
   setup() {
+    const ArticleStore = useArticleStore()
+    const article = computed(() => ArticleStore.articleData)
+    const tabActive = ref(0)
+
+    // 处理markdown
     const markdownParser: any = new MarkdownIt({
       html: true,
       linkify: true,
@@ -47,8 +46,6 @@ export default defineComponent({
         return '<pre class="hljs"><code>' + markdownParser.utils.escapeHtml(str) + '</code></pre>'
       },
     })
-    const ArticleStore = useArticleStore()
-    const article = computed(() => ArticleStore.articleData)
 
     watch(
       () => article.value.markdown,
@@ -58,6 +55,7 @@ export default defineComponent({
     )
     return {
       article,
+      tabActive,
     }
   },
 })
@@ -67,62 +65,30 @@ export default defineComponent({
 .hinoki-blog {
   & .markdown-preview {
     padding: 24px 0;
+    width: 100%;
 
-    & .preview-container {
-      border: 1px solid var(--accents-2);
-      border-radius: 12px;
-    }
-
-    & .tabnav {
-      padding: 5px 10px;
-      background-color: #f6f8fa;
-      border-bottom: 1px solid var(--accents-2);
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-
-      .tabs {
-        margin: -5px 0 -6px -11px;
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-items: center;
-        align-items: center;
-
-        .tab {
-          font-size: 1.2rem;
-          background-color: white;
-          padding: 10px 15px;
-          border-left: 1px solid var(--accents-2);
-          border-right: 1px solid var(--accents-2);
-        }
-      }
-    }
-
-    & .editor {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      align-items: center;
-      justify-items: center;
-      height: 70vh;
+    & .md-preview__tabs {
+      width: 100%;
 
       .markdown-textarea {
         width: 100%;
-        height: 100%;
-        border-right: 4px solid var(--accents-2);
+        height: 70vh;
       }
 
       .preview-html {
         height: 100%;
-        width: 100%;
+        min-height: 70vh;
         padding: 12px;
         font-size: 1rem;
         font-weight: 400;
+        border: 1px solid var(--accents-2);
+        border-radius: 5px;
         overflow: auto;
 
         // strip
         &::-webkit-scrollbar {
-          width: 8px;
-          height: 12px;
+          width: 6px;
+          height: 6px;
           background-color: var(--accents-1);
         }
 
@@ -136,7 +102,7 @@ export default defineComponent({
         // slider
         &::-webkit-scrollbar-thumb {
           border-radius: 10px;
-          background: var(--accents-5);
+          background: var(--accents-3);
         }
       }
     }

@@ -76,10 +76,8 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   & .article-preview {
-    padding: 48px 0;
     .features {
-      padding-top: 20px;
-
+      margin-top: 12px;
       display: flex;
       align-items: center;
       justify-content: flex-end;

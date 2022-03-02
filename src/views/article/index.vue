@@ -13,7 +13,7 @@
       </fe-grid>
     </fe-grid-group>
     <div class="articles__pagination">
-      <fe-pagination v-model="initialPage" count="10">
+      <fe-pagination v-model="paginationVal.curPage" :count="paginationVal.count" :limit="paginationVal.limit">
         <template #prev>
           <arrow-left-circle />
         </template>
@@ -96,8 +96,20 @@ export default defineComponent({
     const CategoryStore = useCategoryStore()
     const isNullArticleList = ref(false)
 
+    // pagination
+
+    const paginationVal = reactive({
+      curPage: 1,
+      count: 1,
+      limit: 5,
+    })
+
+    watchEffect(() => {
+      ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
+      paginationVal.count = Math.ceil(ArticleStore.articleTotal / paginationVal.limit)
+    })
+
     onMounted(() => {
-      ArticleStore.getArticleList()
       CategoryStore.getCategoryList()
     })
 
@@ -120,9 +132,6 @@ export default defineComponent({
         }
       }
     )
-
-    // pagination
-    const initialPage = ref(1)
 
     /* Modal */
     const handleShow = reactive({
@@ -230,8 +239,7 @@ export default defineComponent({
       searchHandler,
       addjuctionHandler,
       isNullArticleList,
-      initialPage,
-
+      paginationVal,
       handleClick,
       modalValue,
       handleShow,

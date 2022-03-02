@@ -53,7 +53,7 @@ export default defineComponent({
     .features {
       padding-top: 64px;
       display: grid;
-      row-gap: 48px;
+      row-gap: 64px;
       justify-items: center;
       align-items: center;
 
@@ -67,7 +67,7 @@ export default defineComponent({
         transition: all 0.4s ease 0s;
         border-radius: 16px;
         color: var(--accents-5);
-        padding: 24px 0;
+        padding: 12px 0;
         width: 100%;
 
         &:hover {

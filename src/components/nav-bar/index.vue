@@ -37,9 +37,9 @@ export default defineComponent({
     .logo {
       margin-left: 24px;
       cursor: pointer;
+      width: 64px;
       overflow: hidden;
       img {
-        width: 56px;
         object-fit: cover;
       }
     }

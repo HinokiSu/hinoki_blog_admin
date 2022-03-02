@@ -3,7 +3,7 @@
     <fe-form class="form-container" :model="formValue" :rules="rules" ref="formRef" show-message>
       <fe-form-item prop="title">
         <p class="form-caption">标题</p>
-        <fe-input size="small" class="title-input" v-model="formValue.title" />
+        <fe-input size="large" class="title-input" v-model="formValue.title" />
       </fe-form-item>
       <fe-form-item prop="description">
         <p class="form-caption">摘要</p>
@@ -132,10 +132,9 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   & .article-form {
-    padding-left: 20px;
+    margin-top: 24px;
 
     .form-caption {
-      padding: 16px 0;
       font-size: 1.3rem;
       font-weight: 500;
     }
@@ -150,6 +149,7 @@ export default defineComponent({
 
       .desc-textarea {
         width: 100%;
+        max-width: 480px;
         height: 64px;
       }
 

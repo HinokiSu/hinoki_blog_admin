@@ -35,7 +35,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  & .fold-side-bar {
+  &.fold-side-bar {
     width: 100%;
     height: 50px;
     display: flex;
@@ -70,17 +70,14 @@ export default defineComponent({
         margin: 2px 0;
       }
 
-      /* 折叠按钮的三条线 */
       &:hover {
         .burger-line-1,
         .burger-line-2,
         .burger-line-3 {
           background-color: #2e2e2e;
-          /* 折叠动画 */
           transition: 0.4s ease;
         }
         .burger-line-1 {
-          /* 转动45度，正数是一个从左到右旋转 */
           transform: translateX(10px);
         }
         .burger-line-2 {

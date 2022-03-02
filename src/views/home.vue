@@ -60,8 +60,8 @@ export default defineComponent({
         align-items: center;
 
         .logo {
+          width: 120px;
           img {
-            width: 120px;
             object-fit: cover;
           }
         }

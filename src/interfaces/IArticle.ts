@@ -10,10 +10,11 @@ export interface IArticle {
   updatedAt?: string
 }
 
-export interface IArticles {
+export type IHttpArticle = {
   articles: IArticle[]
 }
 
-export type IHttpArticle = {
-  article: IArticle[]
+export type IPagination = {
+  total: number
+  articles: IArticle[]
 }

@@ -1,4 +1,4 @@
-import { IArticle, IArticles, IHttpArticle } from '@admin/interfaces/IArticle'
+import { IArticle, IHttpArticle, IPagination } from '@admin/interfaces/IArticle'
 import { nowDateFormat } from '@admin/utils/format'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
 import { defineStore } from 'pinia'
@@ -6,6 +6,7 @@ import { defineStore } from 'pinia'
 interface IState {
   articleList: IArticle[]
   articleData: IArticle
+  articleTotal: number
   fettle: boolean
 }
 
@@ -13,6 +14,7 @@ export const useArticleStore = defineStore('artilce', {
   state: (): IState => ({
     articleList: [],
     articleData: {},
+    articleTotal: 1,
     // whether request is success
     fettle: false,
   }),
@@ -26,7 +28,7 @@ export const useArticleStore = defineStore('artilce', {
     // TODO: determine whether request is success according to response status
     async getArticleList() {
       try {
-        const result = <IArticles>await httpGet({ url: '/admin/article/all' })
+        const result = <IHttpArticle>await httpGet({ url: '/article/all' })
 
         this.articleList = result.articles
       } catch (error) {
@@ -38,9 +40,9 @@ export const useArticleStore = defineStore('artilce', {
     async getArticleById(articleId: string) {
       try {
         const result = <IHttpArticle>await httpGet({
-          url: `/admin/article/${articleId}`,
+          url: `/article/${articleId}`,
         })
-        this.articleData = result.article[0]
+        this.articleData = result.articles[0]
       } catch (error) {
         throw error
       }
@@ -50,7 +52,7 @@ export const useArticleStore = defineStore('artilce', {
       try {
         console.log('this', this.articleData)
         const result = await httpPost({
-          url: '/admin/article/new',
+          url: '/article/new',
           data: this.articleData,
         })
         this.fettle = true
@@ -65,7 +67,7 @@ export const useArticleStore = defineStore('artilce', {
         const updatedArticle = { ...this.articleData }
         updatedArticle.updatedAt = nowDateFormat('YYYY-MM-DD hh:mm:ss')
         const result = <IHttpArticle>await httpPut({
-          url: `/admin/article/${articleId}`,
+          url: `/article/${articleId}`,
           data: updatedArticle,
         })
         this.fettle = true
@@ -78,7 +80,7 @@ export const useArticleStore = defineStore('artilce', {
     async deleteArticle(articleId: string) {
       try {
         const result = <IHttpArticle>await httpDelete({
-          url: `/admin/article/${articleId}`,
+          url: `/article/${articleId}`,
         })
         this.fettle = true
       } catch (error) {
@@ -86,6 +88,21 @@ export const useArticleStore = defineStore('artilce', {
         throw error
       }
     },
+
+    async getArticlePagination(curPage: number, pageSize: number) {
+      try {
+        const result = <IPagination>await httpGet({
+          url: `/article/pagination/${curPage}/${pageSize}`,
+        })
+        this.articleTotal = result.total
+        this.articleList = result.articles
+        this.fettle = true
+      } catch (error) {
+        this.fettle = false
+        throw error
+      }
+    },
+
     // 回收数据
     recycleArticleData() {
       this.articleData = {}

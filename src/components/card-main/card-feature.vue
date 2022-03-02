@@ -44,6 +44,7 @@ export default defineComponent({
     grid-template-columns: 1fr auto;
     align-items: center;
     column-gap: 10px;
+
     .search {
       display: flex;
       flex-direction: row;
@@ -62,6 +63,18 @@ export default defineComponent({
 
       .add-btn {
         font-size: 1.2rem;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      & {
+        grid-template-columns: unset;
+        grid-template-rows: repeat(2, 1fr);
+        row-gap: 0.6rem;
+
+        .search {
+          flex-direction: unset;
+        }
       }
     }
   }

@@ -12,9 +12,9 @@
   box-sizing: border-box !important;
 }
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   width: 0;
-}
+} */
 
 a,
 a:visited,

@@ -1,40 +1,32 @@
 <template>
   <div class="hinoki-blog login">
     <div class="login-page__container">
-      <div class="left-area">
+      <div class="login__left">
         <img class="decorative-img" src="../assets/img/login-page__purple_sky.jpg" alt="" />
       </div>
-      <div class="right--login__wrapper">
-        <div class="right--login__container">
-          <div class="caption">
-            <p>Login In</p>
-          </div>
-          <div class="login-form">
-            <fe-form :model="loginForm" :rules="rules" ref="formRef" label-width="100" inline label-position="top">
-              <fe-form-item label="Username" prop="username">
-                <fe-input
-                  size="large"
-                  clearable
-                  v-model="loginForm.username"
-                  placeholder="input your nick name"
-                  class="form-username"
-                ></fe-input>
-              </fe-form-item>
-              <fe-form-item label="Password" prop="password">
-                <fe-input
-                  class=""
-                  size="large"
-                  type="password"
-                  v-model="loginForm.password"
-                  placeholder="input your password"
-                ></fe-input>
-              </fe-form-item>
-            </fe-form>
-          </div>
-          <div class="form-btns">
-            <fe-button size="medium" type="success" auto @click="formBtnHandler.login">Sumbit</fe-button>
-            <fe-button size="medium" auto @click="formBtnHandler.reset">Rest</fe-button>
-          </div>
+      <div class="login__right">
+        <div class="right__caption">
+          <p>Login In</p>
+        </div>
+        <div class="right__form">
+          <label class="form-item">
+            <span :class="classes.nameLabel"> 用户名 </span>
+            <fe-input
+              size="large"
+              clearable
+              @change="formInputHandler.changeHandler($event)"
+              v-model="loginForm.username"
+              placeholder="input your name"
+            />
+          </label>
+          <label class="form-item">
+            <span :class="classes.pwdLabel"> 密码 </span>
+            <fe-input size="large" type="password" v-model="loginForm.password" placeholder="input your password" />
+          </label>
+        </div>
+        <div class="form__btns">
+          <fe-button size="medium" type="success" auto @click="formBtnHandler.login">Sumbit</fe-button>
+          <fe-button size="medium" auto @click="formBtnHandler.reset">Rest</fe-button>
         </div>
       </div>
     </div>
@@ -42,27 +34,65 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ILoginUser } from '@admin/interfaces'
+import router from '@admin/routes'
+import { useUserStore } from '@admin/stores/userStore'
+import { computed, defineComponent, reactive, ref, watch, watchEffect } from 'vue'
 
 export default defineComponent({
-  name: 'login',
+  name: 'Login',
   setup() {
-    interface ILoginInfo {
-      username: string
-      password: string
-    }
-    const loginForm = ref<ILoginInfo>({
+    const UserStore = useUserStore()
+    const loginForm = ref<ILoginUser>({
       username: '',
       password: '',
     })
 
-    const formRef = ref<Element>()
+    const formInputHandler = {
+      // 验证是否为空
+      changeHandler: (e: Event) => {
+        // console.log(e)
+      },
+    }
 
-    const rules = ref({})
+    const classes = ref({
+      nameLabel: '',
+      pwdLabel: '',
+    })
+
+    watch(
+      () => loginForm.value.username,
+      () => {
+        if (loginForm.value.username === '') {
+          classes.value.nameLabel = 'error'
+        } else {
+          classes.value.nameLabel = ''
+        }
+      }
+    )
+
+    watch(
+      () => loginForm.value.password,
+      () => {
+        if (loginForm.value.password !== '') {
+          classes.value.pwdLabel = ''
+        }
+      }
+    )
 
     const formBtnHandler = {
-      login() {
-        console.log(loginForm.value)
+      async login() {
+        if (loginForm.value.username === '' || loginForm.value.password === '') {
+          classes.value.nameLabel = 'error'
+          classes.value.pwdLabel = 'error'
+        } else {
+          const res = await UserStore.loginAuth(loginForm.value.username, loginForm.value.password)
+          if (res) {
+            router.push(
+              router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
+            )
+          }
+        }
       },
       reset() {
         loginForm.value.username = ''
@@ -72,9 +102,9 @@ export default defineComponent({
 
     return {
       loginForm,
-      rules,
-      formRef,
       formBtnHandler,
+      formInputHandler,
+      classes,
     }
   },
 })
@@ -83,10 +113,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .hinoki-blog {
   &.login {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     background: linear-gradient(
       to right bottom,
       rgba(112, 132, 219, 0.521),
@@ -94,79 +121,87 @@ export default defineComponent({
       rgba(182, 19, 60, 0.233)
     );
 
-    .login-page__container {
-      max-width: 700px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      background-color: var(--accents-2);
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: auto;
 
-      // box-shadow: 0 0 36px var(--accents-2);
-      border-radius: 30px;
+    & .login-page__container {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      margin: auto;
 
-      @media screen and(max-width: 900px ) {
+      width: 60%;
+      min-width: 800px;
+      height: 80%;
+      min-height: 500px;
+
+      display: flex;
+      background-color: var(--accents-1);
+      border-radius: 32px;
+    }
+
+    & .login__left {
+      width: 50%;
+
+      img {
+        border-radius: 32px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    & .login__right {
+      width: 50%;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .right__caption {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accents-7);
+        margin-top: -12px;
+      }
+
+      .right__form {
         display: flex;
-        grid: unset;
-      }
+        flex-direction: column;
 
-      & .left-area {
-        border-radius: 30px 0 0 30px;
-        background-color: rgb(79, 74, 90);
-        z-index: 16;
-        overflow: hidden;
+        .form-item {
+          display: flex;
+          flex-direction: column;
+          padding: 12px 0;
 
-        @media screen and (max-width: 900px) {
-          display: none;
-        }
+          span {
+            padding-bottom: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--accents-6);
+            transition: all 0.2s ease-in;
 
-        .decorative-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      & .right--login__wrapper {
-        border-radius: 0 30px 30px 0;
-        background-color: var(--accents-1);
-        margin-left: -40px;
-        z-index: 15;
-
-        @media screen and (max-width: 900px) {
-          & {
-            margin-left: 0;
-            width: 100%;
-            border-radius: 30px;
-
-            .right--login__container {
-              padding-right: 40px;
+            &.error {
+              color: var(--error-default);
+              &::before {
+                content: '*';
+              }
             }
           }
         }
+      }
 
-        .right--login__container {
-          width: 100%;
-          height: 100%;
-          display: grid;
-          padding-left: 40px;
-          padding-bottom: 40px;
-          padding-top: 64px;
-          grid-template-rows: 1fr 4fr 2fr;
-          align-items: center;
-          justify-items: center;
-
-          .caption {
-            font-size: 3rem;
-            font-weight: 500;
-            background: radial-gradient();
-          }
-
-          .form-btns {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            row-gap: 20px;
-          }
-        }
+      .form__btns {
+        margin-top: 24px;
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
       }
     }
   }

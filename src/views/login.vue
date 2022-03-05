@@ -6,18 +6,12 @@
       </div>
       <div class="login__right">
         <div class="right__caption">
-          <p>Login In</p>
+          <p>Sign In</p>
         </div>
         <div class="right__form">
           <label class="form-item">
             <span :class="classes.nameLabel"> 用户名 </span>
-            <fe-input
-              size="large"
-              clearable
-              @change="formInputHandler.changeHandler($event)"
-              v-model="loginForm.username"
-              placeholder="input your name"
-            />
+            <fe-input size="large" clearable v-model="loginForm.username" placeholder="input your name" />
           </label>
           <label class="form-item">
             <span :class="classes.pwdLabel"> 密码 </span>
@@ -25,8 +19,8 @@
           </label>
         </div>
         <div class="form__btns">
-          <fe-button size="medium" type="success" auto @click="formBtnHandler.login">Sumbit</fe-button>
-          <fe-button size="medium" auto @click="formBtnHandler.reset">Rest</fe-button>
+          <fe-button size="medium" type="success" auto @click="loginClickHandler">Sumbit</fe-button>
+          <fe-button size="medium" auto @click="resetClickHandler">Rest</fe-button>
         </div>
       </div>
     </div>
@@ -37,8 +31,8 @@
 import { ILoginUser } from '@admin/interfaces'
 import router from '@admin/routes'
 import { useUserStore } from '@admin/stores/userStore'
-import { computed, defineComponent, reactive, ref, watch, watchEffect } from 'vue'
-
+import { computed, customRef, defineComponent, getCurrentInstance, reactive, ref, watch, watchEffect } from 'vue'
+import * as _ from 'lodash'
 export default defineComponent({
   name: 'Login',
   setup() {
@@ -48,13 +42,21 @@ export default defineComponent({
       password: '',
     })
 
-    const formInputHandler = {
-      // 验证是否为空
-      changeHandler: (e: Event) => {
-        // console.log(e)
-      },
-    }
+    const { proxy } = getCurrentInstance() as any
 
+    // 监听错误信息的变化，并给出提示
+    watch(
+      () => UserStore.errorInfo === '',
+      () => {
+        if (UserStore.errorInfo !== '') {
+          proxy.$toast({ text: UserStore.errorInfo, type: 'error', closeAble: true, duration: '1000' })
+        } else {
+          UserStore.errorInfo = ''
+        }
+      }
+    )
+
+    // 用户或密码为空 提示
     const classes = ref({
       nameLabel: '',
       pwdLabel: '',
@@ -80,30 +82,52 @@ export default defineComponent({
       }
     )
 
-    const formBtnHandler = {
-      async login() {
-        if (loginForm.value.username === '' || loginForm.value.password === '') {
-          classes.value.nameLabel = 'error'
-          classes.value.pwdLabel = 'error'
-        } else {
-          const res = await UserStore.loginAuth(loginForm.value.username, loginForm.value.password)
-          if (res) {
-            router.push(
-              router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
-            )
-          }
+    const login = () => {
+      // 错误信息中是否为空
+      if (UserStore.getErrorInfo) {
+        // 清除原有的错误信息
+        UserStore.cleanErrorInfo()
+      }
+      if (loginForm.value.username === '' || loginForm.value.password === '') {
+        classes.value.nameLabel = 'error'
+        classes.value.pwdLabel = 'error'
+      } else {
+        UserStore.loginAuth(loginForm.value.username, loginForm.value.password).then(() => {
+          router.push(
+            router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
+          )
+        })
+      }
+    }
+
+    // 防抖
+    const debounce = (fn: any, delay: number) => {
+      let timeout: NodeJS.Timeout
+
+      return (...args: any) => {
+        if (timeout) {
+          clearTimeout(timeout)
         }
-      },
-      reset() {
-        loginForm.value.username = ''
-        loginForm.value.password = ''
-      },
+
+        timeout = setTimeout(() => {
+          fn(...args)
+        }, delay)
+      }
+    }
+
+    // 避免多次点击登录按钮下的场景
+    const loginClickHandler = debounce(() => {
+      login()
+    }, 300)
+    const resetClickHandler = () => {
+      loginForm.value.username = ''
+      loginForm.value.password = ''
     }
 
     return {
       loginForm,
-      formBtnHandler,
-      formInputHandler,
+      loginClickHandler,
+      resetClickHandler,
       classes,
     }
   },
@@ -202,6 +226,51 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         row-gap: 24px;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      & {
+        width: 100vw;
+        // background: var(--primary-background);
+        min-height: unset;
+
+        & .login-page__container {
+          border-radius: unset;
+          min-width: unset;
+          width: unset;
+          height: unset;
+          min-height: unset;
+          background: var(--primary-background);
+
+          & .login__left {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 45%;
+            border-radius: 32px;
+            overflow: hidden;
+
+            img {
+              border-radius: unset;
+              object-position: 50% 45%;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+
+          & .login__right {
+            position: absolute;
+            bottom: 5%;
+            justify-content: unset;
+
+            background-color: var(--primary-background);
+            z-index: 100;
+            width: 100%;
+            border-radius: 32px 32px 0 0;
+          }
+        }
       }
     }
   }

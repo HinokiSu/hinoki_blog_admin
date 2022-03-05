@@ -32,7 +32,6 @@ axios.interceptors.response.use(
   },
   // 服务器状态码不是200的情况
   (error) => {
-    console.log('response error:', error)
     if (error.response.status) {
       switch (error.response.status) {
         // 401: 未登录
@@ -77,7 +76,9 @@ axios.interceptors.response.use(
             message: error.response.data.message,
           })
       }
-      return Promise.reject(error.response)
+      return Promise.reject(() => {
+        useUserStore().errorInfo = error.response
+      })
     }
   }
 )

@@ -32,7 +32,6 @@ import { ILoginUser } from '@admin/interfaces'
 import router from '@admin/routes'
 import { useUserStore } from '@admin/stores/userStore'
 import { computed, customRef, defineComponent, getCurrentInstance, reactive, ref, watch, watchEffect } from 'vue'
-import * as _ from 'lodash'
 export default defineComponent({
   name: 'Login',
   setup() {

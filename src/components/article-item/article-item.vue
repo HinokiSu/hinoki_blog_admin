@@ -70,10 +70,12 @@ export default defineComponent({
   &.article-item {
     & .item--wrapper {
       transition: all 0.4s ease;
-      padding: 20px;
+      padding: 20px 20px 12px 20px;
+      border-radius: 12px;
 
       .item__simple-content {
-        max-width: 200px;
+        min-width: 200px;
+        width: 200px;
         padding: 16px;
         display: grid;
         grid-template-areas:

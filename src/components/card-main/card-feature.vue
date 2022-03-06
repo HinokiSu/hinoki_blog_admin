@@ -1,8 +1,8 @@
 <template>
   <div class="hinoki-blog card_feature">
-    <div class="search">
-      <fe-input size="medium" placeholder="请输入..." clearable v-model="searchValue" />
-      <fe-button class="search-btn" size="medium" auto @click="emitSearchClick">Search</fe-button>
+    <div class="search" v-if="!noSearch">
+      <fe-input size="medium" placeholder="请输入..." clearable v-model="searchValue" @clear-click="emitClearClick" />
+      <fe-button class="search-btn" size="medium" auto @click="searchClick">Search</fe-button>
     </div>
     <div class="adjunction">
       <fe-button class="add-btn" type="success" auto size="medium" @click="emitAddjunction">Add</fe-button>
@@ -11,24 +11,57 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { debounce } from '@admin/hooks'
+import { defineComponent, getCurrentInstance, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'CardFeature',
-  emits: ['searchClick', 'addjuctionClick'],
+  props: {
+    noSearch: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['searchClick', 'addjuctionClick', 'clearClick', 'judgeEmpty'],
   setup(props, { emit }) {
     const searchValue = ref('')
+    const { proxy } = getCurrentInstance() as any
+
     const emitSearchClick = () => {
-      emit('searchClick', searchValue.value)
+      if (searchValue.value === '') {
+        proxy.$toast['warning']({
+          text: '搜索内容不能为空',
+          duration: '1000',
+        })
+      } else {
+        emit('searchClick', searchValue.value)
+      }
     }
+
+    watch(
+      () => searchValue.value === '',
+      () => {
+        if (searchValue.value === '') {
+          emit('judgeEmpty', false)
+          console.log('1')
+        }
+      }
+    )
+
+    const searchClick = debounce(emitSearchClick, 500)
     const emitAddjunction = () => {
       emit('addjuctionClick')
     }
 
+    const emitClearClick = () => {
+      emit('clearClick')
+    }
+
     return {
       searchValue,
-      emitSearchClick,
+      searchClick,
       emitAddjunction,
+      emitClearClick,
     }
   },
 })

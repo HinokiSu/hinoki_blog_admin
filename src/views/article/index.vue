@@ -1,7 +1,12 @@
 <template>
   <div class="hinoki-blog article-continer">
     <div class="article-feature">
-      <card-feature @search-click="searchHandler" @addjuction-click="addjuctionHandler"></card-feature>
+      <card-feature
+        @search-click="searchHandler"
+        @clear-click="clearHandler"
+        @addjuction-click="addjuctionHandler"
+        @judge-empty="judgeSearchisEmpty"
+      ></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
       <fe-grid class="article_card_block" v-for="article in articleList" :key="article._id">
@@ -48,7 +53,13 @@
       <div class="categories">
         <p>类别</p>
         <fe-select class="multi-select-main" placeholder="选择类别" v-model="multiSelectVals" multiple>
-          <fe-option :label="cate.name" :value="cate._id" v-for="cate in categoryList" :key="cate._id"></fe-option>
+          <fe-option
+            style="width: 300px"
+            :label="cate.name"
+            :value="cate._id"
+            v-for="cate in categoryList"
+            :key="cate._id"
+          ></fe-option>
         </fe-select>
       </div>
       <div class="visible-option">
@@ -95,26 +106,79 @@ export default defineComponent({
     const ArticleStore = useArticleStore()
     const CategoryStore = useCategoryStore()
     const isNullArticleList = ref(false)
+    const isSearch = ref(false)
 
-    // pagination
-
+    // 分页
     const paginationVal = reactive({
       curPage: 1,
       count: 1,
-      limit: 5,
+      limit: 6,
     })
 
+    // 监视 分页
     watchEffect(() => {
-      ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
+      // TODO 搜索结果未被分页
+
+      /* 
+       if (isSearch.value) {
+        if (paginationVal.count > 1) {
+          // 先切割数组
+          const wholeList = ArticleStore.articleList
+          const totalLength = ArticleStore.articleTotal
+          const result = []
+          let end = 0
+          let start = 0
+          for (let i = 0; i < paginationVal.count; i++) {
+            start = i === 0 ? 0 : i + paginationVal.limit - 1
+            end = i === 0 ? paginationVal.limit : (i + 1) * paginationVal.limit - 1
+            result.push(wholeList.slice(start, end))
+            console.log(i)
+          }
+          console.log(result)
+        }
+      } 
+      */
+
       paginationVal.count = Math.ceil(ArticleStore.articleTotal / paginationVal.limit)
+      if (!isSearch.value) {
+        // 动态获取总页数
+        paginationVal.limit = 6
+        ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
+      } else {
+        // 只在一页显示。暂时处理成这样
+        paginationVal.count = 1
+        paginationVal.limit = ArticleStore.getArticleCount
+      }
     })
+    const articleList = computed(() => ArticleStore.articleList)
 
     onMounted(() => {
+      ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
       CategoryStore.getCategoryList()
     })
 
-    const searchHandler = (val: string) => {
-      console.log(val)
+    // 搜索框 模糊搜索
+    const searchHandler = async (val: string) => {
+      const res = await ArticleStore.getFuzzySearch(val)
+      if (!res) {
+        proxy.$toast['success']({
+          text: '未搜索到相关文章',
+          duration: '1200',
+        })
+        isSearch.value = false
+      } else {
+        isSearch.value = true
+      }
+    }
+    // 判断搜索框是否为空, TODO 还可以改进
+    const judgeSearchisEmpty = (val: boolean) => {
+      isSearch.value = val
+    }
+
+    // 清除按钮
+    const clearHandler = () => {
+      console.log('is', isSearch.value)
+      isSearch.value = false
     }
 
     const addjuctionHandler = () => {
@@ -122,18 +186,18 @@ export default defineComponent({
         name: 'create-article',
       })
     }
-    const articleList = computed(() => ArticleStore.articleList)
 
+    // 监视 文章是否为空，
     watch(
       () => ArticleStore.articleList,
       () => {
-        if (ArticleStore.articleCount === 0) {
+        if (ArticleStore.getArticleCount === 0) {
           isNullArticleList.value = true
         }
       }
     )
 
-    /* Modal */
+    /* 模态框 */
     const handleShow = reactive({
       editModal: false,
       deleteModal: false,
@@ -237,7 +301,9 @@ export default defineComponent({
     return {
       articleList,
       searchHandler,
+      clearHandler,
       addjuctionHandler,
+      judgeSearchisEmpty,
       isNullArticleList,
       paginationVal,
       handleClick,
@@ -277,8 +343,6 @@ export default defineComponent({
   row-gap: 6px;
 
   & div > p {
-    padding-top: 8px;
-    padding-bottom: 20px;
     font-size: 1.2rem;
     font-weight: 500;
   }

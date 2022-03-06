@@ -20,7 +20,7 @@ export const useArticleStore = defineStore('artilce', {
   }),
 
   getters: {
-    articleCount: (state) => state.articleList.length,
+    getArticleCount: (state) => state.articleList.length,
   },
 
   actions: {
@@ -106,6 +106,22 @@ export const useArticleStore = defineStore('artilce', {
     // 回收数据
     recycleArticleData() {
       this.articleData = {}
+    },
+
+    // 模糊搜索
+    async getFuzzySearch(keyword: string) {
+      try {
+        const result = <IPagination>await httpGet({ url: `/article/search/${keyword}` })
+        if (result.total > 0) {
+          this.articleList = result.articles
+          // this.articleTotal = result.total
+          return true
+        } else {
+          return false
+        }
+      } catch (error) {
+        throw error
+      }
     },
   },
 })

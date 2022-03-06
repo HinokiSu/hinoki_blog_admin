@@ -11,16 +11,22 @@
           <p><hash class="f-icon hash-icon" />Category</p>
         </div>
       </router-link>
-      <div class="feature">
+      <router-link :to="{ name: 'users' }">
+        <div class="feature">
+          <p><User class="f-icon user-icon" />User</p>
+        </div>
+      </router-link>
+      <!-- TODO -->
+      <!-- <div class="feature">
         <p><image-icon class="f-icon image-icon" />Photo</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Hash, FileText, Image as ImageIcon } from '@fect-ui/vue-icons'
+import { Hash, FileText, Image as ImageIcon, User } from '@fect-ui/vue-icons'
 
 export default defineComponent({
   name: 'SideBar',
@@ -28,6 +34,7 @@ export default defineComponent({
     Hash,
     FileText,
     ImageIcon,
+    User,
   },
   setup() {
     return {}
@@ -93,6 +100,10 @@ export default defineComponent({
           }
           &.image-icon {
             width: 36px;
+          }
+
+          &.user-icon {
+            width: 32px;
           }
         }
       }

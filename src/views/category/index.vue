@@ -1,12 +1,9 @@
 <template>
   <div class="hinoki-blog category-container">
     <div class="category-feature">
-      <card-feature
-        @search-click="cardFeaturesHandler.search"
-        @addjuction-click="cardFeaturesHandler.addjuction"
-      ></card-feature>
+      <card-feature :no-search="true" @addjuction-click="cardFeaturesHandler.addjuction"></card-feature>
     </div>
-    <fe-collapseGroup class="category-group" accordion>
+    <fe-collapseGroup accordion>
       <fe-grid-group direction="row" class="block-group" justify="flex-start" :gap="3">
         <fe-grid class="cate-main" v-for="category in categoryList" :key="category._id">
           <category-item :category="category" @show-modal="handleClick" />
@@ -197,10 +194,6 @@ export default defineComponent({
 
     .category-feature {
       margin-left: 20px;
-    }
-
-    & .category-group {
-      padding-top: 24px;
     }
   }
 }

@@ -28,6 +28,7 @@
 </template>
 
 <script lang="ts">
+import { debounce } from '@admin/hooks'
 import { ILoginUser } from '@admin/interfaces'
 import router from '@admin/routes'
 import { useUserStore } from '@admin/stores/userStore'
@@ -96,21 +97,6 @@ export default defineComponent({
             router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
           )
         })
-      }
-    }
-
-    // 防抖
-    const debounce = (fn: any, delay: number) => {
-      let timeout: NodeJS.Timeout
-
-      return (...args: any) => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-
-        timeout = setTimeout(() => {
-          fn(...args)
-        }, delay)
       }
     }
 

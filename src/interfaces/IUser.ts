@@ -4,6 +4,17 @@ export interface IUser {
   access_token: string
 }
 
+export interface IBaseUser {
+  _id: string
+  username: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type IHttpUser = {
+  users: IBaseUser[]
+}
+
 export interface ILoginUser {
   username: string
   password: string

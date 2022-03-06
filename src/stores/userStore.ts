@@ -1,11 +1,11 @@
-import { ILoginUser, IUser } from '@admin/interfaces'
-import { httpGet, httpPost, httpPut } from '@admin/utils/axios'
-import { access } from 'fs/promises'
+import { IBaseUser, IHttpUser, ILoginUser, IUser } from '@admin/interfaces'
+import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
 import { defineStore } from 'pinia'
 
 interface IState {
   user: IUser
   errorInfo: string
+  userList: IBaseUser[]
 }
 
 export const useUserStore = defineStore('user', {
@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
       access_token: '',
     },
     errorInfo: '',
+    userList: [],
   }),
 
   getters: {
@@ -82,6 +83,37 @@ export const useUserStore = defineStore('user', {
     // 清除错误提示信息
     cleanErrorInfo() {
       this.errorInfo = ''
+    },
+
+    // 获取所有用户
+    async getUsers() {
+      const res = <IHttpUser>await httpGet({ url: '/user' })
+      this.userList = res.users
+    },
+
+    /* // 更新用户信息
+    async updateUser(id: string) {
+      const res = await httpPut({ url: `/user/${id}` })
+      console.log(res)
+      return res
+    }, */
+
+    // 删除用户信息
+    async deleteUser(id: string) {
+      console.log(id)
+      const res = await httpDelete({ url: `/user/${id}` })
+      console.log(res)
+      return res
+    },
+
+    // 创建用户
+    async createUser(user: ILoginUser) {
+      await httpPost({
+        url: '/user/new',
+        data: {
+          ...user,
+        },
+      })
     },
   },
 })

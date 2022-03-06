@@ -20,6 +20,7 @@ import {
   Pagination,
   Tabs,
   Tab,
+  Spacer,
 } from '@fect-ui/vue'
 // fe-image need rename,because naming collision
 // Image.name = 'feImg'
@@ -47,7 +48,8 @@ const UI = [
   Toast,
   Pagination,
   Tabs,
-  Tab
+  Tab,
+  Spacer,
 ]
 
 export const UIRegister = (instance: any) => UI.map((_) => instance.use(_))

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { ArticleRoutes } from './articleRoute'
 import { CategoryRoutes } from './categoryRoute'
 import { useUserStore } from '@admin/stores/userStore'
+import { UserRoutes } from './userRoute'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -15,7 +16,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'manage',
         component: () => import('@admin/layouts/content-layout.vue'),
-        children: [...ArticleRoutes, ...CategoryRoutes],
+        children: [...ArticleRoutes, ...CategoryRoutes, ...UserRoutes],
       },
     ],
   },

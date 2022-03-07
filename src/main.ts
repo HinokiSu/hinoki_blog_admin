@@ -7,10 +7,16 @@ import { createPinia } from 'pinia'
 // fect-ui
 import { UIRegister } from './plugins/ui'
 import 'highlight.js/styles/github.css'
+
+// echart
+import * as echarts from 'echarts/core'
+import { Charts } from './plugins/echarts'
+
 const app = createApp(App)
 const pinia = createPinia()
 
 app.use(router)
 app.use(pinia)
 UIRegister(app)
+echarts.use(Charts)
 app.mount('#app')

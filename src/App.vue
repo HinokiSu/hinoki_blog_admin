@@ -3,11 +3,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent, provide } from 'vue'
+import * as echarts from 'echarts/core'
 export default defineComponent({
   name: 'Home',
   setup() {
+    provide('echarts', echarts)
     return {}
   },
 })

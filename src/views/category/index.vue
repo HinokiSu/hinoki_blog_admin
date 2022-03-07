@@ -1,7 +1,11 @@
 <template>
   <div class="hinoki-blog category-container">
     <div class="category-feature">
-      <card-feature :no-search="true" @addjuction-click="cardFeaturesHandler.addjuction"></card-feature>
+      <card-feature
+        :no-search="true"
+        add-name="添加类别"
+        @addjuction-click="cardFeaturesHandler.addjuction"
+      ></card-feature>
     </div>
     <fe-collapseGroup accordion>
       <fe-grid-group direction="row" class="block-group" justify="flex-start" :gap="3">

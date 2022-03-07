@@ -2,10 +2,10 @@
   <div class="hinoki-blog card_feature">
     <div class="search" v-if="!noSearch">
       <fe-input size="medium" placeholder="请输入..." clearable v-model="searchValue" @clear-click="emitClearClick" />
-      <fe-button class="search-btn" size="medium" auto @click="searchClick">Search</fe-button>
+      <fe-button class="search-btn" size="medium" auto @click="searchClick">{{ searchName }}</fe-button>
     </div>
     <div class="adjunction">
-      <fe-button class="add-btn" type="success" auto size="medium" @click="emitAddjunction">Add</fe-button>
+      <fe-button class="add-btn" type="success" auto size="medium" @click="emitAddjunction">{{ addName }}</fe-button>
     </div>
   </div>
 </template>
@@ -20,6 +20,14 @@ export default defineComponent({
     noSearch: {
       type: Boolean,
       default: false,
+    },
+    searchName: {
+      type: String,
+      default: '搜索',
+    },
+    addName: {
+      type: String,
+      default: '添加',
     },
   },
   emits: ['searchClick', 'addjuctionClick', 'clearClick', 'judgeEmpty'],
@@ -42,8 +50,7 @@ export default defineComponent({
       () => searchValue.value === '',
       () => {
         if (searchValue.value === '') {
-          emit('judgeEmpty', false)
-          console.log('1')
+          emit('judgeEmpty')
         }
       }
     )
@@ -92,10 +99,9 @@ export default defineComponent({
 
     .adjunction {
       justify-self: right;
-      margin-right: 10px;
 
       .add-btn {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
     }
 
@@ -103,10 +109,14 @@ export default defineComponent({
       & {
         grid-template-columns: unset;
         grid-template-rows: repeat(2, 1fr);
-        row-gap: 0.6rem;
+        row-gap: 0.8rem;
 
         .search {
           flex-direction: unset;
+        }
+
+        .adjunction {
+          justify-self: left;
         }
       }
     }

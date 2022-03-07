@@ -1,6 +1,6 @@
 <template>
   <div class="hinoki-blog user">
-    <fe-button type="success" @click="showHandler.create">添加用户</fe-button>
+   <card-feature no-search @addjuction-click="showHandler.create" addName="添加用户"></card-feature>
     <div class="user__container">
       <fe-grid-group justify="flex-start" :gap="2">
         <fe-grid v-for="user in users" :key="user._id" :xs="24" :md="12">
@@ -62,9 +62,10 @@ import { useUserStore } from '@admin/stores'
 import UserItem from '@admin/components/user-item/user-item.vue'
 import { IBaseUser } from '@admin/interfaces'
 import { debounce } from '@admin/hooks'
+import CardFeature from '@admin/components/card-main/card-feature.vue'
 export default defineComponent({
   name: 'User',
-  components: { UserItem },
+  components: { UserItem, CardFeature },
   setup() {
     const UserStore = useUserStore()
     const showModal = reactive({

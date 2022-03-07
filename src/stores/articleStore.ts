@@ -7,7 +7,6 @@ interface IState {
   articleList: IArticle[]
   articleData: IArticle
   articleTotal: number
-  fettle: boolean
 }
 
 export const useArticleStore = defineStore('artilce', {
@@ -16,7 +15,6 @@ export const useArticleStore = defineStore('artilce', {
     articleData: {},
     articleTotal: 1,
     // whether request is success
-    fettle: false,
   }),
 
   getters: {
@@ -50,14 +48,11 @@ export const useArticleStore = defineStore('artilce', {
 
     async createArticle() {
       try {
-        console.log('this', this.articleData)
         const result = await httpPost({
           url: '/article/new',
           data: this.articleData,
         })
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         throw error
       }
     },
@@ -70,9 +65,7 @@ export const useArticleStore = defineStore('artilce', {
           url: `/article/${articleId}`,
           data: updatedArticle,
         })
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         throw error
       }
     },
@@ -82,9 +75,7 @@ export const useArticleStore = defineStore('artilce', {
         const result = <IHttpArticle>await httpDelete({
           url: `/article/${articleId}`,
         })
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         throw error
       }
     },
@@ -96,9 +87,7 @@ export const useArticleStore = defineStore('artilce', {
         })
         this.articleTotal = result.total
         this.articleList = result.articles
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         throw error
       }
     },

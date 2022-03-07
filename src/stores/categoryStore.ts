@@ -5,14 +5,12 @@ import { defineStore } from 'pinia'
 interface IState {
   categoryList: ICategory[]
   categoryData: ICategory
-  fettle: boolean
 }
 
 export const useCategoryStore = defineStore('category', {
   state: (): IState => ({
     categoryList: [],
     categoryData: {},
-    fettle: false,
   }),
 
   getters: {
@@ -23,9 +21,7 @@ export const useCategoryStore = defineStore('category', {
     async createCategory() {
       try {
         const result = <ICategories>await httpPost({ url: '/category/new', data: this.categoryData })
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         console.log(`err: ${error}`)
         return error
       }
@@ -35,9 +31,7 @@ export const useCategoryStore = defineStore('category', {
       try {
         const result = <ICategories>await httpGet({ url: '/category/all' })
         this.categoryList = result.categories
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         console.log(`err: ${error}`)
         return error
       }
@@ -48,9 +42,7 @@ export const useCategoryStore = defineStore('category', {
       try {
         const result = <ICategory>await httpGet({ url: `/category/${id}` })
         this.categoryData = result
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         console.log(`err: ${error}`)
         return error
       }
@@ -60,9 +52,7 @@ export const useCategoryStore = defineStore('category', {
       try {
         const result = <ICategories>await httpPut({ url: `/category/${id}` })
         // this.categoryData = result.category
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         console.log(`err: ${error}`)
         return error
       }
@@ -71,9 +61,7 @@ export const useCategoryStore = defineStore('category', {
     async deleteCategory(id: string) {
       try {
         const result = <ICategories>await httpDelete({ url: `/category/${id}` })
-        this.fettle = true
       } catch (error) {
-        this.fettle = false
         console.log(`err: ${error}`)
         return error
       }

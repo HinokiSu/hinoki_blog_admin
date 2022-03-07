@@ -6,6 +6,7 @@
         @clear-click="clearHandler"
         @addjuction-click="addjuctionHandler"
         @judge-empty="judgeSearchisEmpty"
+        add-name="添加文章"
       ></card-feature>
     </div>
     <fe-grid-group direction="row" class="block-group">
@@ -17,7 +18,7 @@
         ></article-item>
       </fe-grid>
     </fe-grid-group>
-    <div class="articles__pagination">
+    <div class="articles__pagination" v-show="!isSearch">
       <fe-pagination v-model="paginationVal.curPage" :count="paginationVal.count" :limit="paginationVal.limit">
         <template #prev>
           <arrow-left-circle />
@@ -118,37 +119,10 @@ export default defineComponent({
     // 监视 分页
     watchEffect(() => {
       // TODO 搜索结果未被分页
-
-      /* 
-       if (isSearch.value) {
-        if (paginationVal.count > 1) {
-          // 先切割数组
-          const wholeList = ArticleStore.articleList
-          const totalLength = ArticleStore.articleTotal
-          const result = []
-          let end = 0
-          let start = 0
-          for (let i = 0; i < paginationVal.count; i++) {
-            start = i === 0 ? 0 : i + paginationVal.limit - 1
-            end = i === 0 ? paginationVal.limit : (i + 1) * paginationVal.limit - 1
-            result.push(wholeList.slice(start, end))
-            console.log(i)
-          }
-          console.log(result)
-        }
-      } 
-      */
-
+      // 动态获取总页数
       paginationVal.count = Math.ceil(ArticleStore.articleTotal / paginationVal.limit)
-      if (!isSearch.value) {
-        // 动态获取总页数
-        paginationVal.limit = 6
-        ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
-      } else {
-        // 只在一页显示。暂时处理成这样
-        paginationVal.count = 1
-        paginationVal.limit = ArticleStore.getArticleCount
-      }
+      paginationVal.limit = 6
+      ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
     })
     const articleList = computed(() => ArticleStore.articleList)
 
@@ -170,15 +144,20 @@ export default defineComponent({
         isSearch.value = true
       }
     }
-    // 判断搜索框是否为空, TODO 还可以改进
-    const judgeSearchisEmpty = (val: boolean) => {
-      isSearch.value = val
-    }
 
+    const clearSearchInput = () => {
+      setTimeout(() => {
+        isSearch.value = false
+      }, 200)
+      ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
+    }
+    // 判断搜索框是否为空, TODO 还可以改进
+    const judgeSearchisEmpty = () => {
+      clearSearchInput()
+    }
     // 清除按钮
     const clearHandler = () => {
-      console.log('is', isSearch.value)
-      isSearch.value = false
+      clearSearchInput()
     }
 
     const addjuctionHandler = () => {
@@ -313,6 +292,7 @@ export default defineComponent({
       confirmModalHandler,
       multiSelectVals,
       categoryList,
+      isSearch,
     }
   },
 })

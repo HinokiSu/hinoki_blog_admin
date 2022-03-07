@@ -69,6 +69,11 @@ export default defineComponent({
             name: 'Users',
             toPath: '/manage/users',
           })
+        } else if (curRouteList.value[1] === 'fettle') {
+          curNavList.value.push({
+            name: 'Fettle',
+            toPath: '/manage/fettle',
+          })
         }
       }
     })

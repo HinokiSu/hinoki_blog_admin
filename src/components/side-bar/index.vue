@@ -13,7 +13,12 @@
       </router-link>
       <router-link :to="{ name: 'users' }">
         <div class="feature">
-          <p><User class="f-icon user-icon" />User</p>
+          <p><user class="f-icon user-icon" />User</p>
+        </div>
+      </router-link>
+      <router-link :to="{ name: 'fettle' }">
+        <div class="feature">
+          <p><pie-chart class="f-icon state-icon" />Fettle</p>
         </div>
       </router-link>
       <!-- TODO -->
@@ -26,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Hash, FileText, Image as ImageIcon, User } from '@fect-ui/vue-icons'
+import { Hash, FileText, Image as ImageIcon, User, PieChart } from '@fect-ui/vue-icons'
 
 export default defineComponent({
   name: 'SideBar',
@@ -35,6 +40,7 @@ export default defineComponent({
     FileText,
     ImageIcon,
     User,
+    PieChart,
   },
   setup() {
     return {}
@@ -58,7 +64,7 @@ export default defineComponent({
     }
 
     .features {
-      padding-top: 64px;
+      padding: 64px 0;
       display: grid;
       row-gap: 64px;
       justify-items: center;
@@ -103,6 +109,10 @@ export default defineComponent({
           }
 
           &.user-icon {
+            width: 32px;
+          }
+
+          &.state-icon {
             width: 32px;
           }
         }

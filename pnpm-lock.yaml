@@ -9,9 +9,11 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.8.0
   '@typescript-eslint/parser': ^5.8.0
   '@vitejs/plugin-vue': ^2.0.0
+  all: ^0.0.0
   axios: ^0.24.0
   browserslist: ^4.19.1
   dayjs: ^1.10.7
+  echarts: ^5.3.0
   eslint: ^8.5.0
   eslint-plugin-vue: ^8.2.0
   highlight.js: ^11.4.0
@@ -33,9 +35,11 @@ dependencies:
   '@fect-ui/vue-icons': registry.npmmirror.com/@fect-ui/vue-icons/2.0.0_vue@3.2.26
   '@types/markdown-it': registry.npmmirror.com/@types/markdown-it/12.2.3
   '@types/nprogress': registry.npmmirror.com/@types/nprogress/0.2.0
+  all: registry.npmmirror.com/all/0.0.0
   axios: registry.npmmirror.com/axios/0.24.0
   browserslist: registry.npmmirror.com/browserslist/4.19.1
   dayjs: registry.npmmirror.com/dayjs/1.10.7
+  echarts: registry.npmmirror.com/echarts/5.3.0
   highlight.js: registry.npmmirror.com/highlight.js/11.4.0
   markdown-it: registry.npmmirror.com/markdown-it/12.3.2
   nprogress: registry.npmmirror.com/nprogress/0.2.0
@@ -1699,6 +1703,12 @@ packages:
       uri-js: registry.nlark.com/uri-js/4.4.1
     dev: true
 
+  registry.npmmirror.com/all/0.0.0:
+    resolution: {integrity: sha512-0oKlfNVv2d+d7c1gwjGspzgbwot47PGQ4b3v1ccx4mR8l9P/Y6E6Dr/yE8lNT63EcAKEbHo6UG3odDpC/NQcKw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/all/-/all-0.0.0.tgz}
+    name: all
+    version: 0.0.0
+    dev: false
+
   registry.npmmirror.com/ansi-colors/4.1.1:
     resolution: {integrity: sha1-y7muJWv3UK8eqzRPIpqif+lLo0g=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ansi-colors/download/ansi-colors-4.1.1.tgz}
     name: ansi-colors
@@ -1829,6 +1839,15 @@ packages:
     dependencies:
       domelementtype: registry.nlark.com/domelementtype/2.2.0
     dev: true
+
+  registry.npmmirror.com/echarts/5.3.0:
+    resolution: {integrity: sha512-zENufmwFE6WjM+24tW3xQq4ICqQtI0CGj4bDVDNd3BK3LtaA/5wBp+64ykIyKy3QElz0cieKqSYP4FX9Lv9MwQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/echarts/-/echarts-5.3.0.tgz}
+    name: echarts
+    version: 5.3.0
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.3.0
+      zrender: registry.npmmirror.com/zrender/5.3.0
+    dev: false
 
   registry.npmmirror.com/electron-to-chromium/1.4.42:
     resolution: {integrity: sha512-JJLT8bjdswJzk8sNRnQjee0MGtO4zTn1t7eWwYPr8gPTadQgNRR/wFRKLGD6HZVZby39yHERkvuCVKNm10r7Dg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/download/electron-to-chromium-1.4.42.tgz}
@@ -2733,10 +2752,16 @@ packages:
     dev: true
 
   registry.npmmirror.com/tslib/1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/download/tslib-1.14.1.tgz}
+    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/-/tslib-1.14.1.tgz}
     name: tslib
     version: 1.14.1
     dev: true
+
+  registry.npmmirror.com/tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/download/tslib-2.3.0.tgz}
+    name: tslib
+    version: 2.3.0
+    dev: false
 
   registry.npmmirror.com/tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/download/tslib-2.3.1.tgz}
@@ -3056,3 +3081,11 @@ packages:
     name: wrappy
     version: 1.0.2
     dev: true
+
+  registry.npmmirror.com/zrender/5.3.0:
+    resolution: {integrity: sha512-Ln2QB5uqI1ftNYMtCRxd+XDq6MOttLgam2tmhKAVA+j0ko47UT+VNlDvKTkqe4K2sJhBvB0EhYNLebqlCTjatQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/zrender/-/zrender-5.3.0.tgz}
+    name: zrender
+    version: 5.3.0
+    dependencies:
+      tslib: registry.npmmirror.com/tslib/2.3.0
+    dev: false

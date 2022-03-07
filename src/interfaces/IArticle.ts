@@ -8,6 +8,7 @@ export interface IArticle {
   isVisible?: string
   createdAt?: string
   updatedAt?: string
+  totalVisits?: number
 }
 
 export type IHttpArticle = {

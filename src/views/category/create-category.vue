@@ -50,22 +50,31 @@ export default defineComponent({
 
     const clickHandler = {
       create: async () => {
-        await CategoryStore.createCategory()
-        if (CategoryStore.fettle) {
-          CategoryStore.fettle = false
-          CategoryStore.recycleCategoryData()
-          router.push({
-            name: 'categories',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Create failed!',
-            duration: '2000',
-          })
-        }
+        await CategoryStore.createCategory().then(
+          () => {
+            CategoryStore.recycleCategoryData()
+            proxy.$toast['success']({
+              text: '创建类别成功!',
+              duration: '1500',
+            })
+            router.push({
+              name: 'categories',
+            })
+          },
+          () => {
+            proxy.$toast['error']({
+              text: '创建类别失败',
+              duration: '1500',
+            })
+          }
+        )
       },
       cancle: () => {
         CategoryStore.recycleCategoryData()
+        proxy.$toast['error']({
+          text: '已取消创建类别',
+          duration: '1500',
+        })
         router.push({
           name: 'categories',
         })

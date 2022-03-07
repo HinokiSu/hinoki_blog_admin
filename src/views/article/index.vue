@@ -18,7 +18,7 @@
         ></article-item>
       </fe-grid>
     </fe-grid-group>
-    <div class="articles__pagination" v-show="!isSearch">
+    <div class="articles__pagination" v-show="!isSearch && !isNullArticleList">
       <fe-pagination v-model="paginationVal.curPage" :count="paginationVal.count" :limit="paginationVal.limit">
         <template #prev>
           <arrow-left-circle />
@@ -214,39 +214,39 @@ export default defineComponent({
 
     const confirmModalHandler = {
       editModal: async () => {
-        await ArticleStore.updateArticle(articleId.value)
-
-        if (ArticleStore.fettle) {
-          ArticleStore.fettle = false
-          ArticleStore.getArticleList()
-          proxy.$toast['success']({
-            text: 'Edit successfully!',
-            duration: '1500',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Edit failed !',
-            duration: '2000',
-          })
-        }
+        await ArticleStore.updateArticle(articleId.value).then(
+          () => {
+            ArticleStore.getArticleList()
+            proxy.$toast['success']({
+              text: '编辑文章成功!',
+              duration: '1500',
+            })
+          },
+          () => {
+            proxy.$toast['error']({
+              text: '编辑文章失败!',
+              duration: '1500',
+            })
+          }
+        )
       },
 
       deleteModal: async () => {
-        await ArticleStore.deleteArticle(articleId.value)
-        if (ArticleStore.fettle) {
-          ArticleStore.fettle = false
-          // reacquire
-          ArticleStore.getArticleList()
-          proxy.$toast['success']({
-            text: 'Delete successfully!',
-            duration: '1500',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Delete failed !',
-            duration: '2000',
-          })
-        }
+        await ArticleStore.deleteArticle(articleId.value).then(
+          () => {
+            ArticleStore.getArticleList()
+            proxy.$toast['success']({
+              text: '删除文章成功!',
+              duration: '1500',
+            })
+          },
+          () => {
+            proxy.$toast['error']({
+              text: '删除文章失败',
+              duration: '1500',
+            })
+          }
+        )
       },
     }
 
@@ -257,7 +257,7 @@ export default defineComponent({
       })
 
     watchEffect(async () => {
-      text.value = handleShow.editModal ? 'Edit' : 'Delete'
+      text.value = handleShow.editModal ? '编辑' : '删除'
 
       // edit & delete modal all close
       if (!handleShow.editModal && !handleShow.deleteModal) {
@@ -273,7 +273,7 @@ export default defineComponent({
 
     const handleCancelEventModal = () =>
       proxy.$toast['warning']({
-        text: `${text.value} cancelled`,
+        text: `已取消${text.value}`,
         duration: '1500',
       })
 

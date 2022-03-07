@@ -38,24 +38,31 @@ export default defineComponent({
 
     const sumbitHandler = async () => {
       // articleStore -> updateArticle
-      await ArticleStore.updateArticle(articleId as string)
-      console.log(ArticleStore.fettle)
-      if (ArticleStore.fettle) {
-        ArticleStore.fettle = false
-        ArticleStore.recycleArticleData()
-        router.push({
-          name: 'articles',
-        })
-      } else {
-        proxy.$toast['error']({
-          text: 'Update failed!',
-          duration: '2000',
-        })
-      }
+      await ArticleStore.updateArticle(articleId as string).then(
+        () => {
+          ArticleStore.recycleArticleData()
+          proxy.$toast['success']({
+            text: '修改文章成功!',
+            duration: '1500',
+          })
+          router.push({
+            name: 'articles',
+          })
+        },
+        () => {
+          proxy.$toast['error']({
+            text: '修改文章失败',
+            duration: '1500',
+          })
+        }
+      )
     }
     const cancelHandler = () => {
-      ArticleStore.fettle = false
       ArticleStore.recycleArticleData()
+      proxy.$toast['error']({
+        text: '已取消修改文章',
+        duration: '1500',
+      })
       router.push({
         name: 'articles',
       })

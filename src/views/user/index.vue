@@ -1,6 +1,6 @@
 <template>
   <div class="hinoki-blog user">
-   <card-feature no-search @addjuction-click="showHandler.create" addName="添加用户"></card-feature>
+    <card-feature no-search @addjuction-click="showHandler.create" addName="添加用户"></card-feature>
     <div class="user__container">
       <fe-grid-group justify="flex-start" :gap="2">
         <fe-grid v-for="user in users" :key="user._id" :xs="24" :md="12">
@@ -116,18 +116,20 @@ export default defineComponent({
             duration: '1500',
           })
         } else {
-          await UserStore.createUser(creatingUser).then(() => {
-            proxy.$toast['success']({
-              text: '创建用户成功!',
-              duration: '1500',
-            })
-          }),
+          await UserStore.createUser(creatingUser).then(
+            () => {
+              proxy.$toast['success']({
+                text: '创建用户成功!',
+                duration: '1500',
+              })
+            },
             () => {
               proxy.$toast['error']({
                 text: '创建用户失败',
                 duration: '1500',
               })
             }
+          )
           await UserStore.getUsers()
         }
       },
@@ -160,7 +162,11 @@ export default defineComponent({
     }
 
     watchEffect(async () => {
-      text.value = showModal.create ? '创建' : '删除'
+      if (showModal.create) {
+        text.value = '创建'
+      } else if (showModal.delete) {
+        text.value = '删除'
+      }
 
       if (!showModal.create && !showModal.delete) {
         recycleData()
@@ -172,7 +178,7 @@ export default defineComponent({
         text: `取消${text.value}用户`,
         duration: '1500',
       })
-    }, 500)
+    }, 200)
 
     return {
       users,

@@ -117,7 +117,7 @@ export default defineComponent({
     })
 
     watchEffect(() => {
-      text.value = handleShow.editModal ? 'Edit' : 'Delete'
+      text.value = handleShow.editModal ? '编辑' : '删除'
     })
 
     watch(
@@ -131,46 +131,45 @@ export default defineComponent({
 
     const handleCancelEventModal = () =>
       proxy.$toast['warning']({
-        text: `${text.value} cancelled`,
+        text: `已取消${text.value} `,
         duration: '1500',
       })
 
     const confirmEventModalHandler = {
       editModal: async () => {
-        await CategoryStore.updateCategory(categoryId.value)
-
-        if (CategoryStore.fettle) {
-          CategoryStore.fettle = false
-          // reacquire
-          CategoryStore.getCategoryList()
-          proxy.$toast['success']({
-            text: 'Edit successfully!',
-            duration: '1500',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Edit failed !',
-            duration: '2000',
-          })
-        }
+        await CategoryStore.updateCategory(categoryId.value).then(
+          () => {
+            CategoryStore.getCategoryList()
+            proxy.$toast['success']({
+              text: '编辑类别成功!',
+              duration: '1500',
+            })
+          },
+          () => {
+            proxy.$toast['error']({
+              text: '编辑类别失败',
+              duration: '1500',
+            })
+          }
+        )
       },
 
       deleteModal: async () => {
-        await CategoryStore.deleteCategory(categoryId.value)
-        if (CategoryStore.fettle) {
-          CategoryStore.fettle = false
-          // reacquire
-          CategoryStore.getCategoryList()
-          proxy.$toast['success']({
-            text: 'Delete successfully!',
-            duration: '1500',
-          })
-        } else {
-          proxy.$toast['error']({
-            text: 'Delete failed !',
-            duration: '2000',
-          })
-        }
+        await CategoryStore.deleteCategory(categoryId.value).then(
+          () => {
+            CategoryStore.getCategoryList()
+            proxy.$toast['success']({
+              text: '删除类别成功!',
+              duration: '1500',
+            })
+          },
+          () => {
+            proxy.$toast['error']({
+              text: '删除类别失败',
+              duration: '1500',
+            })
+          }
+        )
       },
     }
 

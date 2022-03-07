@@ -71,19 +71,23 @@ export default defineComponent({
 
     const sumbitHandler = async () => {
       // ArticleStore -> createArticle
-      await ArticleStore.createArticle()
-
-      if (ArticleStore.fettle) {
-        ArticleStore.fettle = false
-        router.push({
-          name: 'articles',
-        })
-      } else {
-        proxy.$toast['error']({
-          text: 'Create failed!',
-          duration: '2000',
-        })
-      }
+      await ArticleStore.createArticle().then(
+        () => {
+          proxy.$toast['success']({
+            text: '创建文章成功!',
+            duration: '1500',
+          })
+          router.push({
+            name: 'articles',
+          })
+        },
+        () => {
+          proxy.$toast['error']({
+            text: '创建文章失败',
+            duration: '1500',
+          })
+        }
+      )
     }
 
     const rules = {
@@ -98,7 +102,6 @@ export default defineComponent({
     }
 
     const cancelHandler = () => {
-      ArticleStore.fettle = false
       ArticleStore.recycleArticleData()
       router.push({
         name: 'articles',

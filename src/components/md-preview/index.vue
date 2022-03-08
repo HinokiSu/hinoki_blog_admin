@@ -18,7 +18,7 @@ import { computed, defineComponent, reactive, ref, watch, watchEffect } from 'vu
 import { useArticleStore } from '@admin/stores/articleStore'
 import MarkdownIt from 'markdown-it'
 import HinoTextarea from '@admin/components/text-area/index.vue'
-import hljs from 'highlight.js'
+import hljs from '@admin/plugins/hljs'
 export default defineComponent({
   name: 'HinoMarkdownPreview',
   components: { HinoTextarea },

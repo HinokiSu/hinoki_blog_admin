@@ -11,11 +11,17 @@
         <div class="right__form">
           <label class="form-item">
             <span :class="classes.nameLabel"> 用户名 </span>
-            <fe-input size="large" clearable v-model="loginForm.username" placeholder="input your name" />
+            <fe-input size="large" auto clearable v-model="loginForm.username" placeholder="input your name" />
           </label>
           <label class="form-item">
             <span :class="classes.pwdLabel"> 密码 </span>
-            <fe-input size="large" type="password" v-model="loginForm.password" placeholder="input your password" />
+            <fe-input
+              size="large"
+              auto
+              type="password"
+              v-model="loginForm.password"
+              placeholder="input your password"
+            />
           </label>
         </div>
         <div class="form__btns">
@@ -207,14 +213,15 @@ export default defineComponent({
 
       .form__btns {
         margin-top: 24px;
-        width: 65%;
+        width: 240px;
+        max-width: 70%;
         display: flex;
         flex-direction: column;
         row-gap: 24px;
       }
     }
 
-    @media screen and (max-width: 576px) {
+    @media screen and (max-width: 600px) {
       & {
         width: 100vw;
         // background: var(--primary-background);
@@ -232,8 +239,8 @@ export default defineComponent({
             position: absolute;
             z-index: 1;
             width: 100%;
-            height: 45%;
-            border-radius: 32px;
+            height: 55%;
+            border-radius: 0;
             overflow: hidden;
 
             img {
@@ -247,13 +254,24 @@ export default defineComponent({
 
           & .login__right {
             position: absolute;
-            bottom: 5%;
+            bottom: 7%;
             justify-content: unset;
-
             background-color: var(--primary-background);
             z-index: 100;
             width: 100%;
             border-radius: 32px 32px 0 0;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      & {
+        & .login-page__container {
+          & .login__left {
+            img {
+              object-position: 50% 70%;
+            }
           }
         }
       }

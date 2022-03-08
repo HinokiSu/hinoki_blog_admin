@@ -7,7 +7,19 @@
 
 # Description
 
-This is a CMS of Hinoki's Blog
+A simple blog managment platform.
+
+# Precondition
+
+- add `.env.development` and `.env.production` in root directory
+
+> which contains:
+
+```
+ VITE_API_URL = /api/
+```
+
+# Start
 
 ## Installation
 
@@ -17,10 +29,20 @@ $ pnpm install
 
 ## Running
 
-- run admin
-
 ```bash
 $ pnpm run dev
+```
+
+## Build
+
+```bash
+$ pnpm run build
+```
+
+## Preview
+
+```bash
+$ pnpm run preview
 ```
 
 ## License

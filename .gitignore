@@ -108,3 +108,10 @@ dist
 
 # husky
 .husky
+
+# env
+.env.*
+*.env
+
+# analyze packaged  visualizer
+stats.html

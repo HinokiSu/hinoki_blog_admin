@@ -27,13 +27,7 @@ export default defineConfig(({ mode }) => {
           {
             libraryName: '@fect-ui/vue',
             esModule: true,
-            resolveStyle: (name) => {
-              if (name === 'form') {
-                return
-              } else {
-                return `@fect-ui/vue/es/${name}/index.css`
-              }
-            },
+            resolveStyle: (name) => `@fect-ui/vue/es/${name}/style/index`,
           },
         ],
       }),

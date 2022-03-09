@@ -26,6 +26,7 @@ import {
 // Image.name = 'feImg'
 
 import '@fect-ui/vue/lib/main.css'
+import '@fect-ui/themes'
 
 const UI = [
   GridGroup,

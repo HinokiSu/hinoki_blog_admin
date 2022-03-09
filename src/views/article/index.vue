@@ -82,8 +82,9 @@
     @confirm="confirmModalHandler.deleteModal"
   >
     <span>
-      是否确认要删除&nbsp;&nbsp;
-      <p>{{ modalValue.title }}</p>
+      是否确认要删除:
+      <span style="color: var(--highlight-pink); font-size: 14px; font-weight: 500">`{{ modalValue.title }}`</span>
+      <!-- <p>{{ modalValue.title }}</p> -->
     </span>
   </fe-modal>
 </template>

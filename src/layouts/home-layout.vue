@@ -11,13 +11,18 @@
       <fold-side-bar></fold-side-bar>
     </div>
     <div class="layout--main">
-      <router-view />
+      <!-- <router-view /> -->
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in" :duration="{ enter: 200, leave: 150 }">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import NavBar from '@admin/components/nav-bar/index.vue'
 import SideBar from '@admin/components/side-bar/index.vue'
 import FoldSideBar from '@admin/components/side-bar/fold-side-bar.vue'

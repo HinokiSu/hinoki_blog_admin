@@ -10,3 +10,9 @@ blockquote {
   overflow: auto;
   background-color: unset !important;
 }
+
+ul li::before {
+  content: '•' !important;
+  font-size: 1.2rem !important;
+  color: var(--accents-7) !important;
+}

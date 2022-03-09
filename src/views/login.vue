@@ -36,9 +36,10 @@
 <script lang="ts">
 import { debounce } from '@admin/hooks'
 import { ILoginUser } from '@admin/interfaces'
+import NProgress from '@admin/plugins/nprogress'
 import router from '@admin/routes'
 import { useUserStore } from '@admin/stores/userStore'
-import { computed, customRef, defineComponent, getCurrentInstance, reactive, ref, watch, watchEffect } from 'vue'
+import { defineComponent, getCurrentInstance, ref, watch } from 'vue'
 export default defineComponent({
   name: 'Login',
   setup() {
@@ -98,11 +99,16 @@ export default defineComponent({
         classes.value.nameLabel = 'error'
         classes.value.pwdLabel = 'error'
       } else {
-        UserStore.loginAuth(loginForm.value.username, loginForm.value.password).then(() => {
-          router.push(
-            router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
-          )
-        })
+        UserStore.loginAuth(loginForm.value.username, loginForm.value.password).then(
+          () => {
+            router.push(
+              router.currentRoute.value.query!.redirect ? (router.currentRoute.value.query!.redirect as string) : '/'
+            )
+          },
+          () => {
+            NProgress.done()
+          }
+        )
       }
     }
 

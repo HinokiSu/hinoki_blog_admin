@@ -12,6 +12,9 @@ import 'highlight.js/styles/github.css'
 import * as echarts from 'echarts/core'
 import { Charts } from './plugins/echarts'
 
+// nprogress
+import 'nprogress/nprogress.css'
+
 const app = createApp(App)
 const pinia = createPinia()
 

@@ -63,7 +63,7 @@ export default defineComponent({
                 return colorList[colors.dataIndex]
               },
               shadowBlur: 100,
-              shadowColor: 'rgba(0, 0, 0, 0.3)',
+              shadowColor: 'rgba(0, 0, 0, 0.2)',
             },
 
             animationType: 'scale',

@@ -1,9 +1,7 @@
 import router from '@admin/routes'
 import axios from 'axios'
 import { useUserStore } from '@admin/stores/userStore'
-
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import NProgress from '@admin/plugins/nprogress'
 
 // dev or prod
 axios.defaults.baseURL = import.meta.env.VITE_API_URL as string
@@ -24,7 +22,8 @@ axios.interceptors.request.use(
     return config
   },
   (error) => {
-    return Promise.reject(error)
+    useUserStore().errorInfo = error.response
+    // return Promise.reject(error)
   }
 )
 

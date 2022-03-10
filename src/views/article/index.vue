@@ -66,7 +66,7 @@
       <div class="visible-option">
         <p>不可见</p>
         <div class="radio-group">
-          <fe-switch size="large" v-model="modalValue.isVisible" checked-value="1" inactive-value="0" />
+          <fe-switch size="large" v-model="modalValue.isVisible" :checked-value="'false'" :inactive-value="'true'" />
         </div>
       </div>
     </div>
@@ -217,7 +217,7 @@ export default defineComponent({
       editModal: async () => {
         await ArticleStore.updateArticle(articleId.value).then(
           () => {
-            ArticleStore.getArticleList()
+            ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
             proxy.$toast['success']({
               text: '编辑文章成功!',
               duration: '1500',
@@ -235,7 +235,7 @@ export default defineComponent({
       deleteModal: async () => {
         await ArticleStore.deleteArticle(articleId.value).then(
           () => {
-            ArticleStore.getArticleList()
+            ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
             proxy.$toast['success']({
               text: '删除文章成功!',
               duration: '1500',
@@ -336,12 +336,6 @@ export default defineComponent({
 
   .desc-areatext {
     width: 100%;
-  }
-
-  .visible-option {
-    .radio-group {
-      margin-left: 20px;
-    }
   }
 }
 </style>

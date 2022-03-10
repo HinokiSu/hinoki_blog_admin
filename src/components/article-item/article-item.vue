@@ -84,11 +84,17 @@ export default defineComponent({
           'time';
         row-gap: 10px;
         box-shadow: 0 0 30px var(--accents-2);
-        .title + .description {
-          font-weight: 500;
+
+        .title,
+        .description {
           overflow: hidden;
           text-overflow: ellipsis;
-          white-space: nowrap;
+          white-space: normal;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          word-break: break-all;
+
+          display: -webkit-box;
         }
 
         .title {
@@ -100,6 +106,7 @@ export default defineComponent({
           color: var(--accents-7);
         }
         .description {
+          font-weight: 500;
           grid-area: desc;
           font-size: 0.8rem;
         }

@@ -16,8 +16,8 @@ export default defineComponent({
   components: {
     ArticlePie,
     PageviewsBar,
-    TopArticle
-},
+    TopArticle,
+  },
   setup() {
     return {}
   },

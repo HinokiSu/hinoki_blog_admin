@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, onBeforeUnmount, onUnmounted, watchEffect } from 'vue'
+import { defineComponent, getCurrentInstance, onBeforeUnmount, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { useArticleStore } from '@admin/stores/articleStore'
 import { useRoute, useRouter } from 'vue-router'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
+import { getRealTime } from '@admin/utils/format'
 export default defineComponent({
   components: { HinoTextarea, HinoMarkdownPreview },
   setup() {
@@ -25,7 +26,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const { proxy } = getCurrentInstance() as any
-
+    const realTime = ref('')
     const articleId = <string | undefined>route.params?.id
 
     const fetchData = async (id: string) => {
@@ -35,9 +36,16 @@ export default defineComponent({
     watchEffect(async () => {
       await fetchData(articleId as string)
     })
+    let intervalId: number
+
+    onMounted(() => {
+      intervalId = getRealTime(realTime, 500)
+    })
+    // 实时时间
 
     const sumbitHandler = async () => {
       // articleStore -> updateArticle
+      ArticleStore.articleData['updatedAt'] = realTime.value
       await ArticleStore.updateArticle(articleId as string).then(
         () => {
           ArticleStore.recycleArticleData()
@@ -70,6 +78,7 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       ArticleStore.recycleArticleData()
+      clearInterval(intervalId)
     })
 
     return {

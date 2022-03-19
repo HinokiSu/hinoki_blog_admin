@@ -1,5 +1,4 @@
 import { IArticle, IHttpArticle, IPagination } from '@admin/interfaces/IArticle'
-import { nowDateFormat } from '@admin/utils/format'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
 import { defineStore } from 'pinia'
 
@@ -59,11 +58,9 @@ export const useArticleStore = defineStore('artilce', {
 
     async updateArticle(articleId: string) {
       try {
-        const updatedArticle = { ...this.articleData }
-        updatedArticle.updatedAt = nowDateFormat('YYYY-MM-DD hh:mm:ss')
         const result = <IHttpArticle>await httpPut({
           url: `/article/${articleId}`,
-          data: updatedArticle,
+          data: this.articleData,
         })
       } catch (error) {
         throw error

@@ -44,6 +44,7 @@ import { ICategory } from '@admin/interfaces/ICategory'
 import HinoTextarea from '@admin/components/text-area/index.vue'
 import HinoMarkdownPreview from '@admin/components/md-preview/index.vue'
 import { useRouter } from 'vue-router'
+import { getRealTime } from '@admin/utils/format'
 export default defineComponent({
   name: 'ArticleForm',
   components: {
@@ -53,10 +54,11 @@ export default defineComponent({
   setup() {
     const formRef = ref(null)
     const router = useRouter()
-
     const ArticleStore = useArticleStore()
     const { proxy } = getCurrentInstance() as any
     const formValue = computed(() => ArticleStore.articleData)
+    let realTime = ref('')
+    let intervalId: number
 
     const multiSelectVals = ref<string[]>([])
 
@@ -70,6 +72,8 @@ export default defineComponent({
     )
 
     const sumbitHandler = async () => {
+      formValue.value['createdAt'] = realTime.value
+      formValue.value['updatedAt'] = formValue.value['createdAt']
       // ArticleStore -> createArticle
       await ArticleStore.createArticle().then(
         () => {
@@ -110,11 +114,13 @@ export default defineComponent({
 
     onMounted(async () => {
       await CategoryStore.getCategoryList()
+      intervalId = getRealTime(realTime, 1000)
     })
 
     // recycle
     onBeforeUnmount(() => {
       ArticleStore.recycleArticleData()
+      clearInterval(intervalId)
     })
 
     const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)

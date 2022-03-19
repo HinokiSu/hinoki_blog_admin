@@ -90,7 +90,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from 'vue'
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '@admin/stores/articleStore'
 import { ICategory } from '@admin/interfaces/ICategory'
@@ -100,6 +110,7 @@ import CardFeature from '@admin/components/card-main/card-feature.vue'
 import EmptyWrap from '@admin/components/empty-wrap/index.vue'
 import HinoAreatext from '@admin/components/text-area/index.vue'
 import { ArrowLeftCircle, ArrowRightCircle } from '@fect-ui/vue-icons'
+import { getRealTime } from '@admin/utils/format'
 export default defineComponent({
   name: 'Articles',
   components: { ArticleItem, CardFeature, EmptyWrap, HinoAreatext, ArrowLeftCircle, ArrowRightCircle },
@@ -109,6 +120,10 @@ export default defineComponent({
     const CategoryStore = useCategoryStore()
     const isNullArticleList = ref(false)
     const isSearch = ref(false)
+
+    // 获取实时时间
+    let realTime = ref('')
+    let intervalId: number
 
     // 分页
     const paginationVal = reactive({
@@ -130,6 +145,7 @@ export default defineComponent({
     onMounted(() => {
       ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
       CategoryStore.getCategoryList()
+      intervalId = getRealTime(realTime, 1000)
     })
 
     // 搜索框 模糊搜索
@@ -215,6 +231,7 @@ export default defineComponent({
 
     const confirmModalHandler = {
       editModal: async () => {
+        modalValue.value['updatedAt'] = realTime.value
         await ArticleStore.updateArticle(articleId.value).then(
           () => {
             ArticleStore.getArticlePagination(paginationVal.curPage, paginationVal.limit)
@@ -272,11 +289,17 @@ export default defineComponent({
 
     const categoryList = computed<ICategory[]>(() => CategoryStore.categoryList)
 
-    const handleCancelEventModal = () =>
+    const handleCancelEventModal = () => {
+      clearInterval(intervalId)
       proxy.$toast['warning']({
         text: `已取消${text.value}`,
         duration: '1500',
       })
+    }
+
+    onBeforeUnmount(() => {
+      clearInterval(intervalId)
+    })
 
     return {
       articleList,

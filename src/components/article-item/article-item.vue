@@ -10,7 +10,7 @@
           {{ article?.description }}
         </div>
         <div class="release-time">
-          <p>{{ article?.createdAt }}</p>
+          <p>{{ article?.updatedAt }}</p>
         </div>
       </div>
       <div class="item__collapse">

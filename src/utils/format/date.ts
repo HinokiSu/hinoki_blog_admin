@@ -1,10 +1,20 @@
 import dayjs from 'dayjs'
+import { Ref } from 'vue'
 
 /**
- * format date
- * @param format Converted format
- * @returns formated date
+ * 获取实时时间
+ * @param val Proxy 实时的时间
+ * @param delay 实时时间的更新间隔
+ * @param format 时间的格式,default:'YYYY-MM-DD hh:mm:ss'
+ * @returns intervalId，用于清除定时器
  */
-export function nowDateFormat(format: string): string {
-  return <string>dayjs().format(format)
+export function getRealTime(val: Ref, delay: number, format: string = 'YYYY-MM-DD HH:mm:ss') {
+  return setInterval(
+    (val: { value: string }, format: string) => {
+      val.value = dayjs().format(format)
+    },
+    delay,
+    val,
+    format
+  )
 }

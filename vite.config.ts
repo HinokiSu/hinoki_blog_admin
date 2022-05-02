@@ -1,10 +1,11 @@
-import { defineConfig, loadEnv, optimizeDeps } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import styleImport from 'vite-plugin-style-import'
 import ViteCompression from 'vite-plugin-compression'
 import visualizer from 'rollup-plugin-visualizer'
-// import { loadEnv } from './config/load-env'
+import Components from 'unplugin-vue-components/vite'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 // @ts-ignore
@@ -14,6 +15,9 @@ export default defineConfig(({ mode }) => {
     base: '/admin/',
     plugins: [
       vue(),
+      Components({
+        resolvers: [AntDesignVueResolver()],
+      }),
       visualizer(),
       ViteCompression({
         verbose: true,

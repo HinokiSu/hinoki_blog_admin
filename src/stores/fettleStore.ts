@@ -6,6 +6,7 @@ interface IState {
   fettleList: IFettle[]
   pageviewsList: any
   topArticleList: TopArticle[]
+  commentFettle: IFettle[]
 }
 
 export const useFettleStore = defineStore('fettle', {
@@ -13,6 +14,7 @@ export const useFettleStore = defineStore('fettle', {
     fettleList: [],
     pageviewsList: [],
     topArticleList: [],
+    commentFettle: [],
   }),
 
   getters: {},
@@ -36,6 +38,10 @@ export const useFettleStore = defineStore('fettle', {
         temp.push([t.name, t.value])
       }
       this.pageviewsList = temp
+    },
+    async getCommentByEveryArticle() {
+      const res = <IHttpFettle>await httpGet({ url: '/state/pageviews/comment' })
+      this.commentFettle = res.fettle
     },
   },
 })

@@ -1,5 +1,6 @@
 import { ICategories, ICategory } from '@admin/interfaces/ICategory'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
+import dayjs from 'dayjs'
 import { defineStore } from 'pinia'
 
 interface IState {
@@ -30,7 +31,14 @@ export const useCategoryStore = defineStore('category', {
     async getCategoryList() {
       try {
         const result = <ICategories>await httpGet({ url: '/category/all' })
-        this.categoryList = result.categories
+        this.categoryList = result.categories.map((item) => {
+          return {
+            _id: item._id,
+            name: item.name,
+            createdAt: dayjs(item.createdAt).format('YYYY-MM-DD HH:mm'),
+            updatedAt: item.updatedAt,
+          }
+        })
       } catch (error) {
         console.log(`err: ${error}`)
         return error

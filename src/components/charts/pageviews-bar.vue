@@ -15,13 +15,11 @@ export default defineComponent({
     const FettleStore = useFettleStore()
     const chartData = computed(() => FettleStore.pageviewsList)
 
-
     onMounted(async () => {
       await FettleStore.getPageviewsByCategory()
       const myChart = echarts.init(document.getElementById('pageviews-bar'))
       let option: BarEChartsOption = {
         title: {
-          text: '类别浏览量汇总',
           left: 'center',
           top: 10,
           textStyle: {
@@ -45,20 +43,20 @@ export default defineComponent({
           axisLabel: { interval: 0, rotate: 30 },
         },
         yAxis: {},
-  
+
         series: {
           name: '浏览量',
           type: 'bar',
           encode: { x: 'name', y: 'value' },
           datasetIndex: 1,
-  
+
           itemStyle: {
             color: function (colors: any) {
               const colorList = ['#45C2E0', '#C1EBDD', '#FFC851', '#5A5476', '#1869A0', '#FF9393']
               return colorList[colors.dataIndex]
             },
             shadowBlur: 100,
-            shadowColor: 'rgba(0, 0, 0, 0.2)',
+            shadowColor: 'rgba(0, 0, 0, 0)',
           },
         },
         tooltip: {},
@@ -78,6 +76,13 @@ export default defineComponent({
 .chart__pageviews-bar {
   width: 500px;
   max-width: 100%;
-  height: 500px;
+  height: 400px;
+  margin: auto;
+  @media screen and (max-width: 500px) {
+    width: 380px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 300px;
+  }
 }
 </style>

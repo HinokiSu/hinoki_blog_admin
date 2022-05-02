@@ -19,7 +19,7 @@ export default defineComponent({
       myChart.setOption({
         backgroundColor: '#fff',
         title: {
-          text: '文章类别汇总',
+          text: '',
           left: 'center',
           top: 20,
           textStyle: {
@@ -63,7 +63,7 @@ export default defineComponent({
                 return colorList[colors.dataIndex]
               },
               shadowBlur: 100,
-              shadowColor: 'rgba(0, 0, 0, 0.2)',
+              shadowColor: 'rgba(0, 0, 0, 0)',
             },
 
             animationType: 'scale',
@@ -87,7 +87,8 @@ export default defineComponent({
 <style lang="less" scoped>
 .chart__article__pie {
   width: 500px;
-  max-width: 100%;
-  height: 500px;
+  max-width: 300px;
+  height: 400px;
+  margin: auto;
 }
 </style>

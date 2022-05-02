@@ -1,6 +1,5 @@
 <template>
   <div class="fettle top-article">
-    <div class="caption">热门文章</div>
     <div class="article-item" v-for="item in topArticle" :key="item._id">
       <div class="item-title">
         <fe-dot type="success" class="item-dot"></fe-dot>
@@ -35,6 +34,8 @@ export default defineComponent({
 .fettle {
   &.top-article {
     max-width: 500px;
+    padding-left: 24px;
+    padding-bottom: 12px;
 
     & .caption {
       font-size: 1.4rem;

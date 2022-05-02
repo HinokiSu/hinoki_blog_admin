@@ -4,11 +4,11 @@ export const UserRoutes: RouteRecordRaw[] = [
   {
     path: 'users',
     name: 'users',
-    component: () => import('@admin/views/user/index.vue'),
+    component: () => import('@admin/views/user/users.vue'),
   },
- /*  {
-    path: 'user/user',
+  {
+    path: 'user/create',
     name: 'create-user',
-    component: () => import('@admin/views/category/create-category.vue'),
-  }, */
+    component: () => import('@admin/views/user/create-user.vue'),
+  },
 ]

@@ -19,3 +19,9 @@ export interface ILoginUser {
   username: string
   password: string
 }
+
+export interface ICreateUser {
+  username: string
+  pwd: string
+  checkPwd: string
+}

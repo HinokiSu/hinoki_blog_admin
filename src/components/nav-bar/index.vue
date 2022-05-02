@@ -1,10 +1,5 @@
 <template>
   <div class="hinoki-blog navigation">
-    <div class="navigation__logo">
-      <router-link :to="{ name: 'home' }">
-        <img src="@admin/assets/logo.png" alt="logo" />
-      </router-link>
-    </div>
     <div class="navigation__cms-caption">
       <p>Hinoki's Blog CMS</p>
     </div>
@@ -73,33 +68,27 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     align-items: center;
-    box-shadow: 0 0 36px var(--accents-2);
-    .navigation__logo {
-      margin-left: 24px;
-      cursor: pointer;
-      width: 64px;
-      overflow: hidden;
-      img {
-        object-fit: cover;
-      }
-    }
+    border-bottom: 1px solid #eee;
 
     .navigation__cms-caption {
-      margin-left: 30px;
+      margin-left: 24px;
       p {
-        font-size: 1.3rem;
+        text-align: center;
+        font-size: 1.35rem;
         font-weight: 400;
         letter-spacing: 1px;
+        margin: 0;
       }
     }
 
     .navigation__user {
       margin-left: auto;
-      padding-right: 24px;
+      padding-right: 12px;
 
       .user_name {
         padding: 8px;
         cursor: pointer;
+        font-size: 1rem;
 
         &::after {
           margin-left: 4px;
@@ -174,13 +163,7 @@ export default defineComponent({
       }
     }
 
-    @media screen and (max-width: 576px) {
-      & {
-        .navigation__cms-caption {
-          display: none;
-        }
-      }
-    }
+    
   }
 }
 </style>

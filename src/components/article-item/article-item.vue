@@ -24,14 +24,14 @@
                 },
               }"
             >
-              <p>See</p>
+              <p>查看</p>
             </router-link>
           </div>
           <div class="feature-btn" @click="clickHandler.edit">
-            <p>Edit</p>
+            <p>编辑</p>
           </div>
           <div class="feature-btn" @click="clickHandler.delete">
-            <p>Del</p>
+            <p>删除</p>
           </div>
         </div>
       </div>

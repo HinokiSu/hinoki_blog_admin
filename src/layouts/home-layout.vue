@@ -56,15 +56,20 @@ export default defineComponent({
       position: fixed;
       height: 64px;
       width: 100%;
+      padding-left: 120px;
       z-index: 99;
+      @media only screen and(max-width: 875px) {
+        & {
+          padding-left: 0;
+        }
+      }
     }
 
     & .layout--left-side {
       position: fixed;
-      padding-top: 96px;
       width: 120px;
       height: 100vh;
-
+      z-index: 100;
       @media only screen and(max-width: 875px) {
         & {
           display: none;

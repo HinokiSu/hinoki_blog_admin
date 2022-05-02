@@ -1,10 +1,12 @@
 <template>
-  <main class="hinoki-blog main_content">
+  <main class="hinoki-blog main-content">
     <fe-card shadow>
       <div class="bread_wrapper">
         <card-breadnav :breadNavList="curNavList"></card-breadnav>
       </div>
-      <router-view></router-view>
+      <div class="content__container">
+        <router-view></router-view>
+      </div>
     </fe-card>
   </main>
 </template>
@@ -64,15 +66,33 @@ export default defineComponent({
               })
             }
           }
-        } else if (curRouteList.value[1] === 'users') {
+        } else if (curRouteList.value[1] === 'users' || curRouteList.value[1] === 'user') {
           curNavList.value.push({
             name: 'Users',
             toPath: '/manage/users',
           })
+          if (curRouteList.value[2]) {
+            if (curRouteList.value[2] === 'create') {
+              curNavList.value.push({
+                name: 'Create',
+                toPath: curRoutePath,
+              })
+            }
+          }
         } else if (curRouteList.value[1] === 'fettle') {
           curNavList.value.push({
             name: 'Fettle',
             toPath: '/manage/fettle',
+          })
+        } else if (curRouteList.value[1] === 'visitors') {
+          curNavList.value.push({
+            name: 'Visitors',
+            toPath: '/manage/visitors',
+          })
+        } else if (curRouteList.value[1] === 'comments') {
+          curNavList.value.push({
+            name: 'Comments',
+            toPath: '/manage/comments',
           })
         }
       }
@@ -87,7 +107,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .hinoki-blog {
-  &.main_content {
+  &.main-content {
     display: flex;
     width: 100%;
     padding-bottom: 40px;
@@ -96,6 +116,8 @@ export default defineComponent({
       padding: 0px 20px;
       padding-bottom: 20px;
       border-bottom: 1px solid var(--accents-2);
+    }
+    .content__container {
     }
 
     @media only screen and( max-width: 650px) {

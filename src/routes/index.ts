@@ -1,9 +1,11 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { ArticleRoutes } from './articleRoute'
 import { CategoryRoutes } from './categoryRoute'
 import { useUserStore } from '@admin/stores/userStore'
 import { UserRoutes } from './userRoute'
 import { FettlrRoutes } from './fettleRoute'
+import { VisitorRoutes } from './visitorRoute'
+import { CommentRoutes } from './commentRoute'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -17,7 +19,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'manage',
         component: () => import('@admin/layouts/content-layout.vue'),
-        children: [...ArticleRoutes, ...CategoryRoutes, ...UserRoutes, ...FettlrRoutes],
+        children: [
+          ...ArticleRoutes,
+          ...CategoryRoutes,
+          ...UserRoutes,
+          ...FettlrRoutes,
+          ...VisitorRoutes,
+          ...CommentRoutes,
+        ],
       },
     ],
   },
@@ -29,7 +38,7 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory('/admin/'),
+  history: createWebHistory('/admin/'),
   routes,
 })
 

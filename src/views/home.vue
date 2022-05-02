@@ -7,10 +7,10 @@
             <img src="@admin/assets/logo.png" />
           </div>
           <div class="caption">
-            <p>Hinoki's Blog Management Platform</p>
+            <p>Hinoki's Blog 内容管理平台</p>
           </div>
           <div class="description">
-            <p>This platform is used to manage blog resources, including articles, categories, photos, etc</p>
+            <p>该平台用于管理博客内容资源, 包括文章、类别、评论等</p>
           </div>
         </div>
         <div class="charts">

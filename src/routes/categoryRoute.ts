@@ -4,7 +4,7 @@ export const CategoryRoutes: RouteRecordRaw[] = [
   {
     path: 'categories',
     name: 'categories',
-    component: () => import('@admin/views/category/index.vue'),
+    component: () => import('@admin/views/category/categories.vue'),
   },
   {
     path: 'category/create',

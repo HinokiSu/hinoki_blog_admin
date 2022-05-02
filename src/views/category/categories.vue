@@ -32,13 +32,11 @@ import { ICategory } from '@admin/interfaces/ICategory'
 import { useRouter } from 'vue-router'
 import { useCategoryStore } from '@admin/stores'
 import { computed, defineComponent, getCurrentInstance, onMounted, ref } from 'vue'
-import CategoryItem from '@admin/components/category-item/index.vue'
-import EmptyWrap from '@admin/components/empty-wrap/index.vue'
 import CardFeature from '@admin/components/card-main/card-feature.vue'
 
 export default defineComponent({
   name: 'Categories',
-  components: { CategoryItem, EmptyWrap, CardFeature },
+  components: { CardFeature },
   setup() {
     const router = useRouter()
     const CategoryStore = useCategoryStore()

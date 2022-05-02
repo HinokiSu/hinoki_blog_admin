@@ -109,9 +109,9 @@ export default defineComponent({
       padding: 0 20px;
       cursor: pointer;
       width: 100px;
+      height: 60px;
       background-color: rgba(236, 239, 243, 0.764);
       border-radius: 6px;
-      overflow: hidden;
       img {
         width: 60px;
         object-fit: cover;
@@ -119,7 +119,7 @@ export default defineComponent({
     }
 
     .features {
-      padding: 32px 0;
+      margin: 32px 0;
       display: grid;
       row-gap: 64px;
       justify-items: center;

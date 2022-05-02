@@ -21,4 +21,13 @@ export default defineComponent({
 <style lang="less">
 @import url('@admin/assets/css/global.css');
 @import url('@admin/assets/css/markdown-global.css');
+
+.ant-card {
+  .ant-card-body {
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 8px;
+  }
+}
 </style>

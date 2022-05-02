@@ -7,7 +7,8 @@ import { createPinia } from 'pinia'
 // fect-ui
 import { UIRegister } from './plugins/ui'
 import 'highlight.js/styles/github.css'
-
+// ant-design-vue
+import 'ant-design-vue/dist/antd.css'
 // echart
 import * as echarts from 'echarts/core'
 import { Charts } from './plugins/echarts'

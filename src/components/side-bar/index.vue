@@ -106,10 +106,12 @@ export default defineComponent({
 
     .navigation__logo {
       margin-top: 20px;
-      padding: 0 20px;
+      padding: 16px;
       cursor: pointer;
       width: 100px;
-      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background-color: rgba(236, 239, 243, 0.764);
       border-radius: 6px;
       img {

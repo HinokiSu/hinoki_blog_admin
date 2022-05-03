@@ -5,8 +5,13 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ACard: typeof import('ant-design-vue/es')['Card']
+    AInput: typeof import('ant-design-vue/es')['Input']
+    AModal: typeof import('ant-design-vue/es')['Modal']
+    APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     ArticleItem: typeof import('./src/components/article-item/article-item.vue')['default']
     ArticlePie: typeof import('./src/components/charts/article-pie.vue')['default']
+    ATable: typeof import('ant-design-vue/es')['Table']
     CardBreadnav: typeof import('./src/components/card-main/card-breadnav.vue')['default']
     CardFeature: typeof import('./src/components/card-main/card-feature.vue')['default']
     CommentPie: typeof import('./src/components/charts/comment-pie.vue')['default']

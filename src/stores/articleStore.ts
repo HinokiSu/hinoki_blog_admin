@@ -45,6 +45,7 @@ export const useArticleStore = defineStore('artilce', {
       }
     },
 
+    // 创建文章
     async createArticle() {
       try {
         const result = await httpPost({
@@ -56,6 +57,7 @@ export const useArticleStore = defineStore('artilce', {
       }
     },
 
+    // 文章更新
     async updateArticle(articleId: string) {
       try {
         const result = <IHttpArticle>await httpPut({
@@ -67,6 +69,7 @@ export const useArticleStore = defineStore('artilce', {
       }
     },
 
+    // 删除文章
     async deleteArticle(articleId: string) {
       try {
         const result = <IHttpArticle>await httpDelete({
@@ -77,6 +80,7 @@ export const useArticleStore = defineStore('artilce', {
       }
     },
 
+    // 分页查询,获取文章
     async getArticlePagination(curPage: number, pageSize: number) {
       try {
         const result = <IPagination>await httpGet({

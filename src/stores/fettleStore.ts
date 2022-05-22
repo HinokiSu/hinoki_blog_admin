@@ -19,16 +19,19 @@ export const useFettleStore = defineStore('fettle', {
 
   getters: {},
   actions: {
+    // 获取文章类别汇总
     async getArticleCountInCategory() {
       const res = <IHttpFettle>await httpGet({ url: '/state/category' })
       this.fettleList = res.fettle
     },
 
+    // 获取热门文章
     async getTopArticles() {
       const res = <IHttpTopArticle>await httpGet({ url: '/state/article/top' })
       this.topArticleList = res.fettle
     },
 
+    // 获取类别浏览量汇总
     async getPageviewsByCategory() {
       const res = <IHttpFettle>await httpGet({ url: '/state/pageviews/category' })
       const { fettle } = res
@@ -39,6 +42,7 @@ export const useFettleStore = defineStore('fettle', {
       }
       this.pageviewsList = temp
     },
+    // 获取文章评论汇总
     async getCommentByEveryArticle() {
       const res = <IHttpFettle>await httpGet({ url: '/state/pageviews/comment' })
       this.commentFettle = res.fettle

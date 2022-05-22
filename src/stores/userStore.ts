@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', {
   },
 
   actions: {
-    // 清空token
+    // 管理员登录
     async loginAuth(username: string, password: string) {
       // 返回 access_token, user_id, username
       const res = <IUser>await httpPost({
@@ -61,6 +61,7 @@ export const useUserStore = defineStore('user', {
       return true
     },
 
+    // 管理员退出
     logout() {
       // 清除localStorage中的数据
       localStorage.removeItem('access_token')
@@ -87,33 +88,36 @@ export const useUserStore = defineStore('user', {
 
     // 获取所有用户
     async getUsers() {
-      const res = <IHttpUser>await httpGet({ url: '/user' })
-      this.userList = res.users
+      try {
+        const res = <IHttpUser>await httpGet({ url: '/user' })
+        this.userList = res.users
+      } catch (error) {
+        console.log(`Error: ${error}`)
+      }
     },
-
-    /* // 更新用户信息
-    async updateUser(id: string) {
-      const res = await httpPut({ url: `/user/${id}` })
-      console.log(res)
-      return res
-    }, */
 
     // 删除用户信息
     async deleteUser(id: string) {
-      console.log(id)
-      const res = await httpDelete({ url: `/user/${id}` })
-      console.log(res)
-      return res
+      try {
+        const res = await httpDelete({ url: `/user/${id}` })
+        return res
+      } catch (error) {
+        console.log(`Error: ${error}`)
+      }
     },
 
     // 创建用户
     async createUser(user: ILoginUser) {
-      await httpPost({
-        url: '/user/new',
-        data: {
-          ...user,
-        },
-      })
+      try {
+        await httpPost({
+          url: '/user/new',
+          data: {
+            ...user,
+          },
+        })
+      } catch (error) {
+        console.log(`Error: ${error}`)
+      }
     },
   },
 })

@@ -14,6 +14,7 @@ export const useCommentStore = defineStore('comment', {
   getters: {},
 
   actions: {
+    // 获取所有评论
     async getCommentList() {
       try {
         const result = <ICommentList>await httpGet({ url: '/comment/all' })
@@ -24,7 +25,8 @@ export const useCommentStore = defineStore('comment', {
       }
     },
 
-    async deleteVisitor(id: string) {
+    // 根据Id删除 评论
+    async deleteComment(id: string) {
       try {
         const result = <any>await httpDelete({ url: `/comment/${id}` })
       } catch (error) {

@@ -15,6 +15,7 @@ export const useVisitorStore = defineStore('visitor', {
   getters: {},
 
   actions: {
+    // 获取所有访问者
     async getVisitorList() {
       try {
         const result = <IVisitors>await httpGet({ url: '/visitor/all' })
@@ -32,6 +33,7 @@ export const useVisitorStore = defineStore('visitor', {
       }
     },
 
+    // 根据Id删除访问者
     async deleteVisitor(id: string) {
       try {
         const result = <any>await httpDelete({ url: `/visitor/${id}` })

@@ -70,7 +70,7 @@ export default defineComponent({
 
     // 删除用户
     const onDelete = async (id: string) => {
-      await CommentStore.deleteVisitor(id).then(
+      await CommentStore.deleteComment(id).then(
         () =>
           proxy.$toast['success']({
             text: '删除用户成功!',

@@ -108,7 +108,7 @@ export default defineComponent({
       wrapperCol: { span: 10 },
     }
 
-    // 创建按钮
+    // 注册按钮
     const onSubmit = async () => {
       await UserStore.createUser({
         username: formState.username,
@@ -118,6 +118,10 @@ export default defineComponent({
           proxy.$toast['success']({
             text: '创建用户成功!',
             duration: '1500',
+          })
+
+          router.push({
+            name: 'users'
           })
         },
         () => {

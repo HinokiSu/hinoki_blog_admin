@@ -2,10 +2,10 @@
   <div class="hinoki-blog markdown-preview">
     <div class="preview-container">
       <fe-tabs class="md-preview__tabs" v-model:active="tabActive">
-        <fe-tab title="Edit Markdown">
+        <fe-tab title="编辑 Markdown">
           <hino-textarea class="markdown-textarea" v-model="article.markdown" unscale></hino-textarea>
         </fe-tab>
-        <fe-tab title="Preview">
+        <fe-tab title="预览">
           <div class="preview-html" v-html="article.html"></div>
         </fe-tab>
       </fe-tabs>
@@ -27,7 +27,7 @@ export default defineComponent({
     const article = computed(() => ArticleStore.articleData)
     const tabActive = ref(0)
 
-    // 处理markdown
+    // 文章预览，处理markdown
     const markdownParser: any = new MarkdownIt({
       html: true,
       linkify: true,

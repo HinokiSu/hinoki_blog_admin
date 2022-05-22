@@ -16,8 +16,8 @@
         </fe-form-item>
         <fe-form-item>
           <div class="features">
-            <fe-button type="success" auto size="medium" ghost @click="clickHandler.create">Create</fe-button>
-            <fe-button type="warning" auto size="medium" ghost @click="clickHandler.cancle">Cancel</fe-button>
+            <fe-button type="success" auto size="medium" ghost @click="clickHandler.create">创建</fe-button>
+            <fe-button type="warning" auto size="medium" ghost @click="clickHandler.cancle">取消</fe-button>
           </div>
         </fe-form-item>
       </fe-form>

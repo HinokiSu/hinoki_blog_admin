@@ -76,6 +76,7 @@ export default defineComponent({
             text: '删除用户成功!',
             duration: '1500',
           }),
+
         () =>
           proxy.$toast['error']({
             text: '删除用户失败!',

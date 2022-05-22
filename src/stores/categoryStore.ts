@@ -19,6 +19,7 @@ export const useCategoryStore = defineStore('category', {
   },
 
   actions: {
+    // 创建类别
     async createCategory() {
       try {
         const result = <ICategories>await httpPost({ url: '/category/new', data: this.categoryData })
@@ -28,6 +29,7 @@ export const useCategoryStore = defineStore('category', {
       }
     },
 
+    // 获取所有类别
     async getCategoryList() {
       try {
         const result = <ICategories>await httpGet({ url: '/category/all' })
@@ -45,7 +47,7 @@ export const useCategoryStore = defineStore('category', {
       }
     },
 
-    // TODO: Need fix
+    // 根据Id 获取类别
     async getCategoryById(id: string) {
       try {
         const result = <ICategory>await httpGet({ url: `/category/${id}` })
@@ -56,6 +58,7 @@ export const useCategoryStore = defineStore('category', {
       }
     },
 
+    // 更新类别
     async updateCategory(id: string) {
       try {
         const result = <ICategories>await httpPut({ url: `/category/${id}` })
@@ -66,6 +69,7 @@ export const useCategoryStore = defineStore('category', {
       }
     },
 
+    // 删除类别
     async deleteCategory(id: string) {
       try {
         const result = <ICategories>await httpDelete({ url: `/category/${id}` })

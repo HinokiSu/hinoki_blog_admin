@@ -24,10 +24,10 @@
       <fe-form-item>
         <div class="features">
           <div class="update">
-            <fe-button auto ghost size="medium" type="success" @click="sumbitHandler">Submit</fe-button>
+            <fe-button auto ghost size="medium" type="success" @click="sumbitHandler">创建</fe-button>
           </div>
           <div class="cancel">
-            <fe-button auto ghost size="medium" type="warning" @click="cancelHandler">Cancel</fe-button>
+            <fe-button auto ghost size="medium" type="warning" @click="cancelHandler">取消</fe-button>
           </div>
         </div>
       </fe-form-item>

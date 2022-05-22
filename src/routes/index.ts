@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { ArticleRoutes } from './articleRoute'
 import { CategoryRoutes } from './categoryRoute'
 import { useUserStore } from '@admin/stores/userStore'
@@ -15,22 +15,26 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home',
         component: () => import('@admin/views/home.vue'),
-      },
-      {
+      },{
         path: 'manage',
         component: () => import('@admin/layouts/content-layout.vue'),
         children: [
+          // 文章路由
           ...ArticleRoutes,
+          // 类别路由
           ...CategoryRoutes,
+          // 用户路由
           ...UserRoutes,
+          // 仪表盘路由
           ...FettlrRoutes,
+          // 访问者路由
           ...VisitorRoutes,
+          // 评论路由
           ...CommentRoutes,
         ],
       },
     ],
-  },
-  {
+  },{
     path: '/login',
     name: 'login',
     component: () => import('@admin/views/login.vue'),
@@ -38,7 +42,8 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/admin/'),
+  // history: createWebHistory('/admin/'),
+  history: createWebHashHistory('/admin/'),
   routes,
 })
 

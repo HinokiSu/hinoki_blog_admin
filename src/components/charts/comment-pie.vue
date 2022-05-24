@@ -17,9 +17,7 @@ export default defineComponent({
       await FettleStore.getCommentByEveryArticle()
       const myChart = echarts.init(document.getElementById('comment-pie'))
       myChart.setOption({
-        legend: {
-          top: 'bottom',
-        },
+       
 
         tooltip: {
           trigger: 'item',
@@ -27,7 +25,7 @@ export default defineComponent({
 
         series: [
           {
-            name: '类别',
+            name: '评论数',
             type: 'pie',
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,
@@ -38,7 +36,7 @@ export default defineComponent({
             emphasis: {
               label: {
                 show: true,
-                fontSize: '30',
+                fontSize: '16',
                 fontWeight: 'bold',
               },
             },

@@ -1,5 +1,6 @@
 import { IBaseUser, IHttpUser, ILoginUser, IUser } from '@admin/interfaces'
 import { httpDelete, httpGet, httpPost, httpPut } from '@admin/utils/axios'
+import dayjs from 'dayjs'
 import { defineStore } from 'pinia'
 
 interface IState {
@@ -90,7 +91,14 @@ export const useUserStore = defineStore('user', {
     async getUsers() {
       try {
         const res = <IHttpUser>await httpGet({ url: '/user' })
-        this.userList = res.users
+        this.userList = res.users.map((item) => {
+          return {
+            _id: item._id,
+            username: item.username,
+            createdAt: dayjs(item.createdAt).format('YYYY-MM-DD HH:mm'),
+            updatedAt: item.updatedAt,
+          }
+        })
       } catch (error) {
         console.log(`Error: ${error}`)
       }

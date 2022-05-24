@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --mode development",
     "build": "vue-tsc --noEmit && vite build --mode production",
+    "build:dev": "vue-tsc --noEmit && vite build --mode development",
     "preview": "vite preview",
     "preinstall": "npx only-allow pnpm"
   },
